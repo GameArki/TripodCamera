@@ -8,8 +8,11 @@ namespace TripodCamera {
         Vector3 pos;
         public Vector3 Pos => pos;
 
-        public Quaternion rot;
-        public float fov;
+        Quaternion rot;
+        public Quaternion Rot => rot;
+
+        float fov;
+        public float FOV => fov;
 
         public Transform followTF;
         public Transform lookAtTF;
@@ -38,6 +41,16 @@ namespace TripodCamera {
             dir.Normalize();
             pos += dir * value;
         }
+
+        internal void ZoomIn(float value) {
+            fov -= value;
+            if (fov < 1) {
+                fov = 1;
+            } else if (fov > 179) {
+                fov = 179;
+            }
+        }
+
     }
 
 }

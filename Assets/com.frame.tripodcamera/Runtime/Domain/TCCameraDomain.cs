@@ -31,6 +31,14 @@ namespace TripodCamera.Domain {
 
         }
 
+        public void ZoomInCurrent(float value) {
+
+            var repo = facades.CameraRepo;
+            var tcCam = repo.ActiveCam;
+            tcCam.ZoomIn(value);
+
+        }
+
     }
 
 }

@@ -25,8 +25,8 @@ namespace TripodCamera.Controller {
         void ApplyCamera(TCCameraEntity tcCam, Camera mainCam) {
             var info = tcCam.CurrentInfo;
             mainCam.transform.position = info.Pos;
-            mainCam.transform.rotation = info.rot;
-            mainCam.fieldOfView = info.fov;
+            mainCam.transform.rotation = info.Rot;
+            mainCam.fieldOfView = info.FOV;
         }
 
     }

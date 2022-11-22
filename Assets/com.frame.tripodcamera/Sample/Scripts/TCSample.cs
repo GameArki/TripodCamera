@@ -12,7 +12,16 @@ namespace TripodCamera.Sample {
         }
 
         void Update() {
-            tcCore.SetterAPI.PushInCurrent(0.01f);
+            
+            var mouseScroll = Input.mouseScrollDelta.y;
+            if (Input.GetKey(KeyCode.LeftControl)) {
+                if (mouseScroll != 0) {
+                    tcCore.SetterAPI.ZoomInCurrent(mouseScroll);
+                }
+            } else {
+                tcCore.SetterAPI.PushInCurrent(mouseScroll);
+            }
+
         }
 
         void LateUpdate() {
@@ -20,5 +29,5 @@ namespace TripodCamera.Sample {
         }
 
     }
-    
+
 }

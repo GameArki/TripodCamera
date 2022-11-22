@@ -20,6 +20,11 @@ namespace TripodCamera.API {
             cameraDomain.PushInCurrent(value);
         }
 
+        void ITCSetterAPI.ZoomInCurrent(float value) {
+            var cameraDomain = domain.CameraDomain;
+            cameraDomain.ZoomInCurrent(value);
+        }
+
     }
 
 }
