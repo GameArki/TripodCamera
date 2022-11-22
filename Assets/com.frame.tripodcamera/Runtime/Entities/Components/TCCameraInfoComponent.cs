@@ -1,15 +1,24 @@
+using System;
 using UnityEngine;
 
 namespace TripodCamera {
 
     public class TCCameraInfoComponent {
 
-        public Vector3 pos;
-        public Quaternion rot;
-        public float fov;
+        Vector3 pos;
+        public Vector3 Pos => pos;
 
-        public Transform followTF;
-        public Transform lookAtTF;
+        Quaternion rot;
+        public Quaternion Rot => rot;
+
+        float fov;
+        public float FOV => fov;
+
+        Transform followTF;
+        public Transform FollowTF => followTF;
+
+        Transform lookAtTF;
+        public Transform LookAtTF => lookAtTF;
 
         public void Init(Vector3 pos, Quaternion rot, float fov) {
             this.pos = pos;
@@ -23,6 +32,61 @@ namespace TripodCamera {
             this.fov = other.fov;
             this.followTF = other.followTF;
             this.lookAtTF = other.lookAtTF;
+        }
+
+        internal void PushIn(float value) {
+            Vector3 fwd;
+            if (lookAtTF == null) {
+                fwd = rot * Vector3.forward;
+            } else {
+                fwd = lookAtTF.position - pos;
+            }
+            fwd.Normalize();
+            pos += fwd * value;
+        }
+
+        internal void Move(Vector2 value) {
+            Vector3 up;
+            Vector3 right;
+            if (lookAtTF == null) {
+                up = rot * Vector3.up;
+                right = rot * Vector3.right;
+            } else {
+                var fwd = lookAtTF.position - pos;
+                right = Vector3.Cross(fwd, Vector3.up);
+                up = Vector3.Cross(fwd, right);
+            }
+            up.Normalize();
+            right.Normalize();
+            pos += right * value.x;
+            pos += up * value.y;
+        }
+
+        internal void RotateHorizontal(float x) {
+            var euler = rot.eulerAngles;
+            euler.y += x;
+            rot = Quaternion.Euler(euler);
+        }
+
+        internal void RotateVertical(float y) {
+            var euler = rot.eulerAngles;
+            euler.x += y;
+            rot = Quaternion.Euler(euler);
+        }
+
+        internal void RotateRoll(float z) {
+            var euler = rot.eulerAngles;
+            euler.z += z;
+            rot = Quaternion.Euler(euler);
+        }
+
+        internal void ZoomIn(float value, float min, float max) {
+            fov -= value;
+            if (fov < min) {
+                fov = min;
+            } else if (fov > max) {
+                fov = max;
+            }
         }
 
     }

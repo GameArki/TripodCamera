@@ -1,5 +1,8 @@
 using UnityEngine;
 using TripodCamera.Facades;
+using TripodCamera.Domain;
+using TripodCamera.Controller;
+using TripodCamera.API;
 
 namespace TripodCamera {
 
@@ -7,8 +10,15 @@ namespace TripodCamera {
 
         bool isInit;
 
-        TCFacades facades;
+        // ==== API ====
+        TCSetterAPI setterAPI;
+        public ITCSetterAPI SetterAPI => setterAPI;
 
+        // ==== Facades ====
+        TCFacades facades;
+        TCDomain domain;
+
+        // ==== Controller ====
         TCInitializePhase initializePhase;
         TCapplyPhase applyPhase;
 
@@ -16,7 +26,10 @@ namespace TripodCamera {
 
             this.isInit = false;
 
+            this.setterAPI = new TCSetterAPI();
+
             this.facades = new TCFacades();
+            this.domain = new TCDomain();
 
             this.initializePhase = new TCInitializePhase();
             this.applyPhase = new TCapplyPhase();
@@ -26,10 +39,16 @@ namespace TripodCamera {
         public void Initialize(Camera mainCamera) {
 
             // ==== Inject ====
-            facades.Inject(mainCamera);
+            // - API
+            setterAPI.Inject(facades, domain);
 
-            initializePhase.Inject(facades);
-            applyPhase.Inject(facades);
+            // - Facades
+            facades.Inject(mainCamera);
+            domain.Inject(facades);
+
+            // - Controller
+            initializePhase.Inject(facades, domain);
+            applyPhase.Inject(facades, domain);
 
             // ==== Init ====
             initializePhase.Init();

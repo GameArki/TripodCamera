@@ -13,9 +13,12 @@ namespace TripodCamera {
 
         public void SetActiveCam(TCCameraEntity cam) {
             this.activeCam = cam;
-        }
+        } 
 
         public void Add(TCCameraEntity camera) {
+            if (activeCam == null) {
+                activeCam = camera;
+            }
             all.Add(camera);
         }
 

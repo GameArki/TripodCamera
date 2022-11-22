@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace TripodCamera {
@@ -33,8 +34,32 @@ namespace TripodCamera {
 
         // ==== Basic ====
         // - Push
+        internal void PushIn(float value) {
+            currentInfo.PushIn(value);
+        }
+
+        // - Move
+        internal void Move(Vector2 value) {
+            currentInfo.Move(value);
+        }
 
         // - Rotate
+        internal void RotateHorizontal(float x) {
+            currentInfo.RotateHorizontal(x);
+        }
+
+        internal void RotateVertical(float y) {
+            currentInfo.RotateVertical(y);
+        }
+
+        internal void RotateRoll(float z) {
+            currentInfo.RotateRoll(z);
+        }
+
+        // - Zoom
+        internal void ZoomIn(float value, float min, float max) {
+            currentInfo.ZoomIn(value, min, max);
+        }
 
     }
 
