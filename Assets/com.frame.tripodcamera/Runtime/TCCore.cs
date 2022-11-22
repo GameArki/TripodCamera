@@ -9,6 +9,9 @@ namespace TripodCamera {
     public class TCCore {
 
         bool isInit;
+        
+        bool isPause;
+        public bool IsPause => isPause;
 
         // ==== API ====
         TCSetterAPI setterAPI;
@@ -20,11 +23,13 @@ namespace TripodCamera {
 
         // ==== Controller ====
         TCInitializePhase initializePhase;
+        TCStatePhase statePhase;
         TCapplyPhase applyPhase;
 
         public TCCore() {
 
             this.isInit = false;
+            this.isPause = false;
 
             this.setterAPI = new TCSetterAPI();
 
@@ -32,6 +37,7 @@ namespace TripodCamera {
             this.domain = new TCDomain();
 
             this.initializePhase = new TCInitializePhase();
+            this.statePhase = new TCStatePhase();
             this.applyPhase = new TCapplyPhase();
 
         }
@@ -48,6 +54,7 @@ namespace TripodCamera {
 
             // - Controller
             initializePhase.Inject(facades, domain);
+            statePhase.Inject(facades, domain);
             applyPhase.Inject(facades, domain);
 
             // ==== Init ====
@@ -57,16 +64,29 @@ namespace TripodCamera {
 
         }
 
+        public void Pause() {
+            isPause = true;
+        }
+
+        public void Resume() {
+            isPause = false;
+        }
+
         /// <summary>
         /// Recommended to call this method in "LateUpdate()" or "end of Update()"
         /// </summary>
-        public void Tick() {
+        public void Tick(float dt) {
 
             if (!isInit) {
                 return;
             }
 
-            applyPhase.Tick();
+            if (isPause) {
+                return;
+            }
+
+            statePhase.Tick(dt);
+            applyPhase.Tick(dt);
 
         }
 

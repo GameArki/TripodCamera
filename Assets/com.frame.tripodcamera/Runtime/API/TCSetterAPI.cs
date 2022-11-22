@@ -16,34 +16,41 @@ namespace TripodCamera.API {
             this.domain = domain;
         }
 
+        // ==== Basic ====
         void ITCSetterAPI.PushInCurrent(float value) {
             var cameraDomain = domain.CameraDomain;
             cameraDomain.PushInCurrent(value);
         }
 
-        void ITCSetterAPI.Move(Vector2 value) {
+        void ITCSetterAPI.MoveCurrent(Vector2 value) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.Move(value);
+            cameraDomain.MoveCurrent(value);
         }
 
-        void ITCSetterAPI.RotateHorizontal(float x) {
+        void ITCSetterAPI.RotateHorizontalCurrent(float x) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.RotateHorizontal(x);
+            cameraDomain.RotateHorizontalCurrent(x);
         }
 
-        void ITCSetterAPI.RotateVertical(float y) {
+        void ITCSetterAPI.RotateVerticalCurrent(float y) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.RotateVertical(y);
+            cameraDomain.RotateVerticalCurrent(y);
         }
 
-        void ITCSetterAPI.RotateRoll(float z) {
+        void ITCSetterAPI.RotateRollCurrent(float z) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.RotateRoll(z);
+            cameraDomain.RotateRollCurrent(z);
         }
 
         void ITCSetterAPI.ZoomInCurrent(float value) {
             var cameraDomain = domain.CameraDomain;
             cameraDomain.ZoomInCurrent(value);
+        }
+
+        // ==== Advanced ====
+        void ITCSetterAPI.SetFollowCurrent(Transform target, Vector3 offset) {
+            var cameraDomain = domain.CameraDomain;
+            cameraDomain.SetFollowCurrent(target, offset);
         }
 
     }

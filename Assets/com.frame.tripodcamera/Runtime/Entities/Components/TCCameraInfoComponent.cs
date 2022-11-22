@@ -14,9 +14,15 @@ namespace TripodCamera {
         float fov;
         public float FOV => fov;
 
+        // ==== Advance ====
+        // - Follow
         Transform followTF;
         public Transform FollowTF => followTF;
 
+        Vector3 followOffset;
+        public Vector3 FollowOffset => followOffset;
+
+        // - LookAt
         Transform lookAtTF;
         public Transform LookAtTF => lookAtTF;
 
@@ -34,6 +40,7 @@ namespace TripodCamera {
             this.lookAtTF = other.lookAtTF;
         }
 
+        // ==== Basic ====
         internal void PushIn(float value) {
             Vector3 fwd;
             if (lookAtTF == null) {
@@ -86,6 +93,18 @@ namespace TripodCamera {
                 fov = min;
             } else if (fov > max) {
                 fov = max;
+            }
+        }
+
+        // ==== Advanced ====
+        internal void SetFollow(Transform tf, Vector3 offset) {
+            this.followTF = tf;
+            this.followOffset = offset;
+        }
+
+        internal void ApplyFollow() {
+            if (followTF != null) {
+                pos = followTF.position + followOffset;
             }
         }
 
