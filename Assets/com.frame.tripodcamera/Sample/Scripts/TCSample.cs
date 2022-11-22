@@ -6,6 +6,8 @@ namespace TripodCamera.Sample {
 
         TCCore tcCore;
 
+        Vector2 mousePos;
+
         void Awake() {
             tcCore = new TCCore();
             tcCore.Initialize(Camera.main);
@@ -29,6 +31,16 @@ namespace TripodCamera.Sample {
             if (x != 0 || y != 0) {
                 tcSetter.Move(new Vector2(x, y));
             }
+
+            if (Input.GetMouseButton(1)) {
+                var mouseDelta = (Vector2)Input.mousePosition - mousePos;
+                if (mouseDelta != Vector2.zero) {
+                    tcSetter.RotateHorizontal(mouseDelta.x);
+                    tcSetter.RotateVertical(mouseDelta.y, -45, 45);
+                }
+            }
+
+            mousePos = Input.mousePosition;
 
         }
 

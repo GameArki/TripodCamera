@@ -35,6 +35,18 @@ namespace TripodCamera.Domain {
             tcCam.Move(value);
         }
 
+        public void RotateHorizontal(float x) {
+            var repo = facades.CameraRepo;
+            var tcCam = repo.ActiveCam;
+            tcCam.RotateHorizontal(x);
+        }
+
+        public void RotateVertical(float y, float min, float max) {
+            var repo = facades.CameraRepo;
+            var tcCam = repo.ActiveCam;
+            tcCam.RotateVertical(y, min, max);
+        }
+
         public void ZoomInCurrent(float value) {
             var repo = facades.CameraRepo;
             var config = facades.Config;

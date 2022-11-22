@@ -44,6 +44,13 @@ namespace TripodCamera {
         }
 
         // - Rotate
+        internal void RotateHorizontal(float x) {
+            currentInfo.RotateHorizontal(x);
+        }
+
+        internal void RotateVertical(float y, float min, float max) {
+            currentInfo.RotateVertical(y, min, max);
+        }
 
         // - Zoom
         internal void ZoomIn(float value, float min, float max) {
