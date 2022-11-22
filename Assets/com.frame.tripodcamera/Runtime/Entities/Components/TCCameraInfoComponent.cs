@@ -1,10 +1,13 @@
+using System;
 using UnityEngine;
 
 namespace TripodCamera {
 
     public class TCCameraInfoComponent {
 
-        public Vector3 pos;
+        Vector3 pos;
+        public Vector3 Pos => pos;
+
         public Quaternion rot;
         public float fov;
 
@@ -25,6 +28,16 @@ namespace TripodCamera {
             this.lookAtTF = other.lookAtTF;
         }
 
+        internal void PushIn(float value) {
+            Vector3 dir;
+            if (followTF == null) {
+                dir = rot * Vector3.forward;
+            } else {
+                dir = followTF.position - pos;
+            }
+            dir.Normalize();
+            pos += dir * value;
+        }
     }
 
 }

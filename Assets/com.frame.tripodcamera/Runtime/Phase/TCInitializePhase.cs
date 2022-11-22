@@ -1,27 +1,26 @@
 using TripodCamera.Facades;
+using TripodCamera.Domain;
 
 namespace TripodCamera {
 
     public class TCInitializePhase {
 
         TCFacades facades;
+        TCDomain domain;
 
         public TCInitializePhase() {}
 
-        public void Inject(TCFacades facades) {
+        public void Inject(TCFacades facades, TCDomain domain) {
             this.facades = facades;
+            this.domain = domain;
         }
 
         public void Init() {
-            
+
+            var cameraDomain = domain.CameraDomain;
             var cam = facades.MainCamera;
-
-            var repo = facades.CameraRepo;
-            var tcCam = new TCCameraEntity();
-            tcCam.InitInfo(cam.transform.position, cam.transform.rotation, cam.fieldOfView);
-
-            repo.Add(tcCam);
-            repo.SetActiveCam(tcCam);
+            var tf = cam.transform;
+            cameraDomain.Spawn(tf.position, tf.rotation, cam.fieldOfView);
             
         }
 

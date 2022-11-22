@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace TripodCamera {
@@ -33,6 +34,9 @@ namespace TripodCamera {
 
         // ==== Basic ====
         // - Push
+        internal void PushIn(float value) {
+            currentInfo.PushIn(value);
+        }
 
         // - Rotate
 

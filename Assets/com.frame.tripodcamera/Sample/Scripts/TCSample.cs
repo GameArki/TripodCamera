@@ -12,7 +12,7 @@ namespace TripodCamera.Sample {
         }
 
         void Update() {
-
+            tcCore.SetterAPI.PushInCurrent(0.01f);
         }
 
         void LateUpdate() {

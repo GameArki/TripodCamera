@@ -1,16 +1,19 @@
 using UnityEngine;
 using TripodCamera.Facades;
+using TripodCamera.Domain;
 
-namespace TripodCamera {
+namespace TripodCamera.Controller {
 
     public class TCapplyPhase {
 
         TCFacades facades;
+        TCDomain domain;
 
         public TCapplyPhase() {}
 
-        public void Inject(TCFacades facades) {
+        public void Inject(TCFacades facades, TCDomain domain) {
             this.facades = facades;
+            this.domain = domain;
         }
 
         public void Tick() {
@@ -21,7 +24,7 @@ namespace TripodCamera {
 
         void ApplyCamera(TCCameraEntity tcCam, Camera mainCam) {
             var info = tcCam.CurrentInfo;
-            mainCam.transform.position = info.pos;
+            mainCam.transform.position = info.Pos;
             mainCam.transform.rotation = info.rot;
             mainCam.fieldOfView = info.fov;
         }
