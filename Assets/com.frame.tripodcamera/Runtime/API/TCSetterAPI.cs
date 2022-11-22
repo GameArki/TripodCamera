@@ -31,9 +31,14 @@ namespace TripodCamera.API {
             cameraDomain.RotateHorizontal(x);
         }
 
-        void ITCSetterAPI.RotateVertical(float y, float min, float max) {
+        void ITCSetterAPI.RotateVertical(float y) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.RotateVertical(y, min, max);
+            cameraDomain.RotateVertical(y);
+        }
+
+        void ITCSetterAPI.RotateRoll(float z) {
+            var cameraDomain = domain.CameraDomain;
+            cameraDomain.RotateRoll(z);
         }
 
         void ITCSetterAPI.ZoomInCurrent(float value) {

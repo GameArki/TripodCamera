@@ -22,8 +22,12 @@ namespace TripodCamera.Sample {
                 if (mouseScroll != 0) {
                     tcSetter.ZoomInCurrent(mouseScroll);
                 }
-            } else {
+            } else if (Input.GetKey(KeyCode.LeftShift)) {
                 tcSetter.PushInCurrent(mouseScroll);
+            } else if (Input.GetKey(KeyCode.LeftAlt)) {
+                if (mouseScroll != 0) {
+                    tcSetter.RotateRoll(mouseScroll);
+                }
             }
 
             float x = Input.GetAxis("Horizontal");
@@ -36,7 +40,7 @@ namespace TripodCamera.Sample {
                 var mouseDelta = (Vector2)Input.mousePosition - mousePos;
                 if (mouseDelta != Vector2.zero) {
                     tcSetter.RotateHorizontal(mouseDelta.x);
-                    tcSetter.RotateVertical(mouseDelta.y, -45, 45);
+                    tcSetter.RotateVertical(mouseDelta.y);
                 }
             }
 

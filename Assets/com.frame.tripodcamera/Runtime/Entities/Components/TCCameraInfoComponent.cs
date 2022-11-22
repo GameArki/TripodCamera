@@ -63,24 +63,21 @@ namespace TripodCamera {
         }
 
         internal void RotateHorizontal(float x) {
-            if (lookAtTF == null) {
-                var euler = rot.eulerAngles;
-                euler.y += x;
-                rot = Quaternion.Euler(euler);
-            }
+            var euler = rot.eulerAngles;
+            euler.y += x;
+            rot = Quaternion.Euler(euler);
         }
 
-        internal void RotateVertical(float y, float min, float max) {
-            if (lookAtTF == null) {
-                var euler = rot.eulerAngles;
-                euler.x += y;
-                if (euler.x > max && euler.x < 90) {
-                    euler.x = max;
-                } else if ((euler.x - 360) < min && euler.x > 90) {
-                    euler.x = min + 360;
-                }
-                rot = Quaternion.Euler(euler);
-            }
+        internal void RotateVertical(float y) {
+            var euler = rot.eulerAngles;
+            euler.x += y;
+            rot = Quaternion.Euler(euler);
+        }
+
+        internal void RotateRoll(float z) {
+            var euler = rot.eulerAngles;
+            euler.z += z;
+            rot = Quaternion.Euler(euler);
         }
 
         internal void ZoomIn(float value, float min, float max) {
