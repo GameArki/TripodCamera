@@ -14,8 +14,11 @@ namespace TripodCamera {
         float fov;
         public float FOV => fov;
 
-        public Transform followTF;
-        public Transform lookAtTF;
+        Transform followTF;
+        public Transform FollowTF => followTF;
+
+        Transform lookAtTF;
+        public Transform LookAtTF => lookAtTF;
 
         public void Init(Vector3 pos, Quaternion rot, float fov) {
             this.pos = pos;
@@ -32,14 +35,31 @@ namespace TripodCamera {
         }
 
         internal void PushIn(float value) {
-            Vector3 dir;
-            if (followTF == null) {
-                dir = rot * Vector3.forward;
+            Vector3 fwd;
+            if (lookAtTF == null) {
+                fwd = rot * Vector3.forward;
             } else {
-                dir = followTF.position - pos;
+                fwd = lookAtTF.position - pos;
             }
-            dir.Normalize();
-            pos += dir * value;
+            fwd.Normalize();
+            pos += fwd * value;
+        }
+
+        internal void Move(Vector2 value) {
+            Vector3 up;
+            Vector3 right;
+            if (lookAtTF == null) {
+                up = rot * Vector3.up;
+                right = rot * Vector3.right;
+            } else {
+                var fwd = lookAtTF.position - pos;
+                right = Vector3.Cross(fwd, Vector3.up);
+                up = Vector3.Cross(fwd, right);
+            }
+            up.Normalize();
+            right.Normalize();
+            pos += right * value.x;
+            pos += up * value.y;
         }
 
         internal void ZoomIn(float value) {

@@ -24,19 +24,21 @@ namespace TripodCamera.Domain {
         }
 
         public void PushInCurrent(float value) {
-
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
             tcCam.PushIn(value);
+        }
 
+        public void Move(Vector2 value) {
+            var repo = facades.CameraRepo;
+            var tcCam = repo.ActiveCam;
+            tcCam.Move(value);
         }
 
         public void ZoomInCurrent(float value) {
-
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
             tcCam.ZoomIn(value);
-
         }
 
     }

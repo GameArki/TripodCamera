@@ -12,14 +12,22 @@ namespace TripodCamera.Sample {
         }
 
         void Update() {
-            
+
+            var tcSetter = tcCore.SetterAPI;
+
             var mouseScroll = Input.mouseScrollDelta.y;
             if (Input.GetKey(KeyCode.LeftControl)) {
                 if (mouseScroll != 0) {
-                    tcCore.SetterAPI.ZoomInCurrent(mouseScroll);
+                    tcSetter.ZoomInCurrent(mouseScroll);
                 }
             } else {
-                tcCore.SetterAPI.PushInCurrent(mouseScroll);
+                tcSetter.PushInCurrent(mouseScroll);
+            }
+
+            float x = Input.GetAxis("Horizontal");
+            float y = Input.GetAxis("Vertical");
+            if (x != 0 || y != 0) {
+                tcSetter.Move(new Vector2(x, y));
             }
 
         }

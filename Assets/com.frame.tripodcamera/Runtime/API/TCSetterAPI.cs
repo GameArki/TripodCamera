@@ -1,3 +1,4 @@
+using UnityEngine;
 using TripodCamera.Facades;
 using TripodCamera.Domain;
 
@@ -18,6 +19,11 @@ namespace TripodCamera.API {
         void ITCSetterAPI.PushInCurrent(float value) {
             var cameraDomain = domain.CameraDomain;
             cameraDomain.PushInCurrent(value);
+        }
+
+        void ITCSetterAPI.Move(Vector2 value) {
+            var cameraDomain = domain.CameraDomain;
+            cameraDomain.Move(value);
         }
 
         void ITCSetterAPI.ZoomInCurrent(float value) {

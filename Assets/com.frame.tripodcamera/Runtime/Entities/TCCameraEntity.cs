@@ -38,6 +38,11 @@ namespace TripodCamera {
             currentInfo.PushIn(value);
         }
 
+        // - Move
+        internal void Move(Vector2 value) {
+            currentInfo.Move(value);
+        }
+
         // - Rotate
 
         // - Zoom
