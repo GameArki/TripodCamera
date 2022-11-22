@@ -46,8 +46,8 @@ namespace TripodCamera {
         // - Rotate
 
         // - Zoom
-        internal void ZoomIn(float value) {
-            currentInfo.ZoomIn(value);
+        internal void ZoomIn(float value, float min, float max) {
+            currentInfo.ZoomIn(value, min, max);
         }
 
     }

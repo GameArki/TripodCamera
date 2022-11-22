@@ -4,6 +4,9 @@ namespace TripodCamera.Facades {
 
     public class TCFacades {
 
+        TCConfig config;
+        public TCConfig Config => config;
+
         Camera camera;
         public Camera MainCamera => camera;
 
@@ -11,6 +14,7 @@ namespace TripodCamera.Facades {
         public TCCameraRepo CameraRepo => cameraRepo;
 
         public TCFacades() {
+            this.config = new TCConfig();
             this.cameraRepo = new TCCameraRepo();
         }
 

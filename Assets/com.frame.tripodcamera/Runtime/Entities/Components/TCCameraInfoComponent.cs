@@ -62,12 +62,12 @@ namespace TripodCamera {
             pos += up * value.y;
         }
 
-        internal void ZoomIn(float value) {
+        internal void ZoomIn(float value, float min, float max) {
             fov -= value;
-            if (fov < 1) {
-                fov = 1;
-            } else if (fov > 179) {
-                fov = 179;
+            if (fov < min) {
+                fov = min;
+            } else if (fov > max) {
+                fov = max;
             }
         }
 
