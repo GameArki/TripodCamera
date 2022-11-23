@@ -9,12 +9,14 @@ namespace TripodCamera.Sample {
         Vector2 mousePos;
 
         GameObject target;
+        GameObject target2;
 
         void Awake() {
             tcCore = new TCCore();
             tcCore.Initialize(Camera.main);
 
             target = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            target2 = GameObject.CreatePrimitive(PrimitiveType.Cube);
         }
 
         void Update() {
@@ -51,8 +53,15 @@ namespace TripodCamera.Sample {
             mousePos = Input.mousePosition;
 
             if (Input.GetKeyUp(KeyCode.Space)) {
-                // tcSetter.SetFollowCurrent(target.transform, new Vector3(0, 0, -10));
                 tcSetter.SetLookAtCurrent(target.transform, Vector3.zero);
+            }
+
+            if (Input.GetKeyUp(KeyCode.F)) {
+                tcSetter.SetFollowCurrent(target.transform, new Vector3(0, 0, -10));
+            }
+
+            if (Input.GetKeyUp(KeyCode.R)) {
+                tcSetter.SetLookAtCurrent(target2.transform, Vector3.zero);
             }
 
             if (Input.GetKeyUp(KeyCode.Escape)) {

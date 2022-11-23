@@ -41,6 +41,8 @@ namespace TripodCamera {
             this.fov = other.fov;
             this.followTF = other.followTF;
             this.lookAtTF = other.lookAtTF;
+            this.followOffset = other.followOffset;
+            this.lookAtOffset = other.lookAtOffset;
         }
 
         // ==== Basic ====
@@ -53,6 +55,9 @@ namespace TripodCamera {
             }
             fwd.Normalize();
             pos += fwd * value;
+            if (followTF != null) {
+                followOffset += fwd * value;
+            }
         }
 
         internal void Move(Vector2 value) {
