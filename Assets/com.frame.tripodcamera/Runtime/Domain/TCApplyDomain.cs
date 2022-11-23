@@ -16,7 +16,7 @@ namespace TripodCamera.Domain {
         public void ApplyFollow() {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
-            tcCam.ApplyFollow();
+            tcCam.Follow_Apply();
         }
 
         public void ApplyLookAt() {

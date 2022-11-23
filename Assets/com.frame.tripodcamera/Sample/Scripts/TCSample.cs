@@ -26,42 +26,46 @@ namespace TripodCamera.Sample {
             var mouseScroll = Input.mouseScrollDelta.y;
             if (Input.GetKey(KeyCode.LeftControl)) {
                 if (mouseScroll != 0) {
-                    tcSetter.ZoomInCurrent(mouseScroll);
+                    tcSetter.Zoom_In_Current(mouseScroll);
                 }
             } else if (Input.GetKey(KeyCode.LeftShift)) {
-                tcSetter.PushInCurrent(mouseScroll);
+                tcSetter.Push_In_Current(mouseScroll);
             } else if (Input.GetKey(KeyCode.LeftAlt)) {
                 if (mouseScroll != 0) {
-                    tcSetter.RotateRollCurrent(mouseScroll);
+                    tcSetter.Rotate_Roll_Current(mouseScroll);
                 }
             }
 
             float x = Input.GetAxis("Horizontal");
             float y = Input.GetAxis("Vertical");
             if (x != 0 || y != 0) {
-                tcSetter.MoveCurrent(new Vector2(x, y));
+                if (Input.GetKey(KeyCode.LeftControl)) {
+                    tcSetter.Move_AndChangeLookAtOffset_Current(new Vector2(x, y));
+                } else {
+                    tcSetter.Move_Current(new Vector2(x, y));
+                }
             }
 
             if (Input.GetMouseButton(1)) {
                 var mouseDelta = (Vector2)Input.mousePosition - mousePos;
                 if (mouseDelta != Vector2.zero) {
-                    tcSetter.RotateHorizontalCurrent(mouseDelta.x);
-                    tcSetter.RotateVerticalCurrent(mouseDelta.y);
+                    tcSetter.Rotate_Horizontal_Current(mouseDelta.x);
+                    tcSetter.Rotate_Vertical_Current(mouseDelta.y);
                 }
             }
 
             mousePos = Input.mousePosition;
 
             if (Input.GetKeyUp(KeyCode.Space)) {
-                tcSetter.SetLookAtCurrent(target.transform, Vector3.zero);
+                tcSetter.LookAt_SetInit_Current(target.transform, Vector3.zero);
             }
 
             if (Input.GetKeyUp(KeyCode.F)) {
-                tcSetter.SetFollowCurrent(target.transform, new Vector3(0, 0, -10));
+                tcSetter.Follow_SetInit_Current(target.transform, new Vector3(0, 0, -10));
             }
 
             if (Input.GetKeyUp(KeyCode.R)) {
-                tcSetter.SetLookAtCurrent(target2.transform, Vector3.zero);
+                tcSetter.LookAt_SetInit_Current(target2.transform, Vector3.zero);
             }
 
             if (Input.GetKeyUp(KeyCode.Escape)) {

@@ -34,8 +34,8 @@ namespace TripodCamera {
 
         // ==== Basic ====
         // - Push
-        internal void PushIn(float value) {
-            currentInfo.PushIn(value);
+        internal void Push_In(float value) {
+            currentInfo.Push_In(value);
         }
 
         // - Move
@@ -43,41 +43,61 @@ namespace TripodCamera {
             currentInfo.Move(value);
         }
 
+        internal void Move_AndChangeLookAtOffset(Vector2 value) {
+            currentInfo.Move_AndChangeLookAtOffset(value);
+        }
+
         // - Rotate
-        internal void RotateHorizontal(float x) {
-            currentInfo.RotateHorizontal(x);
+        internal void Rotate_Horizontal(float x) {
+            currentInfo.Rotate_Horizontal(x);
         }
 
-        internal void RotateVertical(float y) {
-            currentInfo.RotateVertical(y);
+        internal void Rotate_Vertical(float y) {
+            currentInfo.Rotate_Vertical(y);
         }
 
-        internal void RotateRoll(float z) {
-            currentInfo.RotateRoll(z);
+        internal void Rotate_Roll(float z) {
+            currentInfo.Rotate_Roll(z);
         }
 
         // - Zoom
         internal void ZoomIn(float value, float min, float max) {
-            currentInfo.ZoomIn(value, min, max);
+            currentInfo.Zoom_In(value, min, max);
         }
 
         // ==== Advance ====
         // - Follow
-        internal void SetFollow(Transform target, Vector3 offset) {
-            currentInfo.SetFollow(target, offset);
+        internal void Follow_SetInit(Transform target, Vector3 offset) {
+            currentInfo.Follow_SetInit(target, offset);
         }
 
-        internal void ApplyFollow() {
-            currentInfo.ApplyFollow();
+        internal void Follow_ChangeTarget(Transform target) {
+            currentInfo.Follow_ChangeTarget(target);
+        }
+
+        internal void Follow_ChangeOffset(Vector3 offset) {
+            currentInfo.Follow_ChangeOffset(offset);
+        }
+
+        internal void Follow_Apply() {
+            currentInfo.Follow_Apply();
         }
 
         // - LookAt
-        internal void SetLookAt(Transform target, Vector3 offset) {
-            currentInfo.SetLookAt(target, offset);
+        internal void LookAt_SetInit(Transform target, Vector3 offset) {
+            currentInfo.LookAt_SetInit(target, offset);
+        }
+
+        internal void LookAt_ChangeTarget(Transform target) {
+            currentInfo.LookAt_ChangeTarget(target);
+        }
+
+        internal void LookAt_ChangeOffset(Vector3 offset) {
+            currentInfo.LookAt_ChangeOffset(offset);
         }
 
         internal void ApplyLookAt() {
-            currentInfo.ApplyLookAt();
+            currentInfo.LookAt_Apply();
         }
         
     }
