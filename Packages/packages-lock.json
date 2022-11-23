@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.frame.jackeasing": {
+      "version": "ssh://git@github.com/chenwansal/JackEasing.git?path=/Assets/com.frame.jackeasing#1.0.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "9a0e8b42dc0d13a5524de1b74d8477b29e925b47"
+    },
     "com.unity.collab-proxy": {
       "version": "1.17.6",
       "depth": 0,
