@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace TripodCamera.Sample {
@@ -8,15 +9,143 @@ namespace TripodCamera.Sample {
 
         Vector2 mousePos;
 
-        GameObject target;
-        GameObject target2;
+        GameObject followTarget;
+        GameObject loolAtTarget;
+
+        List<GameObject> targets;
+        PrimitiveType[] randomPrimitiveTypes = new PrimitiveType[] {
+            PrimitiveType.Cube,
+            PrimitiveType.Cylinder,
+            PrimitiveType.Sphere,
+            PrimitiveType.Capsule,
+        };
 
         void Awake() {
+            
             tcCore = new TCCore();
             tcCore.Initialize(Camera.main);
 
-            target = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            target2 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            this.targets = new List<GameObject>();
+
+        }
+
+        float sensitivity = 0.05f;
+        void OnGUI() {
+            
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("灵敏度: ");
+            sensitivity = GUILayout.HorizontalSlider(sensitivity, 0, 1, GUILayout.Width(100));
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.RepeatButton("推")) {
+                tcCore.SetterAPI.Push_In_Current(sensitivity);
+            }
+            if (GUILayout.RepeatButton("拉")) {
+                tcCore.SetterAPI.Push_In_Current(-sensitivity);
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.RepeatButton("左看")) {
+                tcCore.SetterAPI.Rotate_Horizontal_Current(-sensitivity);
+            }
+            if (GUILayout.RepeatButton("右看")) {
+                tcCore.SetterAPI.Rotate_Horizontal_Current(sensitivity);
+            }   
+            if (GUILayout.RepeatButton("上看")) {
+                tcCore.SetterAPI.Rotate_Vertical_Current(sensitivity);
+            }
+            if (GUILayout.RepeatButton("下看")) {
+                tcCore.SetterAPI.Rotate_Vertical_Current(-sensitivity);
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.RepeatButton("左转")) {
+                tcCore.SetterAPI.Rotate_Roll_Current(-sensitivity);
+            }
+            if (GUILayout.RepeatButton("右转")) {
+                tcCore.SetterAPI.Rotate_Roll_Current(sensitivity);
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.RepeatButton("左移")) {
+                tcCore.SetterAPI.Move_Current(new Vector2(-sensitivity, 0));
+            }
+            if (GUILayout.RepeatButton("右移")) {
+                tcCore.SetterAPI.Move_Current(new Vector2(sensitivity, 0));
+            }
+            if (GUILayout.RepeatButton("上移")) {
+                tcCore.SetterAPI.Move_Current(new Vector2(0, sensitivity));
+            }
+            if (GUILayout.RepeatButton("下移")) {
+                tcCore.SetterAPI.Move_Current(new Vector2(0, -sensitivity));
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.RepeatButton("放大")) {
+                tcCore.SetterAPI.Zoom_In_Current(sensitivity);
+            }
+            if (GUILayout.RepeatButton("缩小")) {
+                tcCore.SetterAPI.Zoom_In_Current(-sensitivity);
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("生成随机物体")) {
+                var go = GameObject.CreatePrimitive(randomPrimitiveTypes[Random.Range(0, randomPrimitiveTypes.Length)]);
+                go.transform.position = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
+                targets.Add(go);
+            }
+            if (GUILayout.Button("清空随机物体")) {
+                foreach (var go in targets) {
+                    Destroy(go);
+                }
+                targets.Clear();
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("跟随下一个")) {
+                if (followTarget == null) {
+                    followTarget = targets[0];
+                } else {
+                    var index = targets.IndexOf(followTarget);
+                    if (index == targets.Count - 1) {
+                        followTarget = targets[0];
+                    } else {
+                        followTarget = targets[index + 1];
+                    }
+                }
+                tcCore.SetterAPI.Follow_SetInit_Current(followTarget.transform, new Vector3(0, 0, -10));
+            }
+            if (GUILayout.Button("盯着下一个")) {
+                if (loolAtTarget == null) {
+                    loolAtTarget = targets[0];
+                } else {
+                    var index = targets.IndexOf(loolAtTarget);
+                    if (index == targets.Count - 1) {
+                        loolAtTarget = targets[0];
+                    } else {
+                        loolAtTarget = targets[index + 1];
+                    }
+                }
+                tcCore.SetterAPI.LookAt_SetInit_Current(loolAtTarget.transform, Vector3.zero);
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("取消跟随")) {
+                tcCore.SetterAPI.Follow_ChangeTarget_Current(null);
+            }
+            if (GUILayout.Button("取消盯着")) {
+                tcCore.SetterAPI.LookAt_ChangeTarget_Current(null);
+            }
+            GUILayout.EndHorizontal();
+
         }
 
         void Update() {
@@ -57,15 +186,15 @@ namespace TripodCamera.Sample {
             mousePos = Input.mousePosition;
 
             if (Input.GetKeyUp(KeyCode.Space)) {
-                tcSetter.LookAt_SetInit_Current(target.transform, Vector3.zero);
+                tcSetter.LookAt_SetInit_Current(followTarget.transform, Vector3.zero);
             }
 
             if (Input.GetKeyUp(KeyCode.F)) {
-                tcSetter.Follow_SetInit_Current(target.transform, new Vector3(0, 0, -10));
+                tcSetter.Follow_SetInit_Current(followTarget.transform, new Vector3(0, 0, -10));
             }
 
             if (Input.GetKeyUp(KeyCode.R)) {
-                tcSetter.LookAt_SetInit_Current(target2.transform, Vector3.zero);
+                tcSetter.LookAt_SetInit_Current(loolAtTarget.transform, Vector3.zero);
             }
 
             if (Input.GetKeyUp(KeyCode.Escape)) {

@@ -133,9 +133,6 @@ namespace TripodCamera {
             var euler = rot.eulerAngles;
             euler.z += z;
             rot = Quaternion.Euler(euler);
-            if (lookAtTF != null) {
-                lookAtOffset.z += z;
-            }
         }
 
         internal void Zoom_In(float value, float min, float max) {
@@ -186,7 +183,9 @@ namespace TripodCamera {
             if (lookAtTF != null) {
                 var lookAtPos = lookAtTF.position + lookAtOffset;
                 var fwd = lookAtPos - pos;
+                var z = rot.eulerAngles.z;
                 rot = Quaternion.LookRotation(fwd);
+                rot.eulerAngles = new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, z);
             }
         }
 
