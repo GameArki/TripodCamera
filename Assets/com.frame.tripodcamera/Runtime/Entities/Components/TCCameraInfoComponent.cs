@@ -46,7 +46,7 @@ namespace TripodCamera {
         }
 
         // ==== Basic ====
-        internal void Push_In(float value) {
+        public void Push_In(float value) {
 
             Vector3 fwd;
             if (lookAtTF == null) {
@@ -64,17 +64,15 @@ namespace TripodCamera {
 
         }
 
-        internal void Move(Vector2 value) {
+        public void Move(Vector2 value) {
 
+            Vector3 up = rot * Vector3.up;
+            Vector3 right = rot * Vector3.right;
+            up.Normalize();
+            right.Normalize();
+            up = up * value.y;
+            right = right * value.x;
             if (lookAtTF == null) {
-                Vector3 up;
-                Vector3 right;
-                up = rot * Vector3.up;
-                right = rot * Vector3.right;
-                up.Normalize();
-                right.Normalize();
-                up = up * value.y;
-                right = right * value.x;
                 pos += right + up;
             } else {
 
@@ -94,9 +92,13 @@ namespace TripodCamera {
 
             }
 
+            if (followTF != null) {
+                followOffset += right + up;
+            }
+
         }
 
-        internal void Move_AndChangeLookAtOffset(Vector2 value) {
+        public void Move_AndChangeLookAtOffset(Vector2 value) {
             Vector3 up;
             Vector3 right;
             up = rot * Vector3.up;
@@ -111,7 +113,7 @@ namespace TripodCamera {
             }
         }
 
-        internal void Rotate_Horizontal(float x) {
+        public void Rotate_Horizontal(float x) {
             var euler = rot.eulerAngles;
             euler.y += x;
             rot = Quaternion.Euler(euler);
@@ -120,7 +122,7 @@ namespace TripodCamera {
             }
         }
 
-        internal void Rotate_Vertical(float y) {
+        public void Rotate_Vertical(float y) {
             var euler = rot.eulerAngles;
             euler.x -= y;
             rot = Quaternion.Euler(euler);
@@ -129,13 +131,13 @@ namespace TripodCamera {
             }
         }
 
-        internal void Rotate_Roll(float z) {
+        public void Rotate_Roll(float z) {
             var euler = rot.eulerAngles;
             euler.z += z;
             rot = Quaternion.Euler(euler);
         }
 
-        internal void Zoom_In(float value, float min, float max) {
+        public void Zoom_In(float value, float min, float max) {
             fov -= value;
             if (fov < min) {
                 fov = min;
@@ -146,40 +148,40 @@ namespace TripodCamera {
 
         // ==== Advanced ====
         // - Follow
-        internal void Follow_SetInit(Transform tf, Vector3 offset) {
+        public void Follow_SetInit(Transform tf, Vector3 offset) {
             this.followTF = tf;
             this.followOffset = offset;
         }
 
-        internal void Follow_ChangeTarget(Transform tf) {
+        public void Follow_ChangeTarget(Transform tf) {
             this.followTF = tf;
         }
 
-        internal void Follow_ChangeOffset(Vector3 offset) {
+        public void Follow_ChangeOffset(Vector3 offset) {
             this.followOffset = offset;
         }
 
-        internal void Follow_Apply() {
+        public void Follow_Apply() {
             if (followTF != null) {
                 pos = followTF.position + followOffset;
             }
         }
 
         // - LookAt
-        internal void LookAt_SetInit(Transform target, Vector3 offset) {
+        public void LookAt_SetInit(Transform target, Vector3 offset) {
             this.lookAtTF = target;
             this.lookAtOffset = offset;
         }
 
-        internal void LookAt_ChangeTarget(Transform target) {
+        public void LookAt_ChangeTarget(Transform target) {
             this.lookAtTF = target;
         }
 
-        internal void LookAt_ChangeOffset(Vector3 offset) {
+        public void LookAt_ChangeOffset(Vector3 offset) {
             this.lookAtOffset = offset;
         }
 
-        internal void LookAt_Apply() {
+        public void LookAt_Apply() {
             if (lookAtTF != null) {
                 var lookAtPos = lookAtTF.position + lookAtOffset;
                 var fwd = lookAtPos - pos;

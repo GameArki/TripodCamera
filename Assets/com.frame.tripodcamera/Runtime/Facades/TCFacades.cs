@@ -2,23 +2,23 @@ using UnityEngine;
 
 namespace TripodCamera.Facades {
 
-    public class TCFacades {
+    internal class TCFacades {
 
         TCConfig config;
-        public TCConfig Config => config;
+        internal TCConfig Config => config;
 
         Camera camera;
-        public Camera MainCamera => camera;
+        internal Camera MainCamera => camera;
 
         TCCameraRepo cameraRepo;
-        public TCCameraRepo CameraRepo => cameraRepo;
+        internal TCCameraRepo CameraRepo => cameraRepo;
 
-        public TCFacades() {
+        internal TCFacades() {
             this.config = new TCConfig();
             this.cameraRepo = new TCCameraRepo();
         }
 
-        public void Inject(Camera camera) {
+        internal void Inject(Camera camera) {
             this.camera = camera;
         }
 

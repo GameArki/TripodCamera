@@ -3,29 +3,29 @@ using TripodCamera.Facades;
 
 namespace TripodCamera.Domain {
 
-    public class TCApplyDomain {
+    internal class TCApplyDomain {
 
         TCFacades facades;
 
-        public TCApplyDomain() {}
+        internal TCApplyDomain() {}
 
-        public void Inject(TCFacades facades) {
+        internal void Inject(TCFacades facades) {
             this.facades = facades;
         }
 
-        public void ApplyFollow() {
+        internal void ApplyFollow() {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
             tcCam.Follow_Apply();
         }
 
-        public void ApplyLookAt() {
+        internal void ApplyLookAt() {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
             tcCam.ApplyLookAt();
         }
 
-        public void ApplyToMain(TCCameraEntity tcCam, Camera mainCam) {
+        internal void ApplyToMain(TCCameraEntity tcCam, Camera mainCam) {
             var info = tcCam.CurrentInfo;
             mainCam.transform.position = info.Pos;
             mainCam.transform.rotation = info.Rot;
