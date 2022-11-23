@@ -16,12 +16,9 @@ namespace TripodCamera.Controller {
         }
 
         public void Tick(float dt) {
-            NormalState();
         }
 
         void NormalState() {
-            var cameraDomain = domain.CameraDomain;
-            cameraDomain.ApplyFollowCurrent();
         }
 
     }

@@ -26,6 +26,9 @@ namespace TripodCamera {
         Transform lookAtTF;
         public Transform LookAtTF => lookAtTF;
 
+        Vector3 lookAtOffset;
+        public Vector3 LookAtOffset => lookAtOffset;
+
         public void Init(Vector3 pos, Quaternion rot, float fov) {
             this.pos = pos;
             this.rot = rot;
@@ -97,6 +100,7 @@ namespace TripodCamera {
         }
 
         // ==== Advanced ====
+        // - Follow
         internal void SetFollow(Transform tf, Vector3 offset) {
             this.followTF = tf;
             this.followOffset = offset;
@@ -105,6 +109,20 @@ namespace TripodCamera {
         internal void ApplyFollow() {
             if (followTF != null) {
                 pos = followTF.position + followOffset;
+            }
+        }
+
+        // - LookAt
+        internal void SetLookAt(Transform target, Vector3 offset) {
+            this.lookAtTF = target;
+            this.lookAtOffset = offset;
+        }
+
+        internal void ApplyLookAt() {
+            if (lookAtTF != null) {
+                var lookAtPos = lookAtTF.position + lookAtOffset;
+                var fwd = lookAtPos - pos;
+                rot = Quaternion.LookRotation(fwd);
             }
         }
 

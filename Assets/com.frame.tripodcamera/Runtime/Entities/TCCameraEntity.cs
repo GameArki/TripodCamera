@@ -62,6 +62,7 @@ namespace TripodCamera {
         }
 
         // ==== Advance ====
+        // - Follow
         internal void SetFollow(Transform target, Vector3 offset) {
             currentInfo.SetFollow(target, offset);
         }
@@ -69,6 +70,16 @@ namespace TripodCamera {
         internal void ApplyFollow() {
             currentInfo.ApplyFollow();
         }
+
+        // - LookAt
+        internal void SetLookAt(Transform target, Vector3 offset) {
+            currentInfo.SetLookAt(target, offset);
+        }
+
+        internal void ApplyLookAt() {
+            currentInfo.ApplyLookAt();
+        }
+        
     }
 
 }

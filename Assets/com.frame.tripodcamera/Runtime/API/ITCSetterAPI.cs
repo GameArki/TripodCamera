@@ -14,6 +14,7 @@ namespace TripodCamera.API {
 
         // ==== Advanced ====
         void SetFollowCurrent(Transform target, Vector3 offset);
+        void SetLookAtCurrent(Transform target, Vector3 offset);
 
     }
 

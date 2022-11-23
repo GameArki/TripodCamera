@@ -62,16 +62,18 @@ namespace TripodCamera.Domain {
         }
 
         // ==== Advance ====
+        // - Follow
         public void SetFollowCurrent(Transform target, Vector3 offset) {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
             tcCam.SetFollow(target, offset);
         }
 
-        public void ApplyFollowCurrent() {
+        // - LookAt
+        public void SetLookAtCurrent(Transform target, Vector3 offset) {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
-            tcCam.ApplyFollow();
+            tcCam.SetLookAt(target, offset);
         }
 
     }

@@ -48,9 +48,16 @@ namespace TripodCamera.API {
         }
 
         // ==== Advanced ====
+        // - Follow
         void ITCSetterAPI.SetFollowCurrent(Transform target, Vector3 offset) {
             var cameraDomain = domain.CameraDomain;
             cameraDomain.SetFollowCurrent(target, offset);
+        }
+
+        // - LookAt
+        void ITCSetterAPI.SetLookAtCurrent(Transform target, Vector3 offset) {
+            var cameraDomain = domain.CameraDomain;
+            cameraDomain.SetLookAtCurrent(target, offset);
         }
 
     }
