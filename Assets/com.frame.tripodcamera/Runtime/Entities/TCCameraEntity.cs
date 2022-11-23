@@ -61,6 +61,25 @@ namespace TripodCamera {
             currentInfo.ZoomIn(value, min, max);
         }
 
+        // ==== Advance ====
+        // - Follow
+        internal void SetFollow(Transform target, Vector3 offset) {
+            currentInfo.SetFollow(target, offset);
+        }
+
+        internal void ApplyFollow() {
+            currentInfo.ApplyFollow();
+        }
+
+        // - LookAt
+        internal void SetLookAt(Transform target, Vector3 offset) {
+            currentInfo.SetLookAt(target, offset);
+        }
+
+        internal void ApplyLookAt() {
+            currentInfo.ApplyLookAt();
+        }
+        
     }
 
 }

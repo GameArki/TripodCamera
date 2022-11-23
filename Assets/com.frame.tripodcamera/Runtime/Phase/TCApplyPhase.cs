@@ -16,17 +16,13 @@ namespace TripodCamera.Controller {
             this.domain = domain;
         }
 
-        public void Tick() {
+        public void Tick(float dt) {
             var mainCam = facades.MainCamera;
             var tcCam = facades.CameraRepo.ActiveCam;
-            ApplyCamera(tcCam, mainCam);
-        }
-
-        void ApplyCamera(TCCameraEntity tcCam, Camera mainCam) {
-            var info = tcCam.CurrentInfo;
-            mainCam.transform.position = info.Pos;
-            mainCam.transform.rotation = info.Rot;
-            mainCam.fieldOfView = info.FOV;
+            var applyDomain = domain.ApplyDomain;
+            applyDomain.ApplyFollow();
+            applyDomain.ApplyLookAt();
+            applyDomain.ApplyToMain(tcCam, mainCam);
         }
 
     }

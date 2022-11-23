@@ -14,11 +14,20 @@ namespace TripodCamera {
         float fov;
         public float FOV => fov;
 
+        // ==== Advance ====
+        // - Follow
         Transform followTF;
         public Transform FollowTF => followTF;
 
+        Vector3 followOffset;
+        public Vector3 FollowOffset => followOffset;
+
+        // - LookAt
         Transform lookAtTF;
         public Transform LookAtTF => lookAtTF;
+
+        Vector3 lookAtOffset;
+        public Vector3 LookAtOffset => lookAtOffset;
 
         public void Init(Vector3 pos, Quaternion rot, float fov) {
             this.pos = pos;
@@ -32,8 +41,11 @@ namespace TripodCamera {
             this.fov = other.fov;
             this.followTF = other.followTF;
             this.lookAtTF = other.lookAtTF;
+            this.followOffset = other.followOffset;
+            this.lookAtOffset = other.lookAtOffset;
         }
 
+        // ==== Basic ====
         internal void PushIn(float value) {
             Vector3 fwd;
             if (lookAtTF == null) {
@@ -43,6 +55,9 @@ namespace TripodCamera {
             }
             fwd.Normalize();
             pos += fwd * value;
+            if (followTF != null) {
+                followOffset += fwd * value;
+            }
         }
 
         internal void Move(Vector2 value) {
@@ -86,6 +101,33 @@ namespace TripodCamera {
                 fov = min;
             } else if (fov > max) {
                 fov = max;
+            }
+        }
+
+        // ==== Advanced ====
+        // - Follow
+        internal void SetFollow(Transform tf, Vector3 offset) {
+            this.followTF = tf;
+            this.followOffset = offset;
+        }
+
+        internal void ApplyFollow() {
+            if (followTF != null) {
+                pos = followTF.position + followOffset;
+            }
+        }
+
+        // - LookAt
+        internal void SetLookAt(Transform target, Vector3 offset) {
+            this.lookAtTF = target;
+            this.lookAtOffset = offset;
+        }
+
+        internal void ApplyLookAt() {
+            if (lookAtTF != null) {
+                var lookAtPos = lookAtTF.position + lookAtOffset;
+                var fwd = lookAtPos - pos;
+                rot = Quaternion.LookRotation(fwd);
             }
         }
 

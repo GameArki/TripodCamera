@@ -23,31 +23,32 @@ namespace TripodCamera.Domain {
 
         }
 
+        // ==== Basic ====
         public void PushInCurrent(float value) {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
             tcCam.PushIn(value);
         }
 
-        public void Move(Vector2 value) {
+        public void MoveCurrent(Vector2 value) {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
             tcCam.Move(value);
         }
 
-        public void RotateHorizontal(float x) {
+        public void RotateHorizontalCurrent(float x) {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
             tcCam.RotateHorizontal(x);
         }
 
-        public void RotateVertical(float y) {
+        public void RotateVerticalCurrent(float y) {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
             tcCam.RotateVertical(y);
         }
 
-        public void RotateRoll(float z) {
+        public void RotateRollCurrent(float z) {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
             tcCam.RotateRoll(z);
@@ -58,6 +59,21 @@ namespace TripodCamera.Domain {
             var config = facades.Config;
             var tcCam = repo.ActiveCam;
             tcCam.ZoomIn(value, config.FOVMin, config.FOVMax);
+        }
+
+        // ==== Advance ====
+        // - Follow
+        public void SetFollowCurrent(Transform target, Vector3 offset) {
+            var repo = facades.CameraRepo;
+            var tcCam = repo.ActiveCam;
+            tcCam.SetFollow(target, offset);
+        }
+
+        // - LookAt
+        public void SetLookAtCurrent(Transform target, Vector3 offset) {
+            var repo = facades.CameraRepo;
+            var tcCam = repo.ActiveCam;
+            tcCam.SetLookAt(target, offset);
         }
 
     }
