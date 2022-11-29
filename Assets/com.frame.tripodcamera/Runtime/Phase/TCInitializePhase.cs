@@ -3,19 +3,19 @@ using TripodCamera.Domain;
 
 namespace TripodCamera {
 
-    public class TCInitializePhase {
+    internal class TCInitializePhase {
 
         TCFacades facades;
         TCDomain domain;
 
-        public TCInitializePhase() {}
+        internal TCInitializePhase() {}
 
-        public void Inject(TCFacades facades, TCDomain domain) {
+        internal void Inject(TCFacades facades, TCDomain domain) {
             this.facades = facades;
             this.domain = domain;
         }
 
-        public void Init() {
+        internal void Init() {
 
             // ==== Config ====
             var config = facades.Config;

@@ -3,20 +3,20 @@ using TripodCamera.Facades;
 
 namespace TripodCamera.Domain {
 
-    public class TCDomain {
+    internal class TCDomain {
 
         TCCameraDomain cameraDomain;
-        public TCCameraDomain CameraDomain => cameraDomain;
+        internal TCCameraDomain CameraDomain => cameraDomain;
 
         TCApplyDomain applyDomain;
-        public TCApplyDomain ApplyDomain => applyDomain;
+        internal TCApplyDomain ApplyDomain => applyDomain;
 
-        public TCDomain() {
+        internal TCDomain() {
             this.cameraDomain = new TCCameraDomain();
             this.applyDomain = new TCApplyDomain();
         }
 
-        public void Inject(TCFacades facades) {
+        internal void Inject(TCFacades facades) {
             cameraDomain.Inject(facades);
             applyDomain.Inject(facades);
         }

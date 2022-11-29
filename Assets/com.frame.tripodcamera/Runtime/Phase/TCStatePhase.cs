@@ -3,19 +3,19 @@ using TripodCamera.Facades;
 
 namespace TripodCamera.Controller {
 
-    public class TCStatePhase {
+    internal class TCStatePhase {
 
         TCFacades facades;
         TCDomain domain;
 
-        public TCStatePhase() { }
+        internal TCStatePhase() { }
 
-        public void Inject(TCFacades facades, TCDomain domain) {
+        internal void Inject(TCFacades facades, TCDomain domain) {
             this.facades = facades;
             this.domain = domain;
         }
 
-        public void Tick(float dt) {
+        internal void Tick(float dt) {
         }
 
         void NormalState() {

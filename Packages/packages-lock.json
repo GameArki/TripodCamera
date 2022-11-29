@@ -1,5 +1,19 @@
 {
   "dependencies": {
+    "com.frame.fpmath": {
+      "version": "ssh://git@github.com/chenwansal/FPMath.git?path=/Assets/com.frame.fpmath#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "f69eae962f247ad403d0f205b24f17de4f751efb"
+    },
+    "com.frame.jackeasing": {
+      "version": "ssh://git@github.com/chenwansal/JackEasing.git?path=/Assets/com.frame.jackeasing#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "aa3c3054291b0a68cb43e2ac0a1428ed66c01d2c"
+    },
     "com.unity.collab-proxy": {
       "version": "1.17.6",
       "depth": 0,

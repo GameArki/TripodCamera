@@ -4,24 +4,24 @@ using TripodCamera.Domain;
 
 namespace TripodCamera.Controller {
 
-    public class TCapplyPhase {
+    internal class TCapplyPhase {
 
         TCFacades facades;
         TCDomain domain;
 
-        public TCapplyPhase() {}
+        internal TCapplyPhase() {}
 
-        public void Inject(TCFacades facades, TCDomain domain) {
+        internal void Inject(TCFacades facades, TCDomain domain) {
             this.facades = facades;
             this.domain = domain;
         }
 
-        public void Tick(float dt) {
+        internal void Tick(float dt) {
             var mainCam = facades.MainCamera;
             var tcCam = facades.CameraRepo.ActiveCam;
             var applyDomain = domain.ApplyDomain;
-            applyDomain.ApplyFollow();
-            applyDomain.ApplyLookAt();
+            applyDomain.ApplyFollow(tcCam, dt);
+            applyDomain.ApplyEffect(tcCam, dt);
             applyDomain.ApplyToMain(tcCam, mainCam);
         }
 

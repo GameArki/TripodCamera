@@ -1,4 +1,5 @@
 using UnityEngine;
+using JackEasing;
 using TripodCamera.Facades;
 using TripodCamera.Domain;
 
@@ -17,47 +18,72 @@ namespace TripodCamera.API {
         }
 
         // ==== Basic ====
-        void ITCSetterAPI.PushInCurrent(float value) {
+        void ITCSetterAPI.Push_In_Current(float value) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.PushInCurrent(value);
+            cameraDomain.Push_In_Current(value);
         }
 
-        void ITCSetterAPI.MoveCurrent(Vector2 value) {
+        void ITCSetterAPI.Move_Current(Vector2 value) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.MoveCurrent(value);
+            cameraDomain.Move_Current(value);
         }
 
-        void ITCSetterAPI.RotateHorizontalCurrent(float x) {
+        void ITCSetterAPI.Move_AndChangeLookAtOffset_Current(Vector2 value) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.RotateHorizontalCurrent(x);
+            cameraDomain.Move_AndChangeLookAtOffset_Current(value);
         }
 
-        void ITCSetterAPI.RotateVerticalCurrent(float y) {
+        void ITCSetterAPI.Rotate_Horizontal_Current(float x) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.RotateVerticalCurrent(y);
+            cameraDomain.Rotate_Horizontal_Current(x);
         }
 
-        void ITCSetterAPI.RotateRollCurrent(float z) {
+        void ITCSetterAPI.Rotate_Vertical_Current(float y) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.RotateRollCurrent(z);
+            cameraDomain.Rotate_Vertical_Current(y);
         }
 
-        void ITCSetterAPI.ZoomInCurrent(float value) {
+        void ITCSetterAPI.Rotate_Roll_Current(float z) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.ZoomInCurrent(value);
+            cameraDomain.Rotate_Roll_Current(z);
+        }
+
+        void ITCSetterAPI.Zoom_In_Current(float value) {
+            var cameraDomain = domain.CameraDomain;
+            cameraDomain.Zoom_In_Current(value);
         }
 
         // ==== Advanced ====
         // - Follow
-        void ITCSetterAPI.SetFollowCurrent(Transform target, Vector3 offset) {
+        void ITCSetterAPI.Follow_SetInit_Current(Transform target, Vector3 offset, EasingType easingType, float easingTime) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.SetFollowCurrent(target, offset);
+            cameraDomain.Follow_SetInit_Current(target, offset, easingType, easingTime);
+        }
+
+        void ITCSetterAPI.Follow_ChangeTarget_Current(Transform target) {
+            var cameraDomain = domain.CameraDomain;
+            cameraDomain.Follow_ChangeTarget_Current(target);
+        }
+
+        void ITCSetterAPI.Follow_ChangeOffset_Current(Vector3 offset) {
+            var cameraDomain = domain.CameraDomain;
+            cameraDomain.Follow_ChangeOffset_Current(offset);
         }
 
         // - LookAt
-        void ITCSetterAPI.SetLookAtCurrent(Transform target, Vector3 offset) {
+        void ITCSetterAPI.LookAt_SetInit_Current(Transform target, Vector3 offset) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.SetLookAtCurrent(target, offset);
+            cameraDomain.LookAt_SetInit_Current(target, offset);
+        }
+
+        void ITCSetterAPI.LookAt_ChangeTarget_Current(Transform target) {
+            var cameraDomain = domain.CameraDomain;
+            cameraDomain.LookAt_ChangeTarget_Current(target);
+        }
+
+        void ITCSetterAPI.LookAt_ChangeOffset_Current(Vector3 offset) {
+            var cameraDomain = domain.CameraDomain;
+            cameraDomain.LookAt_ChangeOffset_Current(offset);
         }
 
     }
