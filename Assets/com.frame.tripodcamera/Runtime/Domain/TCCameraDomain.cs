@@ -1,4 +1,5 @@
 using UnityEngine;
+using JackEasing;
 using TripodCamera.Facades;
 
 namespace TripodCamera.Domain {
@@ -69,10 +70,10 @@ namespace TripodCamera.Domain {
 
         // ==== Advance ====
         // - Follow
-        internal void Follow_SetInit_Current(Transform target, Vector3 offset) {
+        internal void Follow_SetInit_Current(Transform target, Vector3 offset, EasingType easingType, float easingTime) {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
-            tcCam.Follow_SetInit(target, offset);
+            tcCam.Follow_SetInit(target, offset, easingType, easingTime);
         }
 
         internal void Follow_ChangeTarget_Current(Transform target) {

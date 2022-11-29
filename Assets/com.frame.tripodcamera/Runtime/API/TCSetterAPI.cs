@@ -1,4 +1,5 @@
 using UnityEngine;
+using JackEasing;
 using TripodCamera.Facades;
 using TripodCamera.Domain;
 
@@ -54,9 +55,9 @@ namespace TripodCamera.API {
 
         // ==== Advanced ====
         // - Follow
-        void ITCSetterAPI.Follow_SetInit_Current(Transform target, Vector3 offset) {
+        void ITCSetterAPI.Follow_SetInit_Current(Transform target, Vector3 offset, EasingType easingType, float easingTime) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.Follow_SetInit_Current(target, offset);
+            cameraDomain.Follow_SetInit_Current(target, offset, easingType, easingTime);
         }
 
         void ITCSetterAPI.Follow_ChangeTarget_Current(Transform target) {

@@ -7,27 +7,15 @@ namespace TripodCamera {
 
         Vector3 pos;
         public Vector3 Pos => pos;
+        public void SetPos(Vector3 value) => pos = value;
 
         Quaternion rot;
         public Quaternion Rot => rot;
+        public void SetRot(Quaternion value) => rot = value;
 
         float fov;
         public float FOV => fov;
-
-        // ==== Advance ====
-        // - Follow
-        Transform followTF;
-        public Transform FollowTF => followTF;
-
-        Vector3 followOffset;
-        public Vector3 FollowOffset => followOffset;
-
-        // - LookAt
-        Transform lookAtTF;
-        public Transform LookAtTF => lookAtTF;
-
-        Vector3 lookAtOffset;
-        public Vector3 LookAtOffset => lookAtOffset;
+        public void SetFOV(float value) => fov = value;
 
         public void Init(Vector3 pos, Quaternion rot, float fov) {
             this.pos = pos;
@@ -39,96 +27,19 @@ namespace TripodCamera {
             this.pos = other.pos;
             this.rot = other.rot;
             this.fov = other.fov;
-            this.followTF = other.followTF;
-            this.lookAtTF = other.lookAtTF;
-            this.followOffset = other.followOffset;
-            this.lookAtOffset = other.lookAtOffset;
         }
 
         // ==== Basic ====
-        public void Push_In(float value) {
-
-            Vector3 fwd;
-            if (lookAtTF == null) {
-                fwd = rot * Vector3.forward;
-            } else {
-                fwd = lookAtTF.position - pos;
-            }
-            fwd.Normalize();
-
-            if (followTF != null) {
-                followOffset += fwd * value;
-            } else {
-                pos += fwd * value;
-            }
-
-        }
-
-        public void Move(Vector2 value) {
-
-            Vector3 up = rot * Vector3.up;
-            Vector3 right = rot * Vector3.right;
-            up.Normalize();
-            right.Normalize();
-            up = up * value.y;
-            right = right * value.x;
-            if (lookAtTF == null) {
-                pos += right + up;
-            } else {
-
-                Vector3 dir = pos - lookAtTF.position;
-                float length = dir.magnitude;
-                dir.Normalize();
-
-                // Rotate Dir
-                float angleX = -value.x;
-                float angleY = value.y;
-                Quaternion rotX = Quaternion.AngleAxis(angleX, Vector3.up);
-                Quaternion rotY = Quaternion.AngleAxis(angleY, Vector3.right);
-                dir = rotX * rotY * dir;
-
-                // Move
-                pos = lookAtTF.position + dir * length;
-
-            }
-
-            if (followTF != null) {
-                followOffset += right + up;
-            }
-
-        }
-
-        public void Move_AndChangeLookAtOffset(Vector2 value) {
-            Vector3 up;
-            Vector3 right;
-            up = rot * Vector3.up;
-            right = rot * Vector3.right;
-            up.Normalize();
-            right.Normalize();
-            right = right * value.x;
-            up = up * value.y;
-            pos += right + up;
-            if (lookAtTF != null) {
-                lookAtOffset += right + up;
-            }
-        }
-
         public void Rotate_Horizontal(float x) {
             var euler = rot.eulerAngles;
             euler.y += x;
             rot = Quaternion.Euler(euler);
-            if (lookAtTF != null) {
-                lookAtOffset.x -= x;
-            }
         }
 
         public void Rotate_Vertical(float y) {
             var euler = rot.eulerAngles;
             euler.x -= y;
             rot = Quaternion.Euler(euler);
-            if (lookAtTF != null) {
-                lookAtOffset.y += y;
-            }
         }
 
         public void Rotate_Roll(float z) {
@@ -143,51 +54,6 @@ namespace TripodCamera {
                 fov = min;
             } else if (fov > max) {
                 fov = max;
-            }
-        }
-
-        // ==== Advanced ====
-        // - Follow
-        public void Follow_SetInit(Transform tf, Vector3 offset) {
-            this.followTF = tf;
-            this.followOffset = offset;
-        }
-
-        public void Follow_ChangeTarget(Transform tf) {
-            this.followTF = tf;
-        }
-
-        public void Follow_ChangeOffset(Vector3 offset) {
-            this.followOffset = offset;
-        }
-
-        public void Follow_Apply() {
-            if (followTF != null) {
-                pos = followTF.position + followOffset;
-            }
-        }
-
-        // - LookAt
-        public void LookAt_SetInit(Transform target, Vector3 offset) {
-            this.lookAtTF = target;
-            this.lookAtOffset = offset;
-        }
-
-        public void LookAt_ChangeTarget(Transform target) {
-            this.lookAtTF = target;
-        }
-
-        public void LookAt_ChangeOffset(Vector3 offset) {
-            this.lookAtOffset = offset;
-        }
-
-        public void LookAt_Apply() {
-            if (lookAtTF != null) {
-                var lookAtPos = lookAtTF.position + lookAtOffset;
-                var fwd = lookAtPos - pos;
-                var z = rot.eulerAngles.z;
-                rot = Quaternion.LookRotation(fwd);
-                rot.eulerAngles = new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, z);
             }
         }
 

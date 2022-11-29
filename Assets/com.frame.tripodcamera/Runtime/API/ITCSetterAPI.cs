@@ -1,4 +1,5 @@
 using UnityEngine;
+using JackEasing;
 
 namespace TripodCamera.API {
 
@@ -17,7 +18,7 @@ namespace TripodCamera.API {
         void Zoom_In_Current(float value);
 
         // ==== Advanced ====
-        void Follow_SetInit_Current(Transform target, Vector3 offset);
+        void Follow_SetInit_Current(Transform target, Vector3 offset, EasingType easingType, float easingTime);
         void Follow_ChangeTarget_Current(Transform target);
         void Follow_ChangeOffset_Current(Vector3 offset);
 

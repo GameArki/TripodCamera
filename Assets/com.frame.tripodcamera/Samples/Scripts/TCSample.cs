@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using JackEasing;
 
 namespace TripodCamera.Sample {
 
@@ -120,7 +121,7 @@ namespace TripodCamera.Sample {
                         followTarget = targets[index + 1];
                     }
                 }
-                tcCore.SetterAPI.Follow_SetInit_Current(followTarget.transform, new Vector3(0, 0, -10));
+                tcCore.SetterAPI.Follow_SetInit_Current(followTarget.transform, new Vector3(0, 0, -10), EasingType.OutExpo, 2f);
             }
             if (GUILayout.Button("盯着下一个")) {
                 if (loolAtTarget == null) {
@@ -184,26 +185,6 @@ namespace TripodCamera.Sample {
             }
 
             mousePos = Input.mousePosition;
-
-            if (Input.GetKeyUp(KeyCode.Space)) {
-                tcSetter.LookAt_SetInit_Current(followTarget.transform, Vector3.zero);
-            }
-
-            if (Input.GetKeyUp(KeyCode.F)) {
-                tcSetter.Follow_SetInit_Current(followTarget.transform, new Vector3(0, 0, -10));
-            }
-
-            if (Input.GetKeyUp(KeyCode.R)) {
-                tcSetter.LookAt_SetInit_Current(loolAtTarget.transform, Vector3.zero);
-            }
-
-            if (Input.GetKeyUp(KeyCode.Escape)) {
-                if (tcCore.IsPause) {
-                    tcCore.Resume();
-                } else {
-                    tcCore.Pause();
-                }
-            }
 
         }
 
