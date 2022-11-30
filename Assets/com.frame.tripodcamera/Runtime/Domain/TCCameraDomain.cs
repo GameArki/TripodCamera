@@ -1,6 +1,7 @@
 using UnityEngine;
 using JackEasing;
 using TripodCamera.Facades;
+using System;
 
 namespace TripodCamera.Domain {
 
@@ -107,6 +108,11 @@ namespace TripodCamera.Domain {
             tcCam.LookAt_ChangeOffset(offset);
         }
 
+        internal void Shake_Current(Vector2 amplitudeOffset, float shakeFrequency, float duration) {
+            var repo = facades.CameraRepo;
+            var tcCam = repo.ActiveCam;
+            tcCam.ShakeComponent.SetShake(amplitudeOffset, shakeFrequency, duration);
+        }
     }
 
 }

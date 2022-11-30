@@ -21,6 +21,13 @@ namespace TripodCamera.Sample {
             PrimitiveType.Capsule,
         };
 
+        // - Input
+        float sensitivity = 0.05f;
+        float shakeAmplitudeX = 0.1f;
+        float shakeAmplitudeY = 0.1f;
+        float shakeFrequency = 10;
+        float shakeDuration = 1;
+
         void Awake() {
             
             tcCore = new TCCore();
@@ -30,14 +37,15 @@ namespace TripodCamera.Sample {
 
         }
 
-        float sensitivity = 0.05f;
         void OnGUI() {
             
             GUILayout.BeginHorizontal();
             GUILayout.Label("灵敏度: ");
             sensitivity = GUILayout.HorizontalSlider(sensitivity, 0, 1, GUILayout.Width(100));
+            GUILayout.Label(" " + sensitivity.ToString("F2"));
             GUILayout.EndHorizontal();
 
+            GUILayout.Space(10);
             GUILayout.BeginHorizontal();
             if (GUILayout.RepeatButton("推")) {
                 tcCore.SetterAPI.Push_In_Current(sensitivity);
@@ -47,6 +55,7 @@ namespace TripodCamera.Sample {
             }
             GUILayout.EndHorizontal();
 
+            GUILayout.Space(10);
             GUILayout.BeginHorizontal();
             if (GUILayout.RepeatButton("左看")) {
                 tcCore.SetterAPI.Rotate_Horizontal_Current(-sensitivity);
@@ -62,6 +71,7 @@ namespace TripodCamera.Sample {
             }
             GUILayout.EndHorizontal();
 
+            GUILayout.Space(10);
             GUILayout.BeginHorizontal();
             if (GUILayout.RepeatButton("左转")) {
                 tcCore.SetterAPI.Rotate_Roll_Current(-sensitivity);
@@ -71,6 +81,7 @@ namespace TripodCamera.Sample {
             }
             GUILayout.EndHorizontal();
 
+            GUILayout.Space(10);
             GUILayout.BeginHorizontal();
             if (GUILayout.RepeatButton("左移")) {
                 tcCore.SetterAPI.Move_Current(new Vector2(-sensitivity, 0));
@@ -86,6 +97,7 @@ namespace TripodCamera.Sample {
             }
             GUILayout.EndHorizontal();
 
+            GUILayout.Space(10);
             GUILayout.BeginHorizontal();
             if (GUILayout.RepeatButton("放大")) {
                 tcCore.SetterAPI.Zoom_In_Current(sensitivity);
@@ -95,20 +107,7 @@ namespace TripodCamera.Sample {
             }
             GUILayout.EndHorizontal();
 
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("生成随机物体")) {
-                var go = GameObject.CreatePrimitive(randomPrimitiveTypes[Random.Range(0, randomPrimitiveTypes.Length)]);
-                go.transform.position = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
-                targets.Add(go);
-            }
-            if (GUILayout.Button("清空随机物体")) {
-                foreach (var go in targets) {
-                    Destroy(go);
-                }
-                targets.Clear();
-            }
-            GUILayout.EndHorizontal();
-
+            GUILayout.Space(10);
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("跟随下一个")) {
                 if (followTarget == null) {
@@ -146,6 +145,49 @@ namespace TripodCamera.Sample {
                 tcCore.SetterAPI.LookAt_ChangeTarget_Current(null);
             }
             GUILayout.EndHorizontal();
+
+            GUILayout.Space(10);
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("生成随机物体")) {
+                var go = GameObject.CreatePrimitive(randomPrimitiveTypes[Random.Range(0, randomPrimitiveTypes.Length)]);
+                go.transform.position = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
+                targets.Add(go);
+            }
+            if (GUILayout.Button("清空随机物体")) {
+                foreach (var go in targets) {
+                    Destroy(go);
+                }
+                targets.Clear();
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.Space(20);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("震幅 x: ");
+            shakeAmplitudeX = GUILayout.HorizontalSlider(shakeAmplitudeX, 0, 100, GUILayout.Width(100));
+            GUILayout.Label(" " + shakeAmplitudeX.ToString("F2"));
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("震幅 y: ");
+            shakeAmplitudeY = GUILayout.HorizontalSlider(shakeAmplitudeY, 0, 100, GUILayout.Width(100));
+            GUILayout.Label(" " + shakeAmplitudeY.ToString("F2"));
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("震频: ");
+            shakeFrequency = GUILayout.HorizontalSlider(shakeFrequency, 0, 100, GUILayout.Width(100));
+            GUILayout.Label(" " + shakeFrequency.ToString("F2"));
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("震时: ");
+            shakeDuration = GUILayout.HorizontalSlider(shakeDuration, 0, 3, GUILayout.Width(100));
+            GUILayout.Label(" " + shakeDuration.ToString("F2"));
+            GUILayout.EndHorizontal();
+            if (GUILayout.Button("震动")) {
+                tcCore.SetterAPI.Shake_Current(new Vector2(shakeAmplitudeX, shakeAmplitudeY), shakeFrequency, shakeDuration);
+            }
 
         }
 

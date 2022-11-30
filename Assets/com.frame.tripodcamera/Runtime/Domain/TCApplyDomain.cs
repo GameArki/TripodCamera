@@ -18,12 +18,16 @@ namespace TripodCamera.Domain {
         }
 
         internal void ApplyEffect(TCCameraEntity tcCam, float dt) {
-            tcCam.Effect.TickDolly(dt);
+            tcCam.TrackComponent.TickDolly(dt);
+        }
+
+        internal void ApplyShake(TCCameraEntity tcCam, float dt) {
+            tcCam.ShakeComponent.TickShake(dt);
         }
 
         internal void ApplyToMain(TCCameraEntity tcCam, Camera mainCam) {
 
-            var info = tcCam.CurrentInfo;
+            var info = tcCam.CurrentInfoComponent;
 
             // - Pos
             Vector3 pos;
@@ -45,14 +49,17 @@ namespace TripodCamera.Domain {
             info.SetPos(pos);
             info.SetRot(rot);
 
-            // - Effect Pos & Rot
-            var effect = tcCam.Effect;
-            Vector3 posAddition = effect.GetDollyMoveOffset();
-            Vector3 rotAddition = effect.GetDollyLookOffset();
+            // - Track Pos & Rot
+            var track = tcCam.TrackComponent;
+            Vector3 trackPosAddition = track.GetDollyMoveOffset();
+            Vector3 trackRotAddition = track.GetDollyLookOffset();
+
+            // - Shake
+            Vector3 shakePosAddition = tcCam.ShakeComponent.GetShakeOffset();
 
             // - Apply
-            mainCam.transform.position = pos + posAddition;
-            mainCam.transform.rotation = rot * Quaternion.Euler(rotAddition);
+            mainCam.transform.position = pos + trackPosAddition + shakePosAddition;
+            mainCam.transform.rotation = rot * Quaternion.Euler(trackRotAddition);
             mainCam.fieldOfView = info.FOV;
 
         }

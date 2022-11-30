@@ -4,17 +4,19 @@ using JackEasing;
 
 namespace TripodCamera {
 
-    public class TCCameraEffectComponent {
+    public class TCCameraTrackComponent {
 
         // ==== Locomotion ====
         List<TCDollyPointModel> dollyPoints;
         int dollyIndex;
+        
+        Vector3 dollyPos;
+        Vector3 dollyRot;
+        float dollyZoom;
+
         float time;
 
-        // ==== Shake ====
-        // - Shake Position
-
-        public TCCameraEffectComponent() {
+        public TCCameraTrackComponent() {
             this.dollyPoints = new List<TCDollyPointModel>();
         }
 
@@ -26,6 +28,9 @@ namespace TripodCamera {
             bool has = TryGetCurrentDolly(out var dolly);
             if (has) {
                 time += dt;
+                dollyPos = EasingHelper.Ease3D(dolly.moveEasingType, time, dolly.moveMaintainTime, dolly.moveOffset, Vector3.zero);
+                dollyRot = EasingHelper.Ease3D(dolly.lookEasingType, time, dolly.lookMaintainTime, dolly.lookOffset, Vector3.zero);
+                dollyZoom = EasingHelper.Ease1D(dolly.zoomInEasingType, time, dolly.zoomInMaintainTime, dolly.zoomInOffset, 0);
                 if (time > dolly.MaintainTimeMax) {
                     time = 0;
                     dollyIndex += 1;
@@ -46,9 +51,7 @@ namespace TripodCamera {
         public Vector3 GetDollyMoveOffset() {
             bool has = TryGetCurrentDolly(out var dolly);
             if (has) {
-                float t = Mathf.Min(time, dolly.moveMaintainTime);
-                Vector3 value = EasingHelper.Ease3D(dolly.moveEasingType, t, dolly.moveMaintainTime, Vector3.zero, dolly.moveOffset);
-                return value;
+                return dollyPos;
             } else {
                 return Vector3.zero;
             }
@@ -57,9 +60,7 @@ namespace TripodCamera {
         public Vector3 GetDollyLookOffset() {
             bool has = TryGetCurrentDolly(out var dolly);
             if (has) {
-                float t = Mathf.Min(time, dolly.lookMaintainTime);
-                Vector3 value = EasingHelper.Ease3D(dolly.lookEasingType, t, dolly.lookMaintainTime, Vector3.zero, dolly.lookOffset);
-                return value;
+                return dollyRot;
             } else {
                 return Vector3.zero;
             }
@@ -68,9 +69,7 @@ namespace TripodCamera {
         public float GetDollyZoomInOffset() {
             bool has = TryGetCurrentDolly(out var dolly);
             if (has) {
-                float t = Mathf.Min(time, dolly.zoomInMaintainTime);
-                float value = EasingHelper.Ease1D(dolly.zoomInEasingType, t, dolly.zoomInMaintainTime, 0, dolly.zoomInOffset);
-                return value;
+                return dollyZoom;
             } else {
                 return 0;
             }
