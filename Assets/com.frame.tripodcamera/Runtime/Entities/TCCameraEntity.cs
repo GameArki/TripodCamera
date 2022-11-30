@@ -7,13 +7,10 @@ namespace TripodCamera {
     public class TCCameraEntity {
 
         // ==== Info ====
-        TCCameraInfoComponent defaultInfo;
+        TCCameraInfoComponent defaultInfoComponent;
 
-        TCCameraInfoComponent currentInfo;
-        public TCCameraInfoComponent CurrentInfo => currentInfo;
-
-        TCCameraEffectComponent effect;
-        public TCCameraEffectComponent Effect => effect;
+        TCCameraInfoComponent currentInfoComponent;
+        public TCCameraInfoComponent CurrentInfoComponent => currentInfoComponent;
 
         TCCameraFollowComponent followComponent;
         public TCCameraFollowComponent FollowComponent => followComponent;
@@ -21,28 +18,35 @@ namespace TripodCamera {
         TCCameraLookAtComponent lookAtComponent;
         public TCCameraLookAtComponent LookAtComponent => lookAtComponent;
 
+        TCCameraTrackComponent trackComponent;
+        public TCCameraTrackComponent TrackComponent => trackComponent;
+
+        TCCameraShakeComponent shakeComponent;
+        public TCCameraShakeComponent ShakeComponent => shakeComponent;
+
         public TCCameraEntity() {
-            this.defaultInfo = new TCCameraInfoComponent();
-            this.currentInfo = new TCCameraInfoComponent();
+            this.defaultInfoComponent = new TCCameraInfoComponent();
+            this.currentInfoComponent = new TCCameraInfoComponent();
             this.followComponent = new TCCameraFollowComponent();
             this.lookAtComponent = new TCCameraLookAtComponent();
-            this.effect = new TCCameraEffectComponent();
+            this.trackComponent = new TCCameraTrackComponent();
+            this.shakeComponent = new TCCameraShakeComponent();
         }
 
         // ==== Info ====
         public void InitInfo(Vector3 pos, Quaternion rot, float fov) {
-            defaultInfo.Init(pos, rot, fov);
-            currentInfo.Init(pos, rot, fov);
+            defaultInfoComponent.Init(pos, rot, fov);
+            currentInfoComponent.Init(pos, rot, fov);
         }
 
         public void SaveAsDefault() {
             // Save pos, rot, fov
-            defaultInfo.CloneFrom(currentInfo);
+            defaultInfoComponent.CloneFrom(currentInfoComponent);
         }
 
         public void RestoreByDefault() {
             // Restore pos, rot, fov
-            currentInfo.CloneFrom(defaultInfo);
+            currentInfoComponent.CloneFrom(defaultInfoComponent);
         }
 
         // ==== Basic ====
@@ -50,8 +54,8 @@ namespace TripodCamera {
         public void Push_In(float value) {
 
             Vector3 fwd;
-            var pos = currentInfo.Pos;
-            var rot = currentInfo.Rot;
+            var pos = currentInfoComponent.Pos;
+            var rot = currentInfoComponent.Rot;
             var lookAtTF = lookAtComponent.LookAtTF;
             if (lookAtTF != null) {
                 fwd = lookAtTF.position - pos;
@@ -64,15 +68,15 @@ namespace TripodCamera {
                 followComponent.PushIn(fwd, value);
             } else {
                 pos += fwd * value;
-                currentInfo.SetPos(pos);
+                currentInfoComponent.SetPos(pos);
             }
 
         }
 
         // - Move
         public void Move(Vector2 value) {
-            var pos = currentInfo.Pos;
-            var rot = currentInfo.Rot;
+            var pos = currentInfoComponent.Pos;
+            var rot = currentInfoComponent.Rot;
             Vector3 up = rot * Vector3.up;
             Vector3 right = rot * Vector3.right;
             up.Normalize();
@@ -100,7 +104,7 @@ namespace TripodCamera {
 
             }
 
-            currentInfo.SetPos(pos);
+            currentInfoComponent.SetPos(pos);
 
             // - Follow Component
             followComponent.OffsetAdd(right + up);
@@ -108,8 +112,8 @@ namespace TripodCamera {
         }
 
         public void Move_AndChangeLookAtOffset(Vector2 value) {
-            var pos = currentInfo.Pos;
-            var rot = currentInfo.Rot;
+            var pos = currentInfoComponent.Pos;
+            var rot = currentInfoComponent.Rot;
             Vector3 up;
             Vector3 right;
             up = rot * Vector3.up;
@@ -120,7 +124,7 @@ namespace TripodCamera {
             up = up * value.y;
             pos += right + up;
 
-            currentInfo.SetPos(pos);
+            currentInfoComponent.SetPos(pos);
 
             // - LookAt Component
             lookAtComponent.OffsetAdd(right + up);
@@ -129,22 +133,22 @@ namespace TripodCamera {
 
         // - Rotate
         public void Rotate_Horizontal(float x) {
-            currentInfo.Rotate_Horizontal(x);
+            currentInfoComponent.Rotate_Horizontal(x);
             lookAtComponent.Rotate_Horizontal(-x);
         }
 
         public void Rotate_Vertical(float y) {
-            currentInfo.Rotate_Vertical(y);
+            currentInfoComponent.Rotate_Vertical(y);
             lookAtComponent.Rotate_Vertical(y);
         }
 
         public void Rotate_Roll(float z) {
-            currentInfo.Rotate_Roll(z);
+            currentInfoComponent.Rotate_Roll(z);
         }
 
         // - Zoom
         public void ZoomIn(float value, float min, float max) {
-            currentInfo.Zoom_In(value, min, max);
+            currentInfoComponent.Zoom_In(value, min, max);
         }
 
         // ==== Advance ====

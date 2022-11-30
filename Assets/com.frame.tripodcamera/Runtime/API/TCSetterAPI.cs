@@ -86,6 +86,12 @@ namespace TripodCamera.API {
             cameraDomain.LookAt_ChangeOffset_Current(offset);
         }
 
+        // ==== Shake ====
+        void ITCSetterAPI.Shake_Current(Vector2 amplitudeOffset, float shakeFrequency, float duration) {
+            var cameraDomain = domain.CameraDomain;
+            cameraDomain.Shake_Current(amplitudeOffset, shakeFrequency, duration);
+        }
+
     }
 
 }

@@ -22,6 +22,7 @@ namespace TripodCamera.Controller {
             var applyDomain = domain.ApplyDomain;
             applyDomain.ApplyFollow(tcCam, dt);
             applyDomain.ApplyEffect(tcCam, dt);
+            applyDomain.ApplyShake(tcCam, dt);
             applyDomain.ApplyToMain(tcCam, mainCam);
         }
 
