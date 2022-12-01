@@ -164,13 +164,13 @@ namespace TripodCamera.Sample {
             GUILayout.Space(20);
             GUILayout.BeginHorizontal();
             GUILayout.Label("震幅 x: ");
-            shakeAmplitudeX = GUILayout.HorizontalSlider(shakeAmplitudeX, 0, 100, GUILayout.Width(100));
+            shakeAmplitudeX = GUILayout.HorizontalSlider(shakeAmplitudeX, 0, 10, GUILayout.Width(100));
             GUILayout.Label(" " + shakeAmplitudeX.ToString("F2"));
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("震幅 y: ");
-            shakeAmplitudeY = GUILayout.HorizontalSlider(shakeAmplitudeY, 0, 100, GUILayout.Width(100));
+            shakeAmplitudeY = GUILayout.HorizontalSlider(shakeAmplitudeY, 0, 10, GUILayout.Width(100));
             GUILayout.Label(" " + shakeAmplitudeY.ToString("F2"));
             GUILayout.EndHorizontal();
 
@@ -186,7 +186,7 @@ namespace TripodCamera.Sample {
             GUILayout.Label(" " + shakeDuration.ToString("F2"));
             GUILayout.EndHorizontal();
             if (GUILayout.Button("震动")) {
-                tcCore.SetterAPI.Shake_Current(new Vector2(shakeAmplitudeX, shakeAmplitudeY), shakeFrequency, shakeDuration);
+                tcCore.SetterAPI.Shake_Current(new Vector2(shakeAmplitudeX, shakeAmplitudeY), EasingType.OutBounce, shakeFrequency, shakeDuration);
             }
 
         }

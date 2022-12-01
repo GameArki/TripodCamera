@@ -6,6 +6,7 @@ namespace TripodCamera {
     public class TCCameraShakeComponent {
 
         Vector2 amplitudeOffset;
+        EasingType easingType;
         float frequency;
         float duration;
 
@@ -13,8 +14,9 @@ namespace TripodCamera {
 
         public TCCameraShakeComponent() { }
 
-        public void SetShake(Vector2 amplitudeOffset, float frequency, float duration) {
+        public void SetShake(Vector2 amplitudeOffset, EasingType reductionEasing, float frequency, float duration) {
             this.amplitudeOffset = amplitudeOffset;
+            this.easingType = reductionEasing;
             this.frequency = frequency;
             this.duration = duration;
             this.time = 0;
@@ -38,8 +40,8 @@ namespace TripodCamera {
                 return Vector3.zero;
             }
 
-            float x = WaveHelper.SinWaveReduction(time, duration, amplitudeOffset.x, frequency, 0);
-            float y = WaveHelper.SinWaveReduction(time, duration, amplitudeOffset.y, frequency, 0);
+            float x = WaveHelper.SinWaveReductionEasing(easingType, time, duration, amplitudeOffset.x, frequency, 0);
+            float y = WaveHelper.SinWaveReductionEasing(easingType, time, duration, amplitudeOffset.y, frequency, 0);
             return new Vector3(x, y, 0);
         }
 
