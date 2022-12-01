@@ -1,5 +1,6 @@
 # TripodCamera 「三角架」
-自用 Unity 相机库
+基于原生 Camera 的 Unity 相机库。  
+控制流清晰，代码易阅读。
 
 # TODO
-[] 双层状态机: 全局层 + 单相机层
+[] Track 轨道相机

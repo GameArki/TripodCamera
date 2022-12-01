@@ -108,10 +108,10 @@ namespace TripodCamera.Domain {
             tcCam.LookAt_ChangeOffset(offset);
         }
 
-        internal void Shake_Current(Vector2 amplitudeOffset, float shakeFrequency, float duration) {
+        internal void Shake_Current(Vector2 amplitudeOffset, EasingType reductionEasing, float shakeFrequency, float duration) {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
-            tcCam.ShakeComponent.SetShake(amplitudeOffset, shakeFrequency, duration);
+            tcCam.ShakeComponent.SetShake(amplitudeOffset, reductionEasing, shakeFrequency, duration);
         }
     }
 
