@@ -9,7 +9,7 @@ namespace TripodCamera {
         // ==== Locomotion ====
         List<TCDollyPointModel> dollyPoints;
         int dollyIndex;
-        
+
         Vector3 dollyPos;
         Vector3 dollyRot;
         float dollyZoom;
@@ -24,12 +24,12 @@ namespace TripodCamera {
             dollyPoints.Add(dollyPoint);
         }
 
-        public void TickDolly(float dt) {
+        public void Tick(float dt) {
             bool has = TryGetCurrentDolly(out var dolly);
             if (has) {
                 time += dt;
-                dollyPos = EasingHelper.Ease3D(dolly.moveEasingType, time, dolly.moveMaintainTime, dolly.moveOffset, Vector3.zero);
-                dollyRot = EasingHelper.Ease3D(dolly.lookEasingType, time, dolly.lookMaintainTime, dolly.lookOffset, Vector3.zero);
+                dollyPos = EasingHelper.Ease3D(dolly.moveEasingType, time, dolly.moveMaintainTime, Vector3.zero, dolly.moveOffset);
+                dollyRot = EasingHelper.Ease3D(dolly.lookEasingType, time, dolly.lookMaintainTime, Vector3.zero, dolly.lookOffset);
                 dollyZoom = EasingHelper.Ease1D(dolly.zoomInEasingType, time, dolly.zoomInMaintainTime, dolly.zoomInOffset, 0);
                 if (time > dolly.MaintainTimeMax) {
                     time = 0;

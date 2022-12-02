@@ -21,8 +21,9 @@ namespace TripodCamera.Controller {
             var tcCam = facades.CameraRepo.ActiveCam;
             var applyDomain = domain.ApplyDomain;
             applyDomain.ApplyFollow(tcCam, dt);
-            applyDomain.ApplyEffect(tcCam, dt);
-            applyDomain.ApplyShake(tcCam, dt);
+            applyDomain.ApplyTrackState(tcCam, dt);
+            applyDomain.ApplyShakeState(tcCam, dt);
+            applyDomain.ApplyMoveState(tcCam, dt);
             applyDomain.ApplyToMain(tcCam, mainCam);
         }
 

@@ -17,12 +17,20 @@ namespace TripodCamera.Domain {
             tcCam.FollowComponent.TickEasing(dt);
         }
 
-        internal void ApplyEffect(TCCameraEntity tcCam, float dt) {
-            tcCam.TrackComponent.TickDolly(dt);
+        // ==== State ====
+        // - Track
+        internal void ApplyTrackState(TCCameraEntity tcCam, float dt) {
+            tcCam.TrackComponent.Tick(dt);
         }
 
-        internal void ApplyShake(TCCameraEntity tcCam, float dt) {
-            tcCam.ShakeComponent.TickShake(dt);
+        // - Shake
+        internal void ApplyShakeState(TCCameraEntity tcCam, float dt) {
+            tcCam.ShakeComponent.Tick(dt);
+        }
+
+        // - Move
+        internal void ApplyMoveState(TCCameraEntity tcCam, float dt) {
+            tcCam.MovementStateComponent.Tick(dt);
         }
 
         internal void ApplyToMain(TCCameraEntity tcCam, Camera mainCam) {
@@ -54,11 +62,14 @@ namespace TripodCamera.Domain {
             Vector3 trackPosAddition = track.GetDollyMoveOffset();
             Vector3 trackRotAddition = track.GetDollyLookOffset();
 
-            // - Shake
+            // - Shake State
             Vector3 shakePosAddition = tcCam.ShakeComponent.GetShakeOffset();
 
+            // - Move State
+            Vector3 moveAddition = tcCam.MovementStateComponent.GetMoveOffset();
+
             // - Apply
-            mainCam.transform.position = pos + trackPosAddition + shakePosAddition;
+            mainCam.transform.position = pos + trackPosAddition + shakePosAddition + moveAddition;
             mainCam.transform.rotation = rot * Quaternion.Euler(trackRotAddition);
             mainCam.fieldOfView = info.FOV;
 

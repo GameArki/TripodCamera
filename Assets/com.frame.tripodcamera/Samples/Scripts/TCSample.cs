@@ -21,15 +21,23 @@ namespace TripodCamera.Sample {
             PrimitiveType.Capsule,
         };
 
-        // - Input
+        // ==== Input ====
         float sensitivity = 0.05f;
+
+        // - Shake State
         float shakeAmplitudeX = 0.1f;
         float shakeAmplitudeY = 0.1f;
         float shakeFrequency = 10;
         float shakeDuration = 1;
+        int shakeEasingType = (int)EasingType.Linear;
+
+        // - Move State
+        Vector2 moveOffset = new Vector2(0.1f, 0.1f);
+        float moveDuration = 1;
+        int moveEasingType = (int)EasingType.Linear;
 
         void Awake() {
-            
+
             tcCore = new TCCore();
             tcCore.Initialize(Camera.main);
 
@@ -38,7 +46,9 @@ namespace TripodCamera.Sample {
         }
 
         void OnGUI() {
-            
+
+            GUILayout.BeginHorizontal();
+            GUILayout.BeginVertical();
             GUILayout.BeginHorizontal();
             GUILayout.Label("灵敏度: ");
             sensitivity = GUILayout.HorizontalSlider(sensitivity, 0, 1, GUILayout.Width(100));
@@ -62,7 +72,7 @@ namespace TripodCamera.Sample {
             }
             if (GUILayout.RepeatButton("右看")) {
                 tcCore.SetterAPI.Rotate_Horizontal_Current(sensitivity);
-            }   
+            }
             if (GUILayout.RepeatButton("上看")) {
                 tcCore.SetterAPI.Rotate_Vertical_Current(sensitivity);
             }
@@ -185,10 +195,63 @@ namespace TripodCamera.Sample {
             shakeDuration = GUILayout.HorizontalSlider(shakeDuration, 0, 3, GUILayout.Width(100));
             GUILayout.Label(" " + shakeDuration.ToString("F2"));
             GUILayout.EndHorizontal();
-            if (GUILayout.Button("震动")) {
-                tcCore.SetterAPI.Shake_Current(new Vector2(shakeAmplitudeX, shakeAmplitudeY), EasingType.OutBounce, shakeFrequency, shakeDuration);
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("震式: ");
+            shakeEasingType = (int)GUILayout.HorizontalSlider((int)shakeEasingType, 0, (int)EasingType.InOutBounce, GUILayout.Width(100));
+            GUILayout.Label(" " + ((EasingType)shakeEasingType).ToString(), GUILayout.Width(100));
+            GUILayout.EndHorizontal();
+
+            if (GUILayout.Button("进入震动状态")) {
+                var arg = new TCShakeStateArgs() {
+                    amplitudeOffset = new Vector2(shakeAmplitudeX, shakeAmplitudeY),
+                    easingType = (EasingType)shakeEasingType,
+                    frequency = shakeFrequency,
+                    duration = shakeDuration
+                };
+                tcCore.SetterAPI.Enter_Shake_Current(new TCShakeStateArgs[] { arg });
+            }
+            GUILayout.EndVertical();
+
+            GUILayout.BeginVertical();
+            GUILayout.Label("移动");
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("x: ");
+            moveOffset.x = GUILayout.HorizontalSlider(moveOffset.x, -10, 10, GUILayout.Width(100));
+            GUILayout.Label(" " + moveOffset.x.ToString("F2"));
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("y: ");
+            moveOffset.y = GUILayout.HorizontalSlider(moveOffset.y, -10, 10, GUILayout.Width(100));
+            GUILayout.Label(" " + moveOffset.y.ToString("F2"));
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("持续: ");
+            moveDuration = GUILayout.HorizontalSlider(moveDuration, 0, 3, GUILayout.Width(100));
+            GUILayout.Label(" " + moveDuration.ToString("F2"));
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("easing: ");
+            moveEasingType = (int)GUILayout.HorizontalSlider((int)moveEasingType, 0, (int)EasingType.InOutBounce, GUILayout.Width(100));
+            GUILayout.Label(" " + ((EasingType)moveEasingType).ToString(), GUILayout.Width(100));
+            GUILayout.EndHorizontal();
+
+            if (GUILayout.Button("进入移动状态")) {
+                var arg = new TCMovementStateArgs() {
+                    offset = moveOffset,
+                    easingType = (EasingType)moveEasingType,
+                    duration = moveDuration,
+                    isInherit = false
+                };
+                tcCore.SetterAPI.Enter_Move_Current(new TCMovementStateArgs[] { arg }, EasingType.Linear, 1f);
             }
 
+            GUILayout.EndVertical();
+
+            GUILayout.EndHorizontal();
         }
 
         void Update() {
