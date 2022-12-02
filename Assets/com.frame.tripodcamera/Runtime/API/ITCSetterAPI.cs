@@ -27,7 +27,12 @@ namespace TripodCamera.API {
         void LookAt_ChangeOffset_Current(Vector3 offset);
 
         // ==== Shake ====
-        void Shake_Current(Vector2 amplitudeOffset, EasingType reductionEasing, float shakeFrequency, float duration);
+        void Enter_Shake_Current(TCShakeStateArgs[] args);
+        void Enter_Rotation_Current(TCRotationStateArgs[] args);
+        void Enter_Move_Current(TCMovementStateArgs[] args);
+        void Enter_Move_Current(TCMovementStateArgs[] args, EasingType exitEasingType, float exitDuration);
+        void Enter_Push_Current(TCPushStateArgs[] args);
+
     }
 
 }

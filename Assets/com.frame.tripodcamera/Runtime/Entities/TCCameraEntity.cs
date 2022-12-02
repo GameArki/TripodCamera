@@ -12,25 +12,38 @@ namespace TripodCamera {
         TCCameraInfoComponent currentInfoComponent;
         public TCCameraInfoComponent CurrentInfoComponent => currentInfoComponent;
 
+        // - Follow
         TCCameraFollowComponent followComponent;
         public TCCameraFollowComponent FollowComponent => followComponent;
 
+        // - LookAt
         TCCameraLookAtComponent lookAtComponent;
         public TCCameraLookAtComponent LookAtComponent => lookAtComponent;
 
+        // ==== State ====
+        // - Track State
         TCCameraTrackComponent trackComponent;
         public TCCameraTrackComponent TrackComponent => trackComponent;
 
-        TCCameraShakeComponent shakeComponent;
-        public TCCameraShakeComponent ShakeComponent => shakeComponent;
+        // - Shake State
+        TCCameraShakeStateComponent shakeStateComponent;
+        public TCCameraShakeStateComponent ShakeComponent => shakeStateComponent;
+
+        // - Move State
+        TCCameraMovementStateComponent movementStateComponent;
+        public TCCameraMovementStateComponent MovementStateComponent => movementStateComponent;
+
+        // - Rotate State
 
         public TCCameraEntity() {
             this.defaultInfoComponent = new TCCameraInfoComponent();
             this.currentInfoComponent = new TCCameraInfoComponent();
             this.followComponent = new TCCameraFollowComponent();
             this.lookAtComponent = new TCCameraLookAtComponent();
+
             this.trackComponent = new TCCameraTrackComponent();
-            this.shakeComponent = new TCCameraShakeComponent();
+            this.shakeStateComponent = new TCCameraShakeStateComponent();
+            this.movementStateComponent = new TCCameraMovementStateComponent();
         }
 
         // ==== Info ====

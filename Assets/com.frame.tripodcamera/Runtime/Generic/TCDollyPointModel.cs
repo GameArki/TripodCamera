@@ -9,6 +9,9 @@ namespace TripodCamera {
 
         /* Last Point Read Outside */
 
+        // - Base Info
+        public Vector3 positionOffset;
+
         // - Move
         public Vector3 moveOffset;
         public EasingType moveEasingType;

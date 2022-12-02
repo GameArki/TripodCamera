@@ -108,10 +108,19 @@ namespace TripodCamera.Domain {
             tcCam.LookAt_ChangeOffset(offset);
         }
 
-        internal void Shake_Current(Vector2 amplitudeOffset, EasingType reductionEasing, float shakeFrequency, float duration) {
+        // ==== State ====
+        // - Shake
+        internal void Enter_Shake_Current(TCShakeStateArgs[] args) {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
-            tcCam.ShakeComponent.SetShake(amplitudeOffset, reductionEasing, shakeFrequency, duration);
+            tcCam.ShakeComponent.SetShake(args);
+        }
+
+        // - Movement
+        internal void Enter_Movement_Current(TCMovementStateArgs[] args, bool isExitReset, EasingType exitEasing, float exitDuration) {
+            var repo = facades.CameraRepo;
+            var tcCam = repo.ActiveCam;
+            tcCam.MovementStateComponent.EnterMovement(args, isExitReset, exitEasing, exitDuration);
         }
     }
 
