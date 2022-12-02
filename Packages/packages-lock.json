@@ -14,15 +14,6 @@
       "dependencies": {},
       "hash": "5712dea81a7669599f409ebdb179276ed4d2515a"
     },
-    "com.unity.collab-proxy": {
-      "version": "1.17.6",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.services.core": "1.0.1"
-      },
-      "url": "https://packages.unity.cn"
-    },
     "com.unity.editorcoroutines": {
       "version": "1.0.0",
       "depth": 1,
@@ -83,15 +74,6 @@
       "dependencies": {},
       "url": "https://packages.unity.cn"
     },
-    "com.unity.services.core": {
-      "version": "1.0.1",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.modules.unitywebrequest": "1.0.0"
-      },
-      "url": "https://packages.unity.cn"
-    },
     "com.unity.settings-manager": {
       "version": "1.0.3",
       "depth": 2,
@@ -100,18 +82,18 @@
       "url": "https://packages.unity.cn"
     },
     "com.unity.sysroot": {
-      "version": "2.0.4",
+      "version": "2.0.3",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.cn"
     },
     "com.unity.sysroot.linux-x86_64": {
-      "version": "2.0.3",
+      "version": "2.0.2",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.sysroot": "2.0.4"
+        "com.unity.sysroot": "2.0.3"
       },
       "url": "https://packages.unity.cn"
     },
@@ -158,12 +140,12 @@
       "url": "https://packages.unity.cn"
     },
     "com.unity.toolchain.win-x86_64-linux-x86_64": {
-      "version": "2.0.3",
+      "version": "2.0.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.sysroot": "2.0.4",
-        "com.unity.sysroot.linux-x86_64": "2.0.3"
+        "com.unity.sysroot": "2.0.3",
+        "com.unity.sysroot.linux-x86_64": "2.0.2"
       },
       "url": "https://packages.unity.cn"
     },
@@ -175,16 +157,6 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
-    },
-    "com.unity.visualscripting": {
-      "version": "1.7.8",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.ugui": "1.0.0",
-        "com.unity.modules.jsonserialize": "1.0.0"
-      },
-      "url": "https://packages.unity.cn"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

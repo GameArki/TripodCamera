@@ -122,6 +122,21 @@ namespace TripodCamera.Domain {
             var tcCam = repo.ActiveCam;
             tcCam.MovementStateComponent.EnterMovement(args, isExitReset, exitEasing, exitDuration);
         }
+
+        // - Rotation
+        internal void Enter_Rotation_Current(TCRotationStateArgs[] args, bool isExitReset, EasingType exitEasing, float exitDuration) {
+            var repo = facades.CameraRepo;
+            var tcCam = repo.ActiveCam;
+            tcCam.RotateStateComponent.EnterRotation(args, isExitReset, exitEasing, exitDuration);
+        }
+
+        // - Push
+        internal void Enter_Push_Current(TCPushStateArgs[] args, bool isExitReset, EasingType exitEasing, float exitDuration) {
+            var repo = facades.CameraRepo;
+            var tcCam = repo.ActiveCam;
+            tcCam.PushStateComponent.EnterPush(args, isExitReset, exitEasing, exitDuration);
+        }
+
     }
 
 }

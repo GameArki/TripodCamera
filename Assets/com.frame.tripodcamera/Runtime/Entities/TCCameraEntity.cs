@@ -34,6 +34,12 @@ namespace TripodCamera {
         public TCCameraMovementStateComponent MovementStateComponent => movementStateComponent;
 
         // - Rotate State
+        TCCameraRotateStateComponent rotateStateComponent;
+        public TCCameraRotateStateComponent RotateStateComponent => rotateStateComponent;
+
+        // - Push State
+        TCCameraPushStateComponent pushStateComponent;
+        public TCCameraPushStateComponent PushStateComponent => pushStateComponent;
 
         public TCCameraEntity() {
             this.defaultInfoComponent = new TCCameraInfoComponent();

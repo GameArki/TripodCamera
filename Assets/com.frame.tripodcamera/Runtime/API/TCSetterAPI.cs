@@ -92,10 +92,7 @@ namespace TripodCamera.API {
             cameraDomain.Enter_Shake_Current(args);
         }
 
-        void ITCSetterAPI.Enter_Rotation_Current(TCRotationStateArgs[] args) {
-            throw new System.NotImplementedException();
-        }
-
+        // ==== Move ====
         void ITCSetterAPI.Enter_Move_Current(TCMovementStateArgs[] args) {
             var cameraDomain = domain.CameraDomain;
             cameraDomain.Enter_Movement_Current(args, false, default, 0);
@@ -106,9 +103,18 @@ namespace TripodCamera.API {
             cameraDomain.Enter_Movement_Current(args, true, exitEasingType, exitDuration);
         }
 
-        void ITCSetterAPI.Enter_Push_Current(TCPushStateArgs[] args) {
-            throw new System.NotImplementedException();
+        // ==== Push ====
+        void ITCSetterAPI.Enter_Push_Current(TCPushStateArgs[] args, EasingType exitEasingType, float exitDuration) {
+            var cameraDomain = domain.CameraDomain;
+            cameraDomain.Enter_Push_Current(args, true, exitEasingType, exitDuration);
         }
+
+        // ==== Rotation ====
+        void ITCSetterAPI.Enter_Rotation_Current(TCRotationStateArgs[] args, EasingType exitEasingType, float exitDuration) {
+            var cameraDomain = domain.CameraDomain;
+            cameraDomain.Enter_Rotation_Current(args, true, exitEasingType, exitDuration);
+        }
+
     }
 
 }
