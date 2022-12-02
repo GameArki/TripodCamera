@@ -7,7 +7,7 @@ namespace TripodCamera.Domain {
 
         TCFacades facades;
 
-        internal TCApplyDomain() {}
+        internal TCApplyDomain() { }
 
         internal void Inject(TCFacades facades) {
             this.facades = facades;
@@ -31,6 +31,16 @@ namespace TripodCamera.Domain {
         // - Move
         internal void ApplyMoveState(TCCameraEntity tcCam, float dt) {
             tcCam.MovementStateComponent.Tick(dt);
+        }
+
+        // - Rotate
+        internal void ApplyRotateState(TCCameraEntity tcCam, float dt) {
+            tcCam.RotateStateComponent.Tick(dt);
+        }
+
+        // - Push
+        internal void ApplyPushState(TCCameraEntity tcCam, float dt) {
+            tcCam.PushStateComponent.Tick(dt);
         }
 
         internal void ApplyToMain(TCCameraEntity tcCam, Camera mainCam) {
@@ -68,9 +78,20 @@ namespace TripodCamera.Domain {
             // - Move State
             Vector3 moveAddition = tcCam.MovementStateComponent.GetMoveOffset();
 
+            // - Rotate State
+            Vector3 rotateAddition = tcCam.RotateStateComponent.GetRotateOffset();
+
+            rot = rot * Quaternion.Euler(trackRotAddition) * Quaternion.Euler(rotateAddition);
+
+            // - Push State
+            float pushAddition = tcCam.PushStateComponent.GetPushOffset();
+            var fwd = rot * Vector3.forward;
+            fwd *= pushAddition;
+
             // - Apply
-            mainCam.transform.position = pos + trackPosAddition + shakePosAddition + moveAddition;
-            mainCam.transform.rotation = rot * Quaternion.Euler(trackRotAddition);
+            mainCam.transform.rotation = rot;
+            mainCam.transform.position = pos + trackPosAddition + shakePosAddition + moveAddition + fwd;
+
             mainCam.fieldOfView = info.FOV;
 
         }
