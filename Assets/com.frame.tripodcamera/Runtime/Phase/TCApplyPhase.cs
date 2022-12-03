@@ -24,6 +24,9 @@ namespace TripodCamera.Controller {
             applyDomain.ApplyTrackState(tcCam, dt);
             applyDomain.ApplyShakeState(tcCam, dt);
             applyDomain.ApplyMoveState(tcCam, dt);
+            applyDomain.ApplyRotateState(tcCam, dt);
+            applyDomain.ApplyPushState(tcCam, dt);
+
             applyDomain.ApplyToMain(tcCam, mainCam);
         }
 

@@ -28,10 +28,10 @@ namespace TripodCamera.API {
 
         // ==== Shake ====
         void Enter_Shake_Current(TCShakeStateArgs[] args);
-        void Enter_Rotation_Current(TCRotationStateArgs[] args);
         void Enter_Move_Current(TCMovementStateArgs[] args);
         void Enter_Move_Current(TCMovementStateArgs[] args, EasingType exitEasingType, float exitDuration);
-        void Enter_Push_Current(TCPushStateArgs[] args);
+        void Enter_Push_Current(TCPushStateArgs[] args, EasingType exitEasingType, float exitDuration);
+        void Enter_Rotation_Current(TCRotationStateArgs[] args, EasingType exitEasingType, float exitDuration);
 
     }
 

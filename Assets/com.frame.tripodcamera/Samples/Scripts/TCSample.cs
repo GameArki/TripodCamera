@@ -36,6 +36,16 @@ namespace TripodCamera.Sample {
         float moveDuration = 1;
         int moveEasingType = (int)EasingType.Linear;
 
+        // - Rotate State
+        Vector2 rotOffset = new Vector2(0.1f, 0.1f);
+        float rotDuration = 1;
+        int rotEasingType = (int)EasingType.Linear;
+
+        // - Push State
+        float pushOffset = 1;
+        float pushDuration = 1;
+        int pushEasingType = (int)EasingType.Linear;
+
         void Awake() {
 
             tcCore = new TCCore();
@@ -211,6 +221,7 @@ namespace TripodCamera.Sample {
                 };
                 tcCore.SetterAPI.Enter_Shake_Current(new TCShakeStateArgs[] { arg });
             }
+
             GUILayout.EndVertical();
 
             GUILayout.BeginVertical();
@@ -246,7 +257,59 @@ namespace TripodCamera.Sample {
                     duration = moveDuration,
                     isInherit = false
                 };
-                tcCore.SetterAPI.Enter_Move_Current(new TCMovementStateArgs[] { arg }, EasingType.Linear, 1f);
+                tcCore.SetterAPI.Enter_Move_Current(new TCMovementStateArgs[] { arg }, EasingType.Linear, 0.5f);
+            }
+
+            GUILayout.Label("旋转");
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("x: ");
+            rotOffset.x = GUILayout.HorizontalSlider(rotOffset.x, -10, 10, GUILayout.Width(100));
+            GUILayout.Label(" " + rotOffset.x.ToString("F2"));
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("y: ");
+            rotOffset.y = GUILayout.HorizontalSlider(rotOffset.y, -10, 10, GUILayout.Width(100));
+            GUILayout.Label(" " + rotOffset.y.ToString("F2"));
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("持续: ");
+            rotDuration = GUILayout.HorizontalSlider(rotDuration, 0, 3, GUILayout.Width(100));
+            GUILayout.Label(" " + rotDuration.ToString("F2"));
+            GUILayout.EndHorizontal();
+
+            if (GUILayout.Button("进入旋转状态")) {
+                var arg = new TCRotationStateArgs() {
+                    offset = rotOffset,
+                    easingType = (EasingType)rotEasingType,
+                    duration = rotDuration,
+                    isInherit = false
+                };
+                tcCore.SetterAPI.Enter_Rotation_Current(new TCRotationStateArgs[] { arg }, EasingType.Linear, 0.5f);
+            }
+
+            GUILayout.Label("推进");
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("pushOffset: ");
+            pushOffset = GUILayout.HorizontalSlider(pushOffset, -10, 10, GUILayout.Width(100));
+            GUILayout.Label(" " + pushOffset.ToString("F2"));
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("持续: ");
+            pushDuration = GUILayout.HorizontalSlider(pushDuration, 0, 3, GUILayout.Width(100));
+            GUILayout.Label(" " + pushDuration.ToString("F2"));
+            GUILayout.EndHorizontal();
+
+            if (GUILayout.Button("进入推进状态")) {
+                var arg = new TCPushStateArgs() {
+                    offset = pushOffset,
+                    easingType = (EasingType)pushEasingType,
+                    duration = pushDuration,
+                    isInherit = false
+                };
+                tcCore.SetterAPI.Enter_Push_Current(new TCPushStateArgs[] { arg }, EasingType.Linear, 0.5f);
             }
 
             GUILayout.EndVertical();
