@@ -3,10 +3,11 @@ using JackEasing;
 
 namespace TripodCamera {
 
-    public struct TCMovementStateArgs {
+    public struct TCRotationStateModel {
 
-        public Vector2 offset;
+        public Vector3 offset;
         public float duration;
+        
         public EasingType easingType;
         public bool isInherit;
 

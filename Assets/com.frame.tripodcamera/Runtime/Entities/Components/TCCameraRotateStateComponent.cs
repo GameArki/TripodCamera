@@ -2,12 +2,12 @@ using System;
 using UnityEngine;
 using JackEasing;
 
-namespace TripodCamera {
+namespace TripodCamera.Entities {
 
     public class TCCameraRotateStateComponent {
 
         // Args
-        TCRotationStateArgs[] args;
+        TCRotationStateModel[] arr;
 
         bool isExitReset;
         EasingType exitEasing;
@@ -16,6 +16,7 @@ namespace TripodCamera {
         // Temp
         int index;
         Vector3 resOffset;
+        Vector3 resOffset_inherit;
         float time;
 
         Vector2 exitStartOffset;
@@ -26,9 +27,9 @@ namespace TripodCamera {
 
         public TCCameraRotateStateComponent() { }
 
-        public void EnterRotation(TCRotationStateArgs[] args, bool isExitReset, EasingType exitEasing, float exitDuration) {
+        public void EnterRotation(TCRotationStateModel[] args, bool isExitReset, EasingType exitEasing, float exitDuration) {
 
-            this.args = args;
+            this.arr = args;
 
             this.isExitReset = isExitReset;
             this.exitEasing = exitEasing;
@@ -53,15 +54,15 @@ namespace TripodCamera {
 
         void Execute(float dt) {
 
-            if (args == null || index >= args.Length) {
+            if (arr == null || index >= arr.Length) {
                 return;
             }
 
             time += dt;
 
-            var cur = args[index];
+            var cur = arr[index];
             if (cur.isInherit) {
-                resOffset = EasingHelper.Ease2D(cur.easingType, time, cur.duration, resOffset, cur.offset);
+                resOffset = EasingHelper.Ease2D(cur.easingType, time, cur.duration, resOffset_inherit, cur.offset);
             } else {
                 resOffset = EasingHelper.Ease2D(cur.easingType, time, cur.duration, Vector2.zero, cur.offset);
             }
@@ -70,11 +71,12 @@ namespace TripodCamera {
                 time = 0;
                 index += 1;
 
-                bool hasNext = index < args.Length;
+                bool hasNext = index < arr.Length;
                 if (hasNext) {
-                    var next = args[index];
+                    var next = arr[index];
                     if (next.isInherit) {
                         next.offset += resOffset;
+                        resOffset_inherit = resOffset;
                     } else {
                         resOffset = Vector2.zero;
                     }

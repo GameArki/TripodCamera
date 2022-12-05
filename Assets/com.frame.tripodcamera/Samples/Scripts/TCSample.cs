@@ -213,13 +213,13 @@ namespace TripodCamera.Sample {
             GUILayout.EndHorizontal();
 
             if (GUILayout.Button("进入震动状态")) {
-                var arg = new TCShakeStateArgs() {
+                var arg = new TCShakeStateModel() {
                     amplitudeOffset = new Vector2(shakeAmplitudeX, shakeAmplitudeY),
                     easingType = (EasingType)shakeEasingType,
                     frequency = shakeFrequency,
                     duration = shakeDuration
                 };
-                tcCore.SetterAPI.Enter_Shake_Current(new TCShakeStateArgs[] { arg });
+                tcCore.SetterAPI.Enter_Shake_Current(new TCShakeStateModel[] { arg });
             }
 
             GUILayout.EndVertical();
@@ -251,13 +251,13 @@ namespace TripodCamera.Sample {
             GUILayout.EndHorizontal();
 
             if (GUILayout.Button("进入移动状态")) {
-                var arg = new TCMovementStateArgs() {
+                var arg = new TCMovementStateModel() {
                     offset = moveOffset,
                     easingType = (EasingType)moveEasingType,
                     duration = moveDuration,
                     isInherit = false
                 };
-                tcCore.SetterAPI.Enter_Move_Current(new TCMovementStateArgs[] { arg }, EasingType.Linear, 0.5f);
+                tcCore.SetterAPI.Enter_Move_Current(new TCMovementStateModel[] { arg }, EasingType.Linear, 0.5f);
             }
 
             GUILayout.Label("旋转");
@@ -280,13 +280,13 @@ namespace TripodCamera.Sample {
             GUILayout.EndHorizontal();
 
             if (GUILayout.Button("进入旋转状态")) {
-                var arg = new TCRotationStateArgs() {
+                var arg = new TCRotationStateModel() {
                     offset = rotOffset,
                     easingType = (EasingType)rotEasingType,
                     duration = rotDuration,
                     isInherit = false
                 };
-                tcCore.SetterAPI.Enter_Rotation_Current(new TCRotationStateArgs[] { arg }, EasingType.Linear, 0.5f);
+                tcCore.SetterAPI.Enter_Rotation_Current(new TCRotationStateModel[] { arg }, EasingType.Linear, 0.5f);
             }
 
             GUILayout.Label("推进");
@@ -303,13 +303,13 @@ namespace TripodCamera.Sample {
             GUILayout.EndHorizontal();
 
             if (GUILayout.Button("进入推进状态")) {
-                var arg = new TCPushStateArgs() {
+                var arg = new TCPushStateModel() {
                     offset = pushOffset,
                     easingType = (EasingType)pushEasingType,
                     duration = pushDuration,
                     isInherit = false
                 };
-                tcCore.SetterAPI.Enter_Push_Current(new TCPushStateArgs[] { arg }, EasingType.Linear, 0.5f);
+                tcCore.SetterAPI.Enter_Push_Current(new TCPushStateModel[] { arg }, EasingType.Linear, 0.5f);
             }
 
             GUILayout.EndVertical();
