@@ -17,6 +17,8 @@ namespace TripodCamera.API {
             this.domain = domain;
         }
 
+        // ==== Spawn ====
+
         // ==== Basic ====
         void ITCSetterAPI.Push_In_Current(float value) {
             var cameraDomain = domain.CameraDomain;
@@ -87,30 +89,30 @@ namespace TripodCamera.API {
         }
 
         // ==== Shake ====
-        void ITCSetterAPI.Enter_Shake_Current(TCShakeStateArgs[] args) {
+        void ITCSetterAPI.Enter_Shake_Current(TCShakeStateModel[] args) {
             var cameraDomain = domain.CameraDomain;
             cameraDomain.Enter_Shake_Current(args);
         }
 
         // ==== Move ====
-        void ITCSetterAPI.Enter_Move_Current(TCMovementStateArgs[] args) {
+        void ITCSetterAPI.Enter_Move_Current(TCMovementStateModel[] args) {
             var cameraDomain = domain.CameraDomain;
             cameraDomain.Enter_Movement_Current(args, false, default, 0);
         }
 
-        void ITCSetterAPI.Enter_Move_Current(TCMovementStateArgs[] args, EasingType exitEasingType, float exitDuration) {
+        void ITCSetterAPI.Enter_Move_Current(TCMovementStateModel[] args, EasingType exitEasingType, float exitDuration) {
             var cameraDomain = domain.CameraDomain;
             cameraDomain.Enter_Movement_Current(args, true, exitEasingType, exitDuration);
         }
 
         // ==== Push ====
-        void ITCSetterAPI.Enter_Push_Current(TCPushStateArgs[] args, EasingType exitEasingType, float exitDuration) {
+        void ITCSetterAPI.Enter_Push_Current(TCPushStateModel[] args, EasingType exitEasingType, float exitDuration) {
             var cameraDomain = domain.CameraDomain;
             cameraDomain.Enter_Push_Current(args, true, exitEasingType, exitDuration);
         }
 
         // ==== Rotation ====
-        void ITCSetterAPI.Enter_Rotation_Current(TCRotationStateArgs[] args, EasingType exitEasingType, float exitDuration) {
+        void ITCSetterAPI.Enter_Rotation_Current(TCRotationStateModel[] args, EasingType exitEasingType, float exitDuration) {
             var cameraDomain = domain.CameraDomain;
             cameraDomain.Enter_Rotation_Current(args, true, exitEasingType, exitDuration);
         }

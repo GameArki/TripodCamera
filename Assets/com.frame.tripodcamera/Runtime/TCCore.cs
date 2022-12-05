@@ -90,6 +90,15 @@ namespace TripodCamera {
 
         }
 
+        // ==== Unsafe API ====
+        public TCFacades GetFacadesThatYouCanVisitEverythingButNotRecommended() {
+            return facades;
+        }
+
+        public TCDomain GetDomainThatYouCanVisitEverythingButNotRecommended() {
+            return domain;
+        }
+
     }
 
 }

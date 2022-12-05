@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace TripodCamera {
+namespace TripodCamera.Entities {
 
     public class TCCameraInfoComponent {
 

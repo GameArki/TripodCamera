@@ -1,49 +1,50 @@
 using UnityEngine;
 using TripodCamera.Facades;
+using TripodCamera.Entities;
 
 namespace TripodCamera.Domain {
 
-    internal class TCApplyDomain {
+    public class TCApplyDomain {
 
         TCFacades facades;
 
-        internal TCApplyDomain() { }
+        public TCApplyDomain() { }
 
-        internal void Inject(TCFacades facades) {
+        public void Inject(TCFacades facades) {
             this.facades = facades;
         }
 
-        internal void ApplyFollow(TCCameraEntity tcCam, float dt) {
+        public void ApplyFollow(TCCameraEntity tcCam, float dt) {
             tcCam.FollowComponent.TickEasing(dt);
         }
 
         // ==== State ====
         // - Track
-        internal void ApplyTrackState(TCCameraEntity tcCam, float dt) {
+        public void ApplyTrackState(TCCameraEntity tcCam, float dt) {
             tcCam.TrackComponent.Tick(dt);
         }
 
         // - Shake
-        internal void ApplyShakeState(TCCameraEntity tcCam, float dt) {
+        public void ApplyShakeState(TCCameraEntity tcCam, float dt) {
             tcCam.ShakeComponent.Tick(dt);
         }
 
         // - Move
-        internal void ApplyMoveState(TCCameraEntity tcCam, float dt) {
+        public void ApplyMoveState(TCCameraEntity tcCam, float dt) {
             tcCam.MovementStateComponent.Tick(dt);
         }
 
         // - Rotate
-        internal void ApplyRotateState(TCCameraEntity tcCam, float dt) {
+        public void ApplyRotateState(TCCameraEntity tcCam, float dt) {
             tcCam.RotateStateComponent.Tick(dt);
         }
 
         // - Push
-        internal void ApplyPushState(TCCameraEntity tcCam, float dt) {
+        public void ApplyPushState(TCCameraEntity tcCam, float dt) {
             tcCam.PushStateComponent.Tick(dt);
         }
 
-        internal void ApplyToMain(TCCameraEntity tcCam, Camera mainCam) {
+        public void ApplyToMain(TCCameraEntity tcCam, Camera mainCam) {
 
             var info = tcCam.CurrentInfoComponent;
 

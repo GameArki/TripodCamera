@@ -1,12 +1,12 @@
 using UnityEngine;
 using JackEasing;
 
-namespace TripodCamera {
+namespace TripodCamera.Entities {
 
     public class TCCameraShakeStateComponent {
 
         // Args
-        TCShakeStateArgs[] args;
+        TCShakeStateModel[] arr;
         int index;
 
         // Temp
@@ -15,21 +15,21 @@ namespace TripodCamera {
 
         public TCCameraShakeStateComponent() { }
 
-        public void SetShake(TCShakeStateArgs[] args) {
-            this.args = args;
+        public void SetShake(TCShakeStateModel[] args) {
+            this.arr = args;
             this.index = 0;
             this.time = 0;
         }
 
         public void Tick(float dt) {
 
-            if (args == null || index >= args.Length) {
+            if (arr == null || index >= arr.Length) {
                 return;
             }
 
             time += dt;
 
-            var cur = args[index];
+            var cur = arr[index];
             float x = WaveHelper.SinWaveReductionEasing(cur.easingType, time, cur.duration, cur.amplitudeOffset.x, cur.frequency, 0);
             float y = WaveHelper.SinWaveReductionEasing(cur.easingType, time, cur.duration, cur.amplitudeOffset.y, cur.frequency, 0);
             resOffset = new Vector3(x, y);

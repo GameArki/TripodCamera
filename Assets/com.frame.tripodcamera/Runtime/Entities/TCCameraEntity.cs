@@ -1,8 +1,7 @@
-using System;
 using UnityEngine;
 using JackEasing;
 
-namespace TripodCamera {
+namespace TripodCamera.Entities {
 
     public class TCCameraEntity {
 

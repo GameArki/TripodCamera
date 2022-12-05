@@ -1,14 +1,13 @@
 using System;
-using UnityEngine;
 using JackEasing;
 
-namespace TripodCamera {
+namespace TripodCamera.Entities {
 
 
     public class TCCameraPushStateComponent {
 
         // Args
-        TCPushStateArgs[] args;
+        TCPushStateModel[] arr;
 
         bool isExitReset;
         EasingType exitEasing;
@@ -27,9 +26,9 @@ namespace TripodCamera {
 
         public TCCameraPushStateComponent() { }
 
-        public void EnterPush(TCPushStateArgs[] args, bool isExitReset, EasingType exitEasing, float exitDuration) {
+        public void EnterPush(TCPushStateModel[] args, bool isExitReset, EasingType exitEasing, float exitDuration) {
 
-            this.args = args;
+            this.arr = args;
 
             this.isExitReset = isExitReset;
             this.exitEasing = exitEasing;
@@ -54,13 +53,13 @@ namespace TripodCamera {
 
         void Execute(float dt) {
 
-            if (args == null || index >= args.Length) {
+            if (arr == null || index >= arr.Length) {
                 return;
             }
 
             time += dt;
 
-            var cur = args[index];
+            var cur = arr[index];
             if (cur.isInherit) {
                 resOffset = EasingHelper.Ease1D(cur.easingType, time, cur.duration, resOffset, cur.offset);
             } else {
@@ -71,9 +70,9 @@ namespace TripodCamera {
                 time = 0;
                 index += 1;
 
-                bool hasNext = index < args.Length;
+                bool hasNext = index < arr.Length;
                 if (hasNext) {
-                    var next = args[index];
+                    var next = arr[index];
                     if (next.isInherit) {
                         next.offset += resOffset;
                     } else {

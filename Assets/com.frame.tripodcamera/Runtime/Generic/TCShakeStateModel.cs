@@ -3,7 +3,7 @@ using JackEasing;
 
 namespace TripodCamera {
 
-    public struct TCShakeStateArgs {
+    public struct TCShakeStateModel {
 
         public Vector2 amplitudeOffset;
         public EasingType easingType;

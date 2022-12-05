@@ -1,40 +1,41 @@
 using System.Collections.Generic;
+using TripodCamera.Entities;
 
 namespace TripodCamera {
 
-    internal class TCCameraRepo {
+    public class TCCameraRepo {
 
         TCCameraEntity activeCam;
-        internal TCCameraEntity ActiveCam => activeCam;
+        public TCCameraEntity ActiveCam => activeCam;
 
         List<TCCameraEntity> all = new List<TCCameraEntity>();
 
-        internal TCCameraRepo() {}
+        public TCCameraRepo() {}
 
-        internal void SetActiveCam(TCCameraEntity cam) {
+        public void SetActiveCam(TCCameraEntity cam) {
             this.activeCam = cam;
         } 
 
-        internal void Add(TCCameraEntity camera) {
+        public void Add(TCCameraEntity camera) {
             if (activeCam == null) {
                 activeCam = camera;
             }
             all.Add(camera);
         }
 
-        internal void Remove(TCCameraEntity camera) {
+        public void Remove(TCCameraEntity camera) {
             all.Remove(camera);
         }
 
-        internal void Clear() {
+        public void Clear() {
             all.Clear();
         }
 
-        internal TCCameraEntity Get(int index) {
+        public TCCameraEntity Get(int index) {
             return all[index];
         }
 
-        internal int Count => all.Count;
+        public int Count => all.Count;
 
     }
 

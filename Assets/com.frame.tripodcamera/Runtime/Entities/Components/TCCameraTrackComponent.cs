@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using JackEasing;
 
-namespace TripodCamera {
+namespace TripodCamera.Entities {
 
     public class TCCameraTrackComponent {
 
         // ==== Locomotion ====
-        List<TCDollyPointModel> dollyPoints;
+        List<TCDollyStateModel> dollyPoints;
         int dollyIndex;
 
         Vector3 dollyPos;
@@ -17,10 +17,10 @@ namespace TripodCamera {
         float time;
 
         public TCCameraTrackComponent() {
-            this.dollyPoints = new List<TCDollyPointModel>();
+            this.dollyPoints = new List<TCDollyStateModel>();
         }
 
-        public void AddDollyPoint(TCDollyPointModel dollyPoint) {
+        public void AddDollyPoint(TCDollyStateModel dollyPoint) {
             dollyPoints.Add(dollyPoint);
         }
 
@@ -38,7 +38,7 @@ namespace TripodCamera {
             }
         }
 
-        bool TryGetCurrentDolly(out TCDollyPointModel model) {
+        bool TryGetCurrentDolly(out TCDollyStateModel model) {
             if (dollyIndex >= dollyPoints.Count) {
                 model = default;
                 return false;

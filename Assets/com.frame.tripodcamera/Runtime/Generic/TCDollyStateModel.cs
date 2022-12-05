@@ -5,7 +5,7 @@ using JackEasing;
 namespace TripodCamera {
 
     [Serializable]
-    public struct TCDollyPointModel {
+    public struct TCDollyStateModel {
 
         /* Last Point Read Outside */
 
