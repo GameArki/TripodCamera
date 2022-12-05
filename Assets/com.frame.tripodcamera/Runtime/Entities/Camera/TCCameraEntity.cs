@@ -10,7 +10,7 @@ namespace TripodCamera.Entities {
         public void SetID(int value) => id = value;
 
         // ==== Info ====
-        TCCameraInfoComponent defaultInfoComponent;
+        TCCameraInfoComponent savedInfoComponent;
 
         TCCameraInfoComponent currentInfoComponent;
         public TCCameraInfoComponent CurrentInfoComponent => currentInfoComponent;
@@ -45,7 +45,7 @@ namespace TripodCamera.Entities {
         public TCCameraPushStateComponent PushStateComponent => pushStateComponent;
 
         public TCCameraEntity() {
-            this.defaultInfoComponent = new TCCameraInfoComponent();
+            this.savedInfoComponent = new TCCameraInfoComponent();
             this.currentInfoComponent = new TCCameraInfoComponent();
             this.followComponent = new TCCameraFollowComponent();
             this.lookAtComponent = new TCCameraLookAtComponent();
@@ -59,18 +59,18 @@ namespace TripodCamera.Entities {
 
         // ==== Info ====
         public void InitInfo(Vector3 pos, Quaternion rot, float fov) {
-            defaultInfoComponent.Init(pos, rot, fov);
+            savedInfoComponent.Init(pos, rot, fov);
             currentInfoComponent.Init(pos, rot, fov);
         }
 
         public void SaveAsDefault() {
             // Save pos, rot, fov
-            defaultInfoComponent.CloneFrom(currentInfoComponent);
+            savedInfoComponent.CloneFrom(currentInfoComponent);
         }
 
         public void RestoreByDefault() {
             // Restore pos, rot, fov
-            currentInfoComponent.CloneFrom(defaultInfoComponent);
+            currentInfoComponent.CloneFrom(savedInfoComponent);
         }
 
         // ==== Basic ====

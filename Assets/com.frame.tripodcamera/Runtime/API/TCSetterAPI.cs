@@ -18,6 +18,22 @@ namespace TripodCamera.API {
         }
 
         // ==== Spawn ====
+        void ITCSetterAPI.SpawnByMain(int id) {
+            var cameraDomain = domain.CameraDomain;
+            var cam = facades.MainCamera;
+            var tf = cam.transform;
+            cameraDomain.Spawn(id, tf.position, tf.rotation, cam.fieldOfView);
+        }
+
+        void ITCSetterAPI.Spawn(int id, Vector3 position, Quaternion rotation, float fov) {
+            var cameraDomain = domain.CameraDomain;
+            cameraDomain.Spawn(id, position, rotation, fov);
+        }
+
+        void ITCSetterAPI.CutTo(int id, EasingType easingType, float duration) {
+            var directorDomain = domain.DirectorDomain;
+            directorDomain.CutTo(id, easingType, duration);
+        }
 
         // ==== Basic ====
         void ITCSetterAPI.Push_In_Current(float value) {

@@ -5,6 +5,11 @@ namespace TripodCamera.API {
 
     public interface ITCSetterAPI {
 
+        // ==== Spawn ====
+        void Spawn(int id, Vector3 position, Quaternion rotation, float fov);
+        void SpawnByMain(int id);
+        void CutTo(int id, EasingType easingType, float duration);
+
         // ==== Basic ====
         void Push_In_Current(float value);
 
