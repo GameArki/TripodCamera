@@ -5,6 +5,10 @@ namespace TripodCamera.Entities {
 
     public class TCCameraEntity {
 
+        int id;
+        public int ID => id;
+        public void SetID(int value) => id = value;
+
         // ==== Info ====
         TCCameraInfoComponent defaultInfoComponent;
 

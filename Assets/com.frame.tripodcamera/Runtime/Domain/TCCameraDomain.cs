@@ -15,10 +15,11 @@ namespace TripodCamera.Domain {
             this.facades = facades;
         }
 
-        public void Spawn(Vector3 pos, Quaternion rot, float fov) {
+        public void Spawn(int id, Vector3 pos, Quaternion rot, float fov) {
 
             var repo = facades.CameraRepo;
             var tcCam = new TCCameraEntity();
+            tcCam.SetID(id);
             tcCam.InitInfo(pos, rot, fov);
 
             repo.Add(tcCam);

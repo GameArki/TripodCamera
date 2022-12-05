@@ -25,7 +25,7 @@ namespace TripodCamera {
             var cameraDomain = domain.CameraDomain;
             var cam = facades.MainCamera;
             var tf = cam.transform;
-            cameraDomain.Spawn(tf.position, tf.rotation, cam.fieldOfView);
+            cameraDomain.Spawn(int.MaxValue, tf.position, tf.rotation, cam.fieldOfView);
 
         }
 
