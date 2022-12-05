@@ -111,31 +111,38 @@ namespace TripodCamera.Domain {
 
         // ==== State ====
         // - Shake
-        public void Enter_Shake_Current(TCShakeStateModel[] args) {
+        public void Enter_Shake_Current(TCShakeStateModel[] mods) {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
-            tcCam.ShakeComponent.SetShake(args);
+            tcCam.ShakeComponent.SetShake(mods);
         }
 
         // - Movement
-        public void Enter_Movement_Current(TCMovementStateModel[] args, bool isExitReset, EasingType exitEasing, float exitDuration) {
+        public void Enter_Movement_Current(TCMovementStateModel[] mods, bool isExitReset, EasingType exitEasing, float exitDuration) {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
-            tcCam.MovementStateComponent.EnterMovement(args, isExitReset, exitEasing, exitDuration);
+            tcCam.MovementStateComponent.EnterMovement(mods, isExitReset, exitEasing, exitDuration);
+        }
+
+        // - Round
+        public void Enter_Round_Current(TCRoundStateModel[] mods, bool isExitReset, EasingType exitEasing, float exitDuration) {
+            var repo = facades.CameraRepo;
+            var tcCam = repo.ActiveCam;
+            tcCam.RoundStateComponent.EnterRound(mods, isExitReset, exitEasing, exitDuration);
         }
 
         // - Rotation
-        public void Enter_Rotation_Current(TCRotationStateModel[] args, bool isExitReset, EasingType exitEasing, float exitDuration) {
+        public void Enter_Rotation_Current(TCRotationStateModel[] mods, bool isExitReset, EasingType exitEasing, float exitDuration) {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
-            tcCam.RotateStateComponent.EnterRotation(args, isExitReset, exitEasing, exitDuration);
+            tcCam.RotateStateComponent.EnterRotation(mods, isExitReset, exitEasing, exitDuration);
         }
 
         // - Push
-        public void Enter_Push_Current(TCPushStateModel[] args, bool isExitReset, EasingType exitEasing, float exitDuration) {
+        public void Enter_Push_Current(TCPushStateModel[] mods, bool isExitReset, EasingType exitEasing, float exitDuration) {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
-            tcCam.PushStateComponent.EnterPush(args, isExitReset, exitEasing, exitDuration);
+            tcCam.PushStateComponent.EnterPush(mods, isExitReset, exitEasing, exitDuration);
         }
 
     }

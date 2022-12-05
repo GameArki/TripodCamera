@@ -34,6 +34,11 @@ namespace TripodCamera.Domain {
             tcCam.MovementStateComponent.Tick(dt);
         }
 
+        // - Round
+        public void ApplyRoundState(TCCameraEntity tcCam, float dt) {
+            tcCam.RoundStateComponent.Tick(dt);
+        }
+
         // - Rotate
         public void ApplyRotateState(TCCameraEntity tcCam, float dt) {
             tcCam.RotateStateComponent.Tick(dt);
@@ -89,10 +94,18 @@ namespace TripodCamera.Domain {
             var fwd = rot * Vector3.forward;
             fwd *= pushAddition;
 
-            // - Apply
-            mainCam.transform.rotation = rot;
-            mainCam.transform.position = pos + trackPosAddition + shakePosAddition + moveAddition + fwd;
+            // # Round Calculation
+            var resPos = pos + trackPosAddition + shakePosAddition + moveAddition + fwd;
+            var rsc = tcCam.RoundStateComponent;
+            var roundPosOffset = rsc.GetRoundPosOffset(resPos);
+            resPos += roundPosOffset;
 
+            mainCam.transform.position = resPos;
+            var lookAtComponent = tcCam.LookAtComponent;
+            if (lookAtComponent.IsLookingAt()) {
+                rot = lookAtComponent.GetLookAtRotation(resPos, info.Rot);
+            }
+            mainCam.transform.rotation = rot;
             mainCam.fieldOfView = info.FOV;
 
         }

@@ -10,7 +10,7 @@ namespace TripodCamera.Entities {
         public void SetID(int value) => id = value;
 
         // ==== Info ====
-        TCCameraInfoComponent defaultInfoComponent;
+        TCCameraInfoComponent savedInfoComponent;
 
         TCCameraInfoComponent currentInfoComponent;
         public TCCameraInfoComponent CurrentInfoComponent => currentInfoComponent;
@@ -36,6 +36,9 @@ namespace TripodCamera.Entities {
         TCCameraMovementStateComponent movementStateComponent;
         public TCCameraMovementStateComponent MovementStateComponent => movementStateComponent;
 
+        TCCameraRoundStateComponent roundStateComponent;
+        public TCCameraRoundStateComponent RoundStateComponent => roundStateComponent;
+
         // - Rotate State
         TCCameraRotateStateComponent rotateStateComponent;
         public TCCameraRotateStateComponent RotateStateComponent => rotateStateComponent;
@@ -45,7 +48,7 @@ namespace TripodCamera.Entities {
         public TCCameraPushStateComponent PushStateComponent => pushStateComponent;
 
         public TCCameraEntity() {
-            this.defaultInfoComponent = new TCCameraInfoComponent();
+            this.savedInfoComponent = new TCCameraInfoComponent();
             this.currentInfoComponent = new TCCameraInfoComponent();
             this.followComponent = new TCCameraFollowComponent();
             this.lookAtComponent = new TCCameraLookAtComponent();
@@ -53,24 +56,25 @@ namespace TripodCamera.Entities {
             this.trackComponent = new TCCameraTrackComponent();
             this.shakeStateComponent = new TCCameraShakeStateComponent();
             this.movementStateComponent = new TCCameraMovementStateComponent();
+            this.roundStateComponent = new TCCameraRoundStateComponent();
             this.rotateStateComponent = new TCCameraRotateStateComponent();
             this.pushStateComponent = new TCCameraPushStateComponent();
         }
 
         // ==== Info ====
         public void InitInfo(Vector3 pos, Quaternion rot, float fov) {
-            defaultInfoComponent.Init(pos, rot, fov);
+            savedInfoComponent.Init(pos, rot, fov);
             currentInfoComponent.Init(pos, rot, fov);
         }
 
         public void SaveAsDefault() {
             // Save pos, rot, fov
-            defaultInfoComponent.CloneFrom(currentInfoComponent);
+            savedInfoComponent.CloneFrom(currentInfoComponent);
         }
 
         public void RestoreByDefault() {
             // Restore pos, rot, fov
-            currentInfoComponent.CloneFrom(defaultInfoComponent);
+            currentInfoComponent.CloneFrom(savedInfoComponent);
         }
 
         // ==== Basic ====
@@ -109,30 +113,32 @@ namespace TripodCamera.Entities {
             right = right * value.x;
             pos += right + up;
 
-            var lookAtTF = lookAtComponent.LookAtTF;
-            if (lookAtTF != null) {
-
-                Vector3 dir = pos - lookAtTF.position;
-                float length = dir.magnitude;
-                dir.Normalize();
-
-                // Rotate Dir
-                float angleX = -value.x;
-                float angleY = value.y;
-                Quaternion rotX = Quaternion.AngleAxis(angleX, Vector3.up);
-                Quaternion rotY = Quaternion.AngleAxis(angleY, Vector3.right);
-                dir = rotX * rotY * dir;
-
-                // Move
-                pos = lookAtTF.position + dir * length;
-
+            if (followComponent.IsFollowing()) {
+                followComponent.OffsetAdd(right + up);
+            } else {
+                currentInfoComponent.SetPos(pos);
             }
+        }
 
-            currentInfoComponent.SetPos(pos);
+        public void Round(Vector2 roundOffset, Transform tar) {
+            var offset = GetRoundOffset(roundOffset, tar);
+            followComponent.OffsetAdd(offset);
+        }
 
-            // - Follow Component
-            followComponent.OffsetAdd(right + up);
+        public Vector3 GetRoundOffset(Vector2 roundOffset, Transform tar) {
+            var pos = currentInfoComponent.Pos;
+            Vector3 dir = pos - tar.position;
+            float length = dir.magnitude;
+            dir.Normalize();
 
+            // Rotate Dir
+            float angleX = -roundOffset.x;
+            float angleY = roundOffset.y;
+            Quaternion rotX = Quaternion.AngleAxis(angleX, Vector3.up);
+            Quaternion rotY = Quaternion.AngleAxis(angleY, Vector3.right);
+            dir = rotX * rotY * dir;
+
+            return (tar.position + dir * length) - pos;
         }
 
         public void Move_AndChangeLookAtOffset(Vector2 value) {

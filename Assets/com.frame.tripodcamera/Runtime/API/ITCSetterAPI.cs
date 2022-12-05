@@ -5,6 +5,11 @@ namespace TripodCamera.API {
 
     public interface ITCSetterAPI {
 
+        // ==== Spawn ====
+        void Spawn(int id, Vector3 position, Quaternion rotation, float fov);
+        void SpawnByMain(int id);
+        void CutTo(int id, EasingType easingType, float duration);
+
         // ==== Basic ====
         void Push_In_Current(float value);
 
@@ -30,6 +35,7 @@ namespace TripodCamera.API {
         void Enter_Shake_Current(TCShakeStateModel[] args);
         void Enter_Move_Current(TCMovementStateModel[] args);
         void Enter_Move_Current(TCMovementStateModel[] args, EasingType exitEasingType, float exitDuration);
+        void Enter_Round_Current(TCRoundStateModel[] args, EasingType exitEasingType, float exitDuration);
         void Enter_Push_Current(TCPushStateModel[] args, EasingType exitEasingType, float exitDuration);
         void Enter_Rotation_Current(TCRotationStateModel[] args, EasingType exitEasingType, float exitDuration);
 

@@ -46,10 +46,17 @@ namespace TripodCamera.Sample {
         float pushDuration = 1;
         int pushEasingType = (int)EasingType.Linear;
 
+        // - Round State
+        Vector2 roundOffset = Vector2.right;
+        float roundDuration = 1;
+        int roundEasingType = (int)EasingType.Linear;
+
         void Awake() {
 
             tcCore = new TCCore();
             tcCore.Initialize(Camera.main);
+            int mainID = 5;
+            tcCore.SetterAPI.SpawnByMain(mainID);
 
             this.targets = new List<GameObject>();
 
@@ -228,13 +235,13 @@ namespace TripodCamera.Sample {
             GUILayout.Label("移动");
             GUILayout.BeginHorizontal();
             GUILayout.Label("x: ");
-            moveOffset.x = GUILayout.HorizontalSlider(moveOffset.x, -10, 10, GUILayout.Width(100));
+            moveOffset.x = GUILayout.HorizontalSlider(moveOffset.x, -100, 100, GUILayout.Width(100));
             GUILayout.Label(" " + moveOffset.x.ToString("F2"));
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("y: ");
-            moveOffset.y = GUILayout.HorizontalSlider(moveOffset.y, -10, 10, GUILayout.Width(100));
+            moveOffset.y = GUILayout.HorizontalSlider(moveOffset.y, -100, 100, GUILayout.Width(10));
             GUILayout.Label(" " + moveOffset.y.ToString("F2"));
             GUILayout.EndHorizontal();
 
@@ -263,13 +270,13 @@ namespace TripodCamera.Sample {
             GUILayout.Label("旋转");
             GUILayout.BeginHorizontal();
             GUILayout.Label("x: ");
-            rotOffset.x = GUILayout.HorizontalSlider(rotOffset.x, -10, 10, GUILayout.Width(100));
+            rotOffset.x = GUILayout.HorizontalSlider(rotOffset.x, -90, 90, GUILayout.Width(100));
             GUILayout.Label(" " + rotOffset.x.ToString("F2"));
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("y: ");
-            rotOffset.y = GUILayout.HorizontalSlider(rotOffset.y, -10, 10, GUILayout.Width(100));
+            rotOffset.y = GUILayout.HorizontalSlider(rotOffset.y, -90, 90, GUILayout.Width(100));
             GUILayout.Label(" " + rotOffset.y.ToString("F2"));
             GUILayout.EndHorizontal();
 
@@ -292,13 +299,13 @@ namespace TripodCamera.Sample {
             GUILayout.Label("推进");
             GUILayout.BeginHorizontal();
             GUILayout.Label("pushOffset: ");
-            pushOffset = GUILayout.HorizontalSlider(pushOffset, -10, 10, GUILayout.Width(100));
+            pushOffset = GUILayout.HorizontalSlider(pushOffset, -100, 100, GUILayout.Width(100));
             GUILayout.Label(" " + pushOffset.ToString("F2"));
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("持续: ");
-            pushDuration = GUILayout.HorizontalSlider(pushDuration, 0, 3, GUILayout.Width(100));
+            pushDuration = GUILayout.HorizontalSlider(pushDuration, 0, 10, GUILayout.Width(100));
             GUILayout.Label(" " + pushDuration.ToString("F2"));
             GUILayout.EndHorizontal();
 
@@ -310,6 +317,32 @@ namespace TripodCamera.Sample {
                     isInherit = false
                 };
                 tcCore.SetterAPI.Enter_Push_Current(new TCPushStateModel[] { arg }, EasingType.Linear, 0.5f);
+            }
+
+            GUILayout.Label("绕柱");
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("roundOffset: ");
+            roundOffset.x = GUILayout.HorizontalSlider(roundOffset.x, -360, 360, GUILayout.Width(100));
+            GUILayout.Label(" " + roundOffset.x.ToString("F2"));
+            roundOffset.y = GUILayout.HorizontalSlider(roundOffset.y, -360, 360, GUILayout.Width(100));
+            GUILayout.Label(" " + roundOffset.y.ToString("F2"));
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("持续: ");
+            roundDuration = GUILayout.HorizontalSlider(roundDuration, 0, 10, GUILayout.Width(100));
+            GUILayout.Label(" " + roundDuration.ToString("F2"));
+            GUILayout.EndHorizontal();
+
+            if (GUILayout.Button("进入绕柱状态")) {
+                TCRoundStateModel arg;
+                arg.tar = GameObject.Find("绕柱柱子").transform;
+                arg.offset = roundOffset;
+                arg.easingType = (EasingType)roundEasingType;
+                arg.duration = roundDuration;
+                arg.isInherit = false;
+
+                tcCore.SetterAPI.Enter_Round_Current(new TCRoundStateModel[] { arg }, EasingType.Linear, 0.5f);
             }
 
             GUILayout.EndVertical();

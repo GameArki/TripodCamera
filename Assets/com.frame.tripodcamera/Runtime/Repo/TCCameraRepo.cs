@@ -29,6 +29,10 @@ namespace TripodCamera {
             }
         }
 
+        public bool TryGet(int id, out TCCameraEntity entity) {
+            return all.TryGetValue(id, out entity);
+        }
+
         public void Remove(int id) {
             all.Remove(id);
         }

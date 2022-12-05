@@ -18,6 +18,22 @@ namespace TripodCamera.API {
         }
 
         // ==== Spawn ====
+        void ITCSetterAPI.SpawnByMain(int id) {
+            var cameraDomain = domain.CameraDomain;
+            var cam = facades.MainCamera;
+            var tf = cam.transform;
+            cameraDomain.Spawn(id, tf.position, tf.rotation, cam.fieldOfView);
+        }
+
+        void ITCSetterAPI.Spawn(int id, Vector3 position, Quaternion rotation, float fov) {
+            var cameraDomain = domain.CameraDomain;
+            cameraDomain.Spawn(id, position, rotation, fov);
+        }
+
+        void ITCSetterAPI.CutTo(int id, EasingType easingType, float duration) {
+            var directorDomain = domain.DirectorDomain;
+            directorDomain.CutTo(id, easingType, duration);
+        }
 
         // ==== Basic ====
         void ITCSetterAPI.Push_In_Current(float value) {
@@ -89,32 +105,37 @@ namespace TripodCamera.API {
         }
 
         // ==== Shake ====
-        void ITCSetterAPI.Enter_Shake_Current(TCShakeStateModel[] args) {
+        void ITCSetterAPI.Enter_Shake_Current(TCShakeStateModel[] mods) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.Enter_Shake_Current(args);
+            cameraDomain.Enter_Shake_Current(mods);
         }
 
         // ==== Move ====
-        void ITCSetterAPI.Enter_Move_Current(TCMovementStateModel[] args) {
+        void ITCSetterAPI.Enter_Move_Current(TCMovementStateModel[] mods) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.Enter_Movement_Current(args, false, default, 0);
+            cameraDomain.Enter_Movement_Current(mods, false, default, 0);
         }
 
-        void ITCSetterAPI.Enter_Move_Current(TCMovementStateModel[] args, EasingType exitEasingType, float exitDuration) {
+        void ITCSetterAPI.Enter_Move_Current(TCMovementStateModel[] mods, EasingType exitEasingType, float exitDuration) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.Enter_Movement_Current(args, true, exitEasingType, exitDuration);
+            cameraDomain.Enter_Movement_Current(mods, true, exitEasingType, exitDuration);
+        }
+
+        void ITCSetterAPI.Enter_Round_Current(TCRoundStateModel[] mods, EasingType exitEasingType, float exitDuration) {
+            var cameraDomain = domain.CameraDomain;
+            cameraDomain.Enter_Round_Current(mods, true, exitEasingType, exitDuration);
         }
 
         // ==== Push ====
-        void ITCSetterAPI.Enter_Push_Current(TCPushStateModel[] args, EasingType exitEasingType, float exitDuration) {
+        void ITCSetterAPI.Enter_Push_Current(TCPushStateModel[] mods, EasingType exitEasingType, float exitDuration) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.Enter_Push_Current(args, true, exitEasingType, exitDuration);
+            cameraDomain.Enter_Push_Current(mods, true, exitEasingType, exitDuration);
         }
 
         // ==== Rotation ====
-        void ITCSetterAPI.Enter_Rotation_Current(TCRotationStateModel[] args, EasingType exitEasingType, float exitDuration) {
+        void ITCSetterAPI.Enter_Rotation_Current(TCRotationStateModel[] mods, EasingType exitEasingType, float exitDuration) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.Enter_Rotation_Current(args, true, exitEasingType, exitDuration);
+            cameraDomain.Enter_Rotation_Current(mods, true, exitEasingType, exitDuration);
         }
 
     }

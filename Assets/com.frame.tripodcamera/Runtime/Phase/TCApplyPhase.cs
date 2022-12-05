@@ -9,7 +9,7 @@ namespace TripodCamera.Controller {
         TCFacades facades;
         TCDomain domain;
 
-        internal TCapplyPhase() {}
+        internal TCapplyPhase() { }
 
         internal void Inject(TCFacades facades, TCDomain domain) {
             this.facades = facades;
@@ -24,6 +24,7 @@ namespace TripodCamera.Controller {
             applyDomain.ApplyTrackState(tcCam, dt);
             applyDomain.ApplyShakeState(tcCam, dt);
             applyDomain.ApplyMoveState(tcCam, dt);
+            applyDomain.ApplyRoundState(tcCam, dt);
             applyDomain.ApplyRotateState(tcCam, dt);
             applyDomain.ApplyPushState(tcCam, dt);
 
