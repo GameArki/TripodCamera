@@ -55,6 +55,8 @@ namespace TripodCamera.Sample {
 
             tcCore = new TCCore();
             tcCore.Initialize(Camera.main);
+            int mainID = 5;
+            tcCore.SetterAPI.SpawnByMain(mainID);
 
             this.targets = new List<GameObject>();
 
