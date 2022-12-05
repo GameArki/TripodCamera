@@ -16,6 +16,7 @@ namespace TripodCamera.Entities {
         // Temp
         int index;
         float resOffset;
+        float resOffset_inherit;
         float time;
 
         float exitStartOffset;
@@ -61,7 +62,7 @@ namespace TripodCamera.Entities {
 
             var cur = arr[index];
             if (cur.isInherit) {
-                resOffset = EasingHelper.Ease1D(cur.easingType, time, cur.duration, resOffset, cur.offset);
+                resOffset = EasingHelper.Ease1D(cur.easingType, time, cur.duration, resOffset_inherit, cur.offset);
             } else {
                 resOffset = EasingHelper.Ease1D(cur.easingType, time, cur.duration, 0, cur.offset);
             }
@@ -75,6 +76,7 @@ namespace TripodCamera.Entities {
                     var next = arr[index];
                     if (next.isInherit) {
                         next.offset += resOffset;
+                        resOffset_inherit = resOffset;
                     } else {
                         resOffset = 0;
                     }
