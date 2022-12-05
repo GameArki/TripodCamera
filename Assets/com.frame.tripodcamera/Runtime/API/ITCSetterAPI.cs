@@ -30,6 +30,7 @@ namespace TripodCamera.API {
         void Enter_Shake_Current(TCShakeStateModel[] args);
         void Enter_Move_Current(TCMovementStateModel[] args);
         void Enter_Move_Current(TCMovementStateModel[] args, EasingType exitEasingType, float exitDuration);
+        void Enter_Round_Current(TCRoundStateModel[] args, EasingType exitEasingType, float exitDuration);
         void Enter_Push_Current(TCPushStateModel[] args, EasingType exitEasingType, float exitDuration);
         void Enter_Rotation_Current(TCRotationStateModel[] args, EasingType exitEasingType, float exitDuration);
 
