@@ -26,6 +26,8 @@ namespace TripodCamera.Entities {
 
         public event Action OnEndHandle;
 
+        Transform curTar;
+
         public TCCameraRoundStateComponent() { }
 
         public void EnterRound(TCRoundStateModel[] args, bool isExitReset, EasingType exitEasing, float exitDuration) {
@@ -62,6 +64,7 @@ namespace TripodCamera.Entities {
             time += dt;
 
             var cur = arr[index];
+            curTar = cur.tar;
             if (cur.isInherit) {
                 resOffset = EasingHelper.Ease2D(cur.easingType, time, cur.duration, resOffset_inherit, cur.offset);
             } else {
@@ -100,6 +103,7 @@ namespace TripodCamera.Entities {
 
             exitTime += dt;
             resOffset = EasingHelper.Ease2D(exitEasing, exitTime, exitDuration, exitStartOffset, Vector2.zero);
+            Debug.Log($"resOffset:{resOffset}");
 
             if (exitTime >= exitDuration) {
                 exitTime = 0;
@@ -108,11 +112,11 @@ namespace TripodCamera.Entities {
         }
 
         public Vector3 GetRoundPosOffset(Vector3 pos) {
-            if (arr == null || index >= arr.Length) {
+            if (arr == null) {
                 return Vector3.zero;
             }
 
-            var tarPos = arr[index].tar.position;
+            var tarPos = curTar.position;
             Vector3 dir = pos - tarPos;
             float length = dir.magnitude;
             dir.Normalize();
@@ -129,8 +133,10 @@ namespace TripodCamera.Entities {
             Quaternion rotX = Quaternion.AngleAxis(angleX, up);
             Quaternion rotY = Quaternion.AngleAxis(angleY, right);
             dir = rotX * rotY * dir;
+            var offset = (tarPos + dir * length) - pos;
+            Debug.Log($"offset:{offset}");
 
-            return (tarPos + dir * length) - pos;
+            return offset;
         }
 
     }
