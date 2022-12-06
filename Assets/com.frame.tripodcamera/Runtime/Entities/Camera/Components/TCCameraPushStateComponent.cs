@@ -29,6 +29,14 @@ namespace TripodCamera.Entities {
 
         public void EnterPush(TCPushStateModel[] args, bool isExitReset, EasingType exitEasing, float exitDuration) {
 
+            if (args.Length == 0) return;
+            var args_0 = args[0];
+            if (args_0.isInherit) {
+                resOffset_inherit = resOffset;
+                args_0.offset += resOffset;
+                args[0] = args_0;
+            }
+
             this.arr = args;
 
             this.isExitReset = isExitReset;

@@ -35,21 +35,29 @@ namespace TripodCamera.Sample {
         Vector2 moveOffset = new Vector2(0.1f, 0.1f);
         float moveDuration = 1;
         int moveEasingType = (int)EasingType.Linear;
+        bool isInherit_move;
+        bool isExitReset_move;
 
         // - Rotate State
         Vector2 rotOffset = new Vector2(0.1f, 0.1f);
         float rotDuration = 1;
         int rotEasingType = (int)EasingType.Linear;
+        bool isInherit_rotate;
+        bool isExitReset_rotate;
 
         // - Push State
         float pushOffset = 1;
         float pushDuration = 1;
         int pushEasingType = (int)EasingType.Linear;
+        bool isInherit_push;
+        bool isExitReset_push;
 
         // - Round State
         Vector2 roundOffset = Vector2.right;
         float roundDuration = 1;
         int roundEasingType = (int)EasingType.Linear;
+        bool isInherit_round;
+        bool isExitReset_round;
 
         void Awake() {
 
@@ -256,15 +264,17 @@ namespace TripodCamera.Sample {
             moveEasingType = (int)GUILayout.HorizontalSlider((int)moveEasingType, 0, (int)EasingType.InOutBounce, GUILayout.Width(100));
             GUILayout.Label(" " + ((EasingType)moveEasingType).ToString(), GUILayout.Width(100));
             GUILayout.EndHorizontal();
+            isInherit_move = GUILayout.Toggle(isInherit_move, "isInherit");
+            isExitReset_move = GUILayout.Toggle(isExitReset_move, "isExitReset");
 
             if (GUILayout.Button("进入移动状态")) {
                 var arg = new TCMovementStateModel() {
                     offset = moveOffset,
                     easingType = (EasingType)moveEasingType,
                     duration = moveDuration,
-                    isInherit = false
+                    isInherit = isInherit_move
                 };
-                tcCore.SetterAPI.Enter_Move_Current(new TCMovementStateModel[] { arg }, EasingType.Linear, 0.5f);
+                tcCore.SetterAPI.Enter_Move_Current(new TCMovementStateModel[] { arg }, isExitReset_move, EasingType.Linear, 0.5f);
             }
 
             GUILayout.Label("旋转");
@@ -285,15 +295,17 @@ namespace TripodCamera.Sample {
             rotDuration = GUILayout.HorizontalSlider(rotDuration, 0, 3, GUILayout.Width(100));
             GUILayout.Label(" " + rotDuration.ToString("F2"));
             GUILayout.EndHorizontal();
+            isInherit_rotate = GUILayout.Toggle(isInherit_rotate, "isInherit");
+            isExitReset_rotate = GUILayout.Toggle(isExitReset_rotate, "isExitReset");
 
             if (GUILayout.Button("进入旋转状态")) {
                 var arg = new TCRotationStateModel() {
                     offset = rotOffset,
                     easingType = (EasingType)rotEasingType,
                     duration = rotDuration,
-                    isInherit = false
+                    isInherit = isInherit_rotate
                 };
-                tcCore.SetterAPI.Enter_Rotation_Current(new TCRotationStateModel[] { arg }, EasingType.Linear, 0.5f);
+                tcCore.SetterAPI.Enter_Rotation_Current(new TCRotationStateModel[] { arg }, isExitReset_rotate, EasingType.Linear, 0.5f);
             }
 
             GUILayout.Label("推进");
@@ -308,15 +320,17 @@ namespace TripodCamera.Sample {
             pushDuration = GUILayout.HorizontalSlider(pushDuration, 0, 10, GUILayout.Width(100));
             GUILayout.Label(" " + pushDuration.ToString("F2"));
             GUILayout.EndHorizontal();
+            isInherit_push = GUILayout.Toggle(isInherit_push, "isInherit");
+            isExitReset_push = GUILayout.Toggle(isExitReset_push, "isExitReset");
 
             if (GUILayout.Button("进入推进状态")) {
                 var arg = new TCPushStateModel() {
                     offset = pushOffset,
                     easingType = (EasingType)pushEasingType,
                     duration = pushDuration,
-                    isInherit = false
+                    isInherit = isInherit_push
                 };
-                tcCore.SetterAPI.Enter_Push_Current(new TCPushStateModel[] { arg }, EasingType.Linear, 0.5f);
+                tcCore.SetterAPI.Enter_Push_Current(new TCPushStateModel[] { arg }, isExitReset_push, EasingType.Linear, 0.5f);
             }
 
             GUILayout.Label("绕柱");
@@ -333,6 +347,8 @@ namespace TripodCamera.Sample {
             roundDuration = GUILayout.HorizontalSlider(roundDuration, 0, 10, GUILayout.Width(100));
             GUILayout.Label(" " + roundDuration.ToString("F2"));
             GUILayout.EndHorizontal();
+            isInherit_round = GUILayout.Toggle(isInherit_round, "isInherit");
+            isExitReset_round = GUILayout.Toggle(isExitReset_round, "isExitReset");
 
             if (GUILayout.Button("进入绕柱状态")) {
                 TCRoundStateModel arg;
@@ -340,9 +356,9 @@ namespace TripodCamera.Sample {
                 arg.offset = roundOffset;
                 arg.easingType = (EasingType)roundEasingType;
                 arg.duration = roundDuration;
-                arg.isInherit = false;
+                arg.isInherit = isInherit_round;
 
-                tcCore.SetterAPI.Enter_Round_Current(new TCRoundStateModel[] { arg }, EasingType.Linear, 0.5f);
+                tcCore.SetterAPI.Enter_Round_Current(new TCRoundStateModel[] { arg }, isExitReset_round, EasingType.Linear, 0.5f);
             }
 
             GUILayout.EndVertical();

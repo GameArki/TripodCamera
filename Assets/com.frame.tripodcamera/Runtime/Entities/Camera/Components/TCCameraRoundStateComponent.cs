@@ -32,6 +32,14 @@ namespace TripodCamera.Entities {
 
         public void EnterRound(TCRoundStateModel[] args, bool isExitReset, EasingType exitEasing, float exitDuration) {
 
+            if (args.Length == 0) return;
+            var args_0 = args[0];
+            if (args_0.isInherit) {
+                resOffset_inherit = resOffset;
+                args_0.offset += resOffset;
+                args[0] = args_0;
+            }
+
             this.arr = args;
 
             this.isExitReset = isExitReset;
@@ -42,6 +50,7 @@ namespace TripodCamera.Entities {
             this.time = 0;
             this.exitTime = 0;
             this.isExiting = false;
+
         }
 
         public void Tick(float dt) {
@@ -103,7 +112,6 @@ namespace TripodCamera.Entities {
 
             exitTime += dt;
             resOffset = EasingHelper.Ease2D(exitEasing, exitTime, exitDuration, exitStartOffset, Vector2.zero);
-            Debug.Log($"resOffset:{resOffset}");
 
             if (exitTime >= exitDuration) {
                 exitTime = 0;
@@ -134,7 +142,6 @@ namespace TripodCamera.Entities {
             Quaternion rotY = Quaternion.AngleAxis(angleY, right);
             dir = rotX * rotY * dir;
             var offset = (tarPos + dir * length) - pos;
-            Debug.Log($"offset:{offset}");
 
             return offset;
         }
