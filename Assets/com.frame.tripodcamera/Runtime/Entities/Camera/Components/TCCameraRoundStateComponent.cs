@@ -107,10 +107,6 @@ namespace TripodCamera.Entities {
 
         }
 
-        public Vector2 GetRoundOffset() {
-            return resOffset;
-        }
-
         public Vector3 GetRoundPosOffset(Vector3 pos) {
             if (arr == null || index >= arr.Length) {
                 return Vector3.zero;

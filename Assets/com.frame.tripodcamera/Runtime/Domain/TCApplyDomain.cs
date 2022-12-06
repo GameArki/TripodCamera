@@ -60,6 +60,7 @@ namespace TripodCamera.Domain {
             } else {
                 pos = info.Pos;
             }
+            info.SetPos(pos);
 
             // - Rot
             Quaternion rot;
@@ -68,45 +69,53 @@ namespace TripodCamera.Domain {
             } else {
                 rot = info.Rot;
             }
-
-            // - Set
-            info.SetPos(pos);
             info.SetRot(rot);
+            
+            // - FOV
+            mainCam.fieldOfView = info.FOV;
 
-            // - Track Pos & Rot
+            // *********************************** Start Position Caculation 
+
+            Vector3 resPos = pos;
+            // - DollyTrack
             var track = tcCam.TrackComponent;
             Vector3 trackPosAddition = track.GetDollyMoveOffset();
-            Vector3 trackRotAddition = track.GetDollyLookOffset();
-
+            resPos += trackPosAddition;
             // - Shake State
             Vector3 shakePosAddition = tcCam.ShakeComponent.GetShakeOffset();
-
+            resPos += shakePosAddition;
             // - Move State
             Vector3 moveAddition = tcCam.MovementStateComponent.GetMoveOffset();
-
-            // - Rotate State
-            Vector3 rotateAddition = tcCam.RotateStateComponent.GetRotateOffset();
-
-            rot = rot * Quaternion.Euler(trackRotAddition) * Quaternion.Euler(rotateAddition);
-
+            resPos += moveAddition;
             // - Push State
             float pushAddition = tcCam.PushStateComponent.GetPushOffset();
             var fwd = rot * Vector3.forward;
             fwd *= pushAddition;
-
-            // # Round Calculation
-            var resPos = pos + trackPosAddition + shakePosAddition + moveAddition + fwd;
+            resPos += fwd;
+            // - Round State
             var rsc = tcCam.RoundStateComponent;
             var roundPosOffset = rsc.GetRoundPosOffset(resPos);
             resPos += roundPosOffset;
-
+            // - Set
             mainCam.transform.position = resPos;
+
+            // *********************************** End Position Caculation 
+
+            // *********************************** Start Rotation Caculation 
+
+            // - LookAt
             var lookAtComponent = tcCam.LookAtComponent;
             if (lookAtComponent.IsLookingAt()) {
                 rot = lookAtComponent.GetLookAtRotation(resPos, info.Rot);
             }
+            // - Rotate State
+            Vector3 trackRotAddition = track.GetDollyLookOffset();
+            Vector3 rotateAddition = tcCam.RotateStateComponent.GetRotateOffset();
+            rot = rot * Quaternion.Euler(trackRotAddition) * Quaternion.Euler(rotateAddition);
+            // - Set
             mainCam.transform.rotation = rot;
-            mainCam.fieldOfView = info.FOV;
+
+            // *********************************** End Rotation Caculation 
 
         }
 
