@@ -11,6 +11,7 @@ namespace TripodCamera.Sample {
         Vector2 mousePos;
 
         GameObject followTarget;
+        float duration_follow;
         GameObject loolAtTarget;
 
         List<GameObject> targets;
@@ -59,6 +60,8 @@ namespace TripodCamera.Sample {
         bool isInherit_round;
         bool isExitReset_round;
 
+        bool showMenu;
+
         void Awake() {
 
             tcCore = new TCCore();
@@ -71,6 +74,10 @@ namespace TripodCamera.Sample {
         }
 
         void OnGUI() {
+
+            showMenu = GUILayout.Toggle(showMenu, "显示菜单");
+
+            if (!showMenu) return;
 
             GUILayout.BeginHorizontal();
             GUILayout.BeginVertical();
@@ -144,6 +151,8 @@ namespace TripodCamera.Sample {
 
             GUILayout.Space(10);
             GUILayout.BeginHorizontal();
+            GUILayout.Label($"跟随duration:{duration_follow.ToString("F2")}");
+            duration_follow = GUILayout.HorizontalSlider(duration_follow, 0, 10, GUILayout.Width(100));
             if (GUILayout.Button("跟随下一个")) {
                 if (followTarget == null) {
                     followTarget = targets[0];
@@ -155,8 +164,9 @@ namespace TripodCamera.Sample {
                         followTarget = targets[index + 1];
                     }
                 }
-                tcCore.SetterAPI.Follow_SetInit_Current(followTarget.transform, new Vector3(0, 0, -10), EasingType.OutExpo, 2f);
+                tcCore.SetterAPI.Follow_SetInit_Current(followTarget.transform, new Vector3(0, 5, -8), EasingType.Linear, duration_follow);
             }
+
             if (GUILayout.Button("盯着下一个")) {
                 if (loolAtTarget == null) {
                     loolAtTarget = targets[0];

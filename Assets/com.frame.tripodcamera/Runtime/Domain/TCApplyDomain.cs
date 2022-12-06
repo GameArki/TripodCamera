@@ -52,25 +52,34 @@ namespace TripodCamera.Domain {
         public void ApplyToMain(TCCameraEntity tcCam, Camera mainCam) {
 
             var info = tcCam.CurrentInfoComponent;
+            var lookAtComponent = tcCam.LookAtComponent;
+            var followComponent = tcCam.FollowComponent;
+            var lookAtTF = lookAtComponent.LookAtTF;
+            var followTF = followComponent.FollowTF;
 
             // - Pos
-            Vector3 pos;
+            bool hasLookAt = tcCam.IsLookingAt();
+            Vector3 pos = info.Pos;
+            Vector3 forward = Vector3.forward;
+            if (hasLookAt && lookAtTF != followTF) {
+                forward = (lookAtTF.position - pos);
+                forward.y = 0;
+                forward.Normalize();
+            }
             if (tcCam.IsFollowing()) {
-                pos = tcCam.FollowComponent.GetFollowPos();
-            } else {
-                pos = info.Pos;
+                pos = followComponent.GetFollowPos(forward);
             }
             info.SetPos(pos);
 
             // - Rot
             Quaternion rot;
-            if (tcCam.IsLookingAt()) {
-                rot = tcCam.LookAtComponent.GetLookAtRotation(pos, info.Rot);
+            if (hasLookAt) {
+                rot = lookAtComponent.GetLookAtRotation(pos, info.Rot);
             } else {
                 rot = info.Rot;
             }
             info.SetRot(rot);
-            
+
             // - FOV
             mainCam.fieldOfView = info.FOV;
 
@@ -104,8 +113,7 @@ namespace TripodCamera.Domain {
             // *********************************** Start Rotation Caculation 
 
             // - LookAt
-            var lookAtComponent = tcCam.LookAtComponent;
-            if (lookAtComponent.IsLookingAt()) {
+            if (hasLookAt) {
                 rot = lookAtComponent.GetLookAtRotation(resPos, info.Rot);
             }
             // - Rotate State

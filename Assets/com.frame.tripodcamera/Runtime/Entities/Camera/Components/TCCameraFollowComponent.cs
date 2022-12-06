@@ -18,6 +18,7 @@ namespace TripodCamera.Entities {
 
         // ==== Temp ====
         Vector3 startPos;
+        Vector3 dstPos;
         float time;
 
         public TCCameraFollowComponent() { }
@@ -34,24 +35,21 @@ namespace TripodCamera.Entities {
                     easePos = followTF.position;
                 }
                 return;
-            } else {
-
-                if (time >= duration) {
-                    startPos = followTF.position;
-                    easePos = followTF.position;
-                    time = 0;
-                    return;
-                }
-
             }
 
-            Vector3 destPos = followTF.position;
+            if (dstPos != followTF.position) {
+                startPos = easePos;
+                dstPos = followTF.position;
+                time = 0;
+            }
+
+            if (time >= duration) {
+                return;
+            }
 
             time += dt;
-            if (time >= duration) {
-                time = duration;
-            }
-            easePos = EasingHelper.Ease3D(easingType, time, duration, startPos, destPos);
+
+            easePos = EasingHelper.Ease3D(easingType, time, duration, startPos, dstPos);
 
         }
 
@@ -86,8 +84,10 @@ namespace TripodCamera.Entities {
             this.followOffset = offset;
         }
 
-        internal Vector3 GetFollowPos() {
-            return easePos + followOffset;
+        internal Vector3 GetFollowPos(Vector3 forward) {
+            var rot = Quaternion.LookRotation(forward);
+            var finalOffset = rot * followOffset;
+            return easePos + finalOffset;
         }
 
         internal bool IsFollowing() {
