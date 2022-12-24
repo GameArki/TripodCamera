@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.frame.fpmath": "ssh://git@github.com/chenwansal/FPMath.git?path=/Assets/com.frame.fpmath#main",
-    "com.frame.jackeasing": "ssh://git@github.com/chenwansal/JackEasing.git?path=/Assets/com.frame.jackeasing#main",
+    "com.frame.fpmath": "ssh://git@github.com/gamearki/FPMath.git?path=/Assets/com.frame.fpmath#main",
+    "com.gamearki.fpeasing": "ssh://git@github.com/gamearki/FPEasing.git?path=/Assets/com.gamearki.fpeasing#main",
     "com.unity.feature.development": "1.0.1",
     "com.unity.ide.rider": "3.0.15",
     "com.unity.ide.visualstudio": "2.0.16",

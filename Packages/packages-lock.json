@@ -1,18 +1,18 @@
 {
   "dependencies": {
     "com.frame.fpmath": {
-      "version": "ssh://git@github.com/chenwansal/FPMath.git?path=/Assets/com.frame.fpmath#main",
+      "version": "ssh://git@github.com/gamearki/FPMath.git?path=/Assets/com.frame.fpmath#main",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "f69eae962f247ad403d0f205b24f17de4f751efb"
+      "hash": "8a06f8331a5f67e71f31550e5c170aa726b8b615"
     },
-    "com.frame.jackeasing": {
-      "version": "ssh://git@github.com/chenwansal/JackEasing.git?path=/Assets/com.frame.jackeasing#main",
+    "com.gamearki.fpeasing": {
+      "version": "ssh://git@github.com/gamearki/FPEasing.git?path=/Assets/com.gamearki.fpeasing#main",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "5712dea81a7669599f409ebdb179276ed4d2515a"
+      "hash": "c512e0dd8b17aa1e78c7246081ff2cce843f18d0"
     },
     "com.unity.editorcoroutines": {
       "version": "1.0.0",
