@@ -72,10 +72,12 @@ namespace TripodCamera.Domain {
 
         // ==== Advance ====
         // - Follow
-        public void Follow_SetInit_Current(Transform target, Vector3 offset, EasingType easingType, float easingTime) {
+        public void Follow_SetInit_Current(Transform target, Vector3 offset,
+        EasingType easingType_horizontal, float easingTime_horizontal,
+        EasingType easingType_vertical, float easingTime_vertical) {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
-            tcCam.Follow_SetInit(target, offset, easingType, easingTime);
+            tcCam.Follow_SetInit(target, offset, easingType_horizontal, easingTime_horizontal, easingType_vertical, easingTime_vertical);
         }
 
         public void Follow_ChangeTarget_Current(Transform target) {

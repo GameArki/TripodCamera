@@ -11,7 +11,8 @@ namespace TripodCamera.Sample {
         Vector2 mousePos;
 
         GameObject followTarget;
-        float duration_follow;
+        float follow_duration_horizontal;
+        float follow_duration_vertical;
         GameObject loolAtTarget;
 
         List<GameObject> targets;
@@ -150,9 +151,17 @@ namespace TripodCamera.Sample {
             GUILayout.EndHorizontal();
 
             GUILayout.Space(10);
+
             GUILayout.BeginHorizontal();
-            GUILayout.Label($"跟随duration:{duration_follow.ToString("F2")}");
-            duration_follow = GUILayout.HorizontalSlider(duration_follow, 0, 10, GUILayout.Width(100));
+            GUILayout.Label($"跟随过渡时间_水平方向:{follow_duration_horizontal.ToString("F2")}");
+            follow_duration_horizontal = GUILayout.HorizontalSlider(follow_duration_horizontal, 0, 2, GUILayout.Width(100));
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label($"跟随过渡时间_垂直方向:{follow_duration_vertical.ToString("F2")}");
+            follow_duration_vertical = GUILayout.HorizontalSlider(follow_duration_vertical, 0, 2, GUILayout.Width(100));
+            GUILayout.EndHorizontal();
+
             if (GUILayout.Button("跟随下一个")) {
                 if (followTarget == null) {
                     followTarget = targets[0];
@@ -164,7 +173,9 @@ namespace TripodCamera.Sample {
                         followTarget = targets[index + 1];
                     }
                 }
-                tcCore.SetterAPI.Follow_SetInit_Current(followTarget.transform, new Vector3(0, 5, -8), EasingType.Linear, duration_follow);
+                tcCore.SetterAPI.Follow_SetInit_Current(followTarget.transform, new Vector3(0, 5, -8),
+                EasingType.Linear, follow_duration_horizontal,
+                EasingType.Linear, follow_duration_vertical);
             }
 
             if (GUILayout.Button("盯着下一个")) {
@@ -180,7 +191,6 @@ namespace TripodCamera.Sample {
                 }
                 tcCore.SetterAPI.LookAt_SetInit_Current(loolAtTarget.transform, Vector3.zero);
             }
-            GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("取消跟随")) {

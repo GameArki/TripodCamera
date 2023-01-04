@@ -75,7 +75,14 @@ namespace TripodCamera.API {
         // - Follow
         void ITCSetterAPI.Follow_SetInit_Current(Transform target, Vector3 offset, EasingType easingType, float easingTime) {
             var cameraDomain = domain.CameraDomain;
-            cameraDomain.Follow_SetInit_Current(target, offset, easingType, easingTime);
+            cameraDomain.Follow_SetInit_Current(target, offset, easingType, easingTime, easingType, easingTime);
+        }
+
+        void ITCSetterAPI.Follow_SetInit_Current(Transform target, Vector3 offset,
+        EasingType easingType_horizontal, float easingTime_horizontal,
+        EasingType easingType_vertical, float easingTime_vertical) {
+            var cameraDomain = domain.CameraDomain;
+            cameraDomain.Follow_SetInit_Current(target, offset, easingType_horizontal, easingTime_horizontal, easingType_vertical, easingTime_vertical);
         }
 
         void ITCSetterAPI.Follow_ChangeTarget_Current(Transform target) {

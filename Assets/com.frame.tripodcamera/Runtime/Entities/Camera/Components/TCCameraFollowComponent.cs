@@ -12,25 +12,30 @@ namespace TripodCamera.Entities {
         Vector3 followOffset;
         public Vector3 FollowOffset => followOffset;
 
-        float duration;
-        EasingType easingType;
+        EasingType easingType_horizontal;
+        EasingType easingType_vertical;
+        float duration_horizontal;
+        float duration_vertical;
         Vector3 easePos;
 
         // ==== Temp ====
         Vector3 startPos;
         Vector3 dstPos;
-        float time;
+        float time_horizontal;
+        float time_vertical;
 
         public TCCameraFollowComponent() { }
 
-        public void SetEasing(EasingType easingType, float duration) {
-            this.easingType = easingType;
-            this.duration = duration;
+        public void SetEasing(EasingType easingType_horizontal, float duration_horizontal, EasingType easingType_vertical, float duration_vertical) {
+            this.easingType_horizontal = easingType_horizontal;
+            this.easingType_vertical = easingType_vertical;
+            this.duration_horizontal = duration_horizontal;
+            this.duration_vertical = duration_vertical;
         }
 
         public void TickEasing(float dt) {
 
-            if (duration == 0) {
+            if (duration_horizontal == 0) {
                 if (followTF != null) {
                     easePos = followTF.position;
                 }
@@ -40,16 +45,23 @@ namespace TripodCamera.Entities {
             if (dstPos != followTF.position) {
                 startPos = easePos;
                 dstPos = followTF.position;
-                time = 0;
+                time_horizontal = 0;
+                time_vertical = 0;
             }
 
-            if (time >= duration) {
-                return;
+            if (time_horizontal < duration_horizontal) {
+                time_horizontal += dt;
+                var x = EasingHelper.Ease1D(easingType_horizontal, time_horizontal, duration_horizontal, startPos.x, dstPos.x);
+                var z = EasingHelper.Ease1D(easingType_horizontal, time_horizontal, duration_horizontal, startPos.z, dstPos.z);
+                easePos.x = x;
+                easePos.z = z;
             }
 
-            time += dt;
-
-            easePos = EasingHelper.Ease3D(easingType, time, duration, startPos, dstPos);
+            if (time_vertical < duration_vertical) {
+                time_vertical += dt;
+                var y = EasingHelper.Ease1D(easingType_vertical, time_vertical, duration_vertical, startPos.y, dstPos.y);
+                easePos.y = y;
+            }
 
         }
 
@@ -77,7 +89,7 @@ namespace TripodCamera.Entities {
             }
             this.followTF = tf;
             startPos = tf.position;
-            time = 0;
+            time_horizontal = 0;
         }
 
         public void ChangeOffset(Vector3 offset) {

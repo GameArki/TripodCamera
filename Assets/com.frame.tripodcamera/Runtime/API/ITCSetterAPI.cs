@@ -24,6 +24,7 @@ namespace TripodCamera.API {
 
         // ==== Advanced ====
         void Follow_SetInit_Current(Transform target, Vector3 offset, EasingType easingType, float easingTime);
+        void Follow_SetInit_Current(Transform target, Vector3 offset, EasingType easingType_horizontal, float easingTime_horizontal, EasingType easingType_vertical, float easingTime_vertical);
         void Follow_ChangeTarget_Current(Transform target);
         void Follow_ChangeOffset_Current(Vector3 offset);
 
