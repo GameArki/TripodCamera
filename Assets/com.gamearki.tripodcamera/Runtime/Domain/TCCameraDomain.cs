@@ -2,6 +2,8 @@ using UnityEngine;
 using GameArki.FPEasing;
 using GameArki.TripodCamera.Facades;
 using GameArki.TripodCamera.Entities;
+using GameArki.TripodCamera.Hook;
+using System;
 
 namespace GameArki.TripodCamera.Domain {
 
@@ -49,6 +51,20 @@ namespace GameArki.TripodCamera.Domain {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;
             tcCam.Rotate_Horizontal(x);
+        }
+
+        internal TCCameraHook SpawnHook(int id) {
+            var repo = facades.CameraRepo;
+            bool has = repo.TryGet(id, out var cam);
+            if (has) {
+                var go = new GameObject($"tc_hook_{id}");
+                var hook = go.AddComponent<TCCameraHook>();
+                hook.Ctor(cam);
+                facades.HookRepo.Add(hook);
+                return hook;
+            } else {
+                return null;
+            }
         }
 
         public void Rotate_Vertical_Current(float y) {

@@ -2,6 +2,7 @@ using UnityEngine;
 using GameArki.FPEasing;
 using GameArki.TripodCamera.Facades;
 using GameArki.TripodCamera.Domain;
+using GameArki.TripodCamera.Hook;
 
 namespace GameArki.TripodCamera.API {
 
@@ -33,6 +34,11 @@ namespace GameArki.TripodCamera.API {
         void ITCSetterAPI.CutTo(int id, EasingType easingType, float duration) {
             var directorDomain = domain.DirectorDomain;
             directorDomain.CutTo(id, easingType, duration);
+        }
+
+        TCCameraHook ITCSetterAPI.GetHook(int id) {
+            var cameraDomain = domain.CameraDomain;
+            return cameraDomain.SpawnHook(id);
         }
 
         // ==== Basic ====

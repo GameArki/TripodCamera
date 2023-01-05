@@ -69,6 +69,7 @@ namespace GameArki.TripodCamera.Sample {
             tcCore.Initialize(Camera.main);
             int mainID = 5;
             tcCore.SetterAPI.SpawnByMain(mainID);
+            var hook = tcCore.SetterAPI.GetHook(mainID);
 
             this.targets = new List<GameObject>();
 

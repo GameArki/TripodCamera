@@ -13,9 +13,17 @@ namespace GameArki.TripodCamera.Entities {
         public Vector3 FollowOffset => followOffset;
 
         EasingType easingType_horizontal;
+        public EasingType XEasing => easingType_horizontal;
+
         EasingType easingType_vertical;
+        public EasingType YEasing => easingType_vertical;
+
         float duration_horizontal;
+        public float XDuration => duration_horizontal;
+    
         float duration_vertical;
+        public float YDuration => duration_vertical;
+
         Vector3 easePos;
 
         // ==== Temp ====
@@ -94,6 +102,16 @@ namespace GameArki.TripodCamera.Entities {
 
         public void ChangeOffset(Vector3 offset) {
             this.followOffset = offset;
+        }
+
+        public void ChangeXEasing(EasingType easingType, float duration) {
+            this.easingType_horizontal = easingType;
+            this.duration_horizontal = duration;
+        }
+
+        public void ChangeYEasing(EasingType easingType, float duration) {
+            this.easingType_vertical = easingType;
+            this.duration_vertical = duration;
         }
 
         internal Vector3 GetFollowPos(Vector3 forward) {

@@ -17,9 +17,15 @@ namespace GameArki.TripodCamera.Controller {
         }
 
         internal void Tick(float dt) {
-            var mainCam = facades.MainCamera;
-            var tcCam = facades.CameraRepo.ActiveCam;
+
             var applyDomain = domain.ApplyDomain;
+
+            var hooks = facades.HookRepo.GetAll();
+            foreach (var hook in hooks) {
+                applyDomain.ApplyHook(hook);
+            }
+
+            var tcCam = facades.CameraRepo.ActiveCam;
             applyDomain.ApplyFollow(tcCam, dt);
             applyDomain.ApplyTrackState(tcCam, dt);
             applyDomain.ApplyShakeState(tcCam, dt);
@@ -28,7 +34,9 @@ namespace GameArki.TripodCamera.Controller {
             applyDomain.ApplyRotateState(tcCam, dt);
             applyDomain.ApplyPushState(tcCam, dt);
 
+            var mainCam = facades.MainCamera;
             applyDomain.ApplyToMain(tcCam, mainCam);
+
         }
 
     }

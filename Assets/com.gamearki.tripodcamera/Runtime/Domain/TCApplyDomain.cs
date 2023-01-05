@@ -1,6 +1,7 @@
 using UnityEngine;
 using GameArki.TripodCamera.Facades;
 using GameArki.TripodCamera.Entities;
+using GameArki.TripodCamera.Hook;
 
 namespace GameArki.TripodCamera.Domain {
 
@@ -12,6 +13,10 @@ namespace GameArki.TripodCamera.Domain {
 
         public void Inject(TCFacades facades) {
             this.facades = facades;
+        }
+
+        public void ApplyHook(TCCameraHook hook) {
+            hook.Tick();
         }
 
         public void ApplyFollow(TCCameraEntity tcCam, float dt) {
