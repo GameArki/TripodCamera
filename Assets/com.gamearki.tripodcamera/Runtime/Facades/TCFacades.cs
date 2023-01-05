@@ -13,9 +13,13 @@ namespace GameArki.TripodCamera.Facades {
         TCCameraRepo cameraRepo;
         public TCCameraRepo CameraRepo => cameraRepo;
 
+        TCCameraHookRepo hookRepo;
+        public TCCameraHookRepo HookRepo => hookRepo;
+
         public TCFacades() {
             this.config = new TCConfig();
             this.cameraRepo = new TCCameraRepo();
+            this.hookRepo = new TCCameraHookRepo();
         }
 
         public void Inject(Camera camera) {

@@ -1,5 +1,6 @@
 using UnityEngine;
 using GameArki.FPEasing;
+using GameArki.TripodCamera.Hook;
 
 namespace GameArki.TripodCamera.API {
 
@@ -30,6 +31,7 @@ namespace GameArki.TripodCamera.API {
 
         void LookAt_SetInit_Current(Transform target, Vector3 offset);
         void LookAt_ChangeTarget_Current(Transform target);
+        TCCameraHook GetHook(int id);
         void LookAt_ChangeOffset_Current(Vector3 offset);
 
         // ==== Shake ====

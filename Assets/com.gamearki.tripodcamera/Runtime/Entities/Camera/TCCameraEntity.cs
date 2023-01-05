@@ -183,15 +183,26 @@ namespace GameArki.TripodCamera.Entities {
 
         // ==== Advance ====
         // - Follow
-        public void Follow_SetInit(Transform target, Vector3 offset,
-        EasingType easingType_horizontal, float easingTime_horizontal,
-        EasingType easingType_vertical, float easingTime_vertical) {
+        public void Follow_SetInit(Transform target,
+                                   Vector3 offset,
+                                   EasingType easingType_horizontal,
+                                   float easingTime_horizontal,
+                                   EasingType easingType_vertical,
+                                   float easingTime_vertical) {
             followComponent.SetInit(target, offset);
             followComponent.SetEasing(easingType_horizontal, easingTime_horizontal, easingType_vertical, easingTime_vertical);
         }
 
         public void Follow_ChangeTarget(Transform target) {
             followComponent.ChangeTarget(target);
+        }
+
+        public void Follow_ChangeXEasing(EasingType easingType, float easingTime) {
+            followComponent.ChangeXEasing(easingType, easingTime);
+        }
+
+        public void Follow_ChangeYEasing(EasingType easingType, float easingTime) {
+            followComponent.ChangeYEasing(easingType, easingTime);
         }
 
         public void Follow_ChangeOffset(Vector3 offset) {
