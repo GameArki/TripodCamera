@@ -8,6 +8,13 @@ namespace GameArki.TripodCamera.Hook {
 
         TCCameraEntity entity;
 
+        [Header("Transform")]
+        [SerializeField] Vector3 position;
+        [SerializeField] Quaternion rotation;
+
+        [Header("FOV")]
+        [SerializeField] float fov;
+
         [Header("Follow")]
         [SerializeField] Vector3 followOffset;
         [SerializeField] EasingType followXEasing;
@@ -36,6 +43,11 @@ namespace GameArki.TripodCamera.Hook {
 
         void RecordFromCam() {
 
+            position = entity.CurrentInfoComponent.Pos;
+            rotation = entity.CurrentInfoComponent.Rot;
+
+            fov = entity.CurrentInfoComponent.FOV;
+
             var followCom = entity.FollowComponent;
             followOffset = followCom.FollowOffset;
 
@@ -51,6 +63,10 @@ namespace GameArki.TripodCamera.Hook {
         }
 
         void ApplyToCam() {
+
+            entity.CurrentInfoComponent.SetPos(position);
+            entity.CurrentInfoComponent.SetRot(rotation);
+            entity.CurrentInfoComponent.SetFOV(fov);
             
             entity.Follow_ChangeOffset(followOffset);
             entity.Follow_ChangeXEasing(followXEasing, followXDuration);
