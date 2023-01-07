@@ -47,6 +47,12 @@ namespace GameArki.TripodCamera.Domain {
             tcCam.Move_AndChangeLookAtOffset(value);
         }
 
+        public void Round_Current(Vector2 value) {
+            var repo = facades.CameraRepo;
+            var tcCam = repo.ActiveCam;
+            tcCam.Round(value);
+        }
+
         public void Rotate_Horizontal_Current(float x) {
             var repo = facades.CameraRepo;
             var tcCam = repo.ActiveCam;

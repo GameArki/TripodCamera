@@ -9,6 +9,8 @@ namespace GameArki.TripodCamera.Entities {
         Transform followTF;
         public Transform FollowTF => followTF;
 
+        Vector2 roundOffset;
+
         Vector3 followOffset;
         public Vector3 FollowOffset => followOffset;
 
@@ -79,13 +81,19 @@ namespace GameArki.TripodCamera.Entities {
             }
         }
 
-        public void OffsetAdd(Vector3 offset) {
+        public void RoundOffsetAdd(Vector2 offset) {
+            if (followTF != null) {
+                roundOffset += offset;
+            }
+        }
+
+        // - Follow
+        public void FollowOffsetAdd(Vector3 offset) {
             if (followTF != null) {
                 followOffset += offset;
             }
         }
 
-        // - Follow
         public void SetInit(Transform tf, Vector3 offset) {
             ChangeTarget(tf);
             ChangeOffset(offset);
@@ -98,6 +106,7 @@ namespace GameArki.TripodCamera.Entities {
             this.followTF = tf;
             startPos = tf.position;
             time_horizontal = 0;
+            roundOffset = Vector2.zero;
         }
 
         public void ChangeOffset(Vector3 offset) {
@@ -116,7 +125,8 @@ namespace GameArki.TripodCamera.Entities {
 
         internal Vector3 GetFollowPos(Vector3 forward) {
             var rot = Quaternion.LookRotation(forward);
-            var finalOffset = rot * followOffset;
+            Quaternion roundRot = Quaternion.Euler(roundOffset.y, roundOffset.x, 0);
+            var finalOffset = rot * roundRot * followOffset;
             return easePos + finalOffset;
         }
 

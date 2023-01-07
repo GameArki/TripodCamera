@@ -81,6 +81,8 @@ namespace GameArki.TripodCamera.Sample {
 
             if (!showMenu) return;
 
+            const int MENU_PADDING_TOP = 5;
+
             GUILayout.BeginHorizontal();
             GUILayout.BeginVertical();
             GUILayout.BeginHorizontal();
@@ -89,7 +91,7 @@ namespace GameArki.TripodCamera.Sample {
             GUILayout.Label(" " + sensitivity.ToString("F2"));
             GUILayout.EndHorizontal();
 
-            GUILayout.Space(10);
+            GUILayout.Space(MENU_PADDING_TOP);
             GUILayout.BeginHorizontal();
             if (GUILayout.RepeatButton("推")) {
                 tcCore.SetterAPI.Push_In_Current(sensitivity);
@@ -99,7 +101,7 @@ namespace GameArki.TripodCamera.Sample {
             }
             GUILayout.EndHorizontal();
 
-            GUILayout.Space(10);
+            GUILayout.Space(MENU_PADDING_TOP);
             GUILayout.BeginHorizontal();
             if (GUILayout.RepeatButton("左看")) {
                 tcCore.SetterAPI.Rotate_Horizontal_Current(-sensitivity);
@@ -115,7 +117,7 @@ namespace GameArki.TripodCamera.Sample {
             }
             GUILayout.EndHorizontal();
 
-            GUILayout.Space(10);
+            GUILayout.Space(MENU_PADDING_TOP);
             GUILayout.BeginHorizontal();
             if (GUILayout.RepeatButton("左转")) {
                 tcCore.SetterAPI.Rotate_Roll_Current(-sensitivity);
@@ -125,7 +127,7 @@ namespace GameArki.TripodCamera.Sample {
             }
             GUILayout.EndHorizontal();
 
-            GUILayout.Space(10);
+            GUILayout.Space(MENU_PADDING_TOP);
             GUILayout.BeginHorizontal();
             if (GUILayout.RepeatButton("左移")) {
                 tcCore.SetterAPI.Move_Current(new Vector2(-sensitivity, 0));
@@ -141,7 +143,23 @@ namespace GameArki.TripodCamera.Sample {
             }
             GUILayout.EndHorizontal();
 
-            GUILayout.Space(10);
+            GUILayout.Space(MENU_PADDING_TOP);
+            GUILayout.BeginHorizontal();
+            if (GUILayout.RepeatButton("左绕")) {
+                tcCore.SetterAPI.Round_Current(new Vector2(-sensitivity, 0));
+            }
+            if (GUILayout.RepeatButton("右绕")) {
+                tcCore.SetterAPI.Round_Current(new Vector2(sensitivity, 0));
+            }
+            if (GUILayout.RepeatButton("上绕")) {
+                tcCore.SetterAPI.Round_Current(new Vector2(0, sensitivity));
+            }
+            if (GUILayout.RepeatButton("下绕")) {
+                tcCore.SetterAPI.Round_Current(new Vector2(0, -sensitivity));
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.Space(MENU_PADDING_TOP);
             GUILayout.BeginHorizontal();
             if (GUILayout.RepeatButton("放大")) {
                 tcCore.SetterAPI.Zoom_In_Current(sensitivity);
@@ -151,7 +169,7 @@ namespace GameArki.TripodCamera.Sample {
             }
             GUILayout.EndHorizontal();
 
-            GUILayout.Space(10);
+            GUILayout.Space(MENU_PADDING_TOP);
 
             GUILayout.BeginHorizontal();
             GUILayout.Label($"跟随过渡时间_水平方向:{follow_duration_horizontal.ToString("F2")}");
@@ -202,7 +220,7 @@ namespace GameArki.TripodCamera.Sample {
             }
             GUILayout.EndHorizontal();
 
-            GUILayout.Space(10);
+            GUILayout.Space(MENU_PADDING_TOP);
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("生成随机物体")) {
                 var go = GameObject.CreatePrimitive(randomPrimitiveTypes[Random.Range(0, randomPrimitiveTypes.Length)]);
@@ -216,8 +234,9 @@ namespace GameArki.TripodCamera.Sample {
                 targets.Clear();
             }
             GUILayout.EndHorizontal();
+            GUILayout.EndVertical();
 
-            GUILayout.Space(20);
+            GUILayout.BeginVertical();
             GUILayout.BeginHorizontal();
             GUILayout.Label("震幅 x: ");
             shakeAmplitudeX = GUILayout.HorizontalSlider(shakeAmplitudeX, 0, 10, GUILayout.Width(100));
@@ -258,9 +277,6 @@ namespace GameArki.TripodCamera.Sample {
                 tcCore.SetterAPI.Enter_Shake_Current(new TCShakeStateModel[] { arg });
             }
 
-            GUILayout.EndVertical();
-
-            GUILayout.BeginVertical();
             GUILayout.Label("移动");
             GUILayout.BeginHorizontal();
             GUILayout.Label("x: ");
@@ -297,7 +313,9 @@ namespace GameArki.TripodCamera.Sample {
                 };
                 tcCore.SetterAPI.Enter_Move_Current(new TCMovementStateModel[] { arg }, isExitReset_move, EasingType.Linear, 0.5f);
             }
+            GUILayout.EndVertical();
 
+            GUILayout.BeginVertical();
             GUILayout.Label("旋转");
             GUILayout.BeginHorizontal();
             GUILayout.Label("x: ");

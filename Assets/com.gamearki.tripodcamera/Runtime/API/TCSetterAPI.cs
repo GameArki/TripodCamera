@@ -57,6 +57,11 @@ namespace GameArki.TripodCamera.API {
             cameraDomain.Move_AndChangeLookAtOffset_Current(value);
         }
 
+        void ITCSetterAPI.Round_Current(Vector2 value) {
+            var cameraDomain = domain.CameraDomain;
+            cameraDomain.Round_Current(value);
+        }
+
         void ITCSetterAPI.Rotate_Horizontal_Current(float x) {
             var cameraDomain = domain.CameraDomain;
             cameraDomain.Rotate_Horizontal_Current(x);

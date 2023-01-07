@@ -114,31 +114,14 @@ namespace GameArki.TripodCamera.Entities {
             pos += right + up;
 
             if (followComponent.IsFollowing()) {
-                followComponent.OffsetAdd(right + up);
+                followComponent.FollowOffsetAdd(right + up);
             } else {
                 currentInfoComponent.SetPos(pos);
             }
         }
 
-        public void Round(Vector2 roundOffset, Transform tar) {
-            var offset = GetRoundOffset(roundOffset, tar);
-            followComponent.OffsetAdd(offset);
-        }
-
-        public Vector3 GetRoundOffset(Vector2 roundOffset, Transform tar) {
-            var pos = currentInfoComponent.Pos;
-            Vector3 dir = pos - tar.position;
-            float length = dir.magnitude;
-            dir.Normalize();
-
-            // Rotate Dir
-            float angleX = -roundOffset.x;
-            float angleY = roundOffset.y;
-            Quaternion rotX = Quaternion.AngleAxis(angleX, Vector3.up);
-            Quaternion rotY = Quaternion.AngleAxis(angleY, Vector3.right);
-            dir = rotX * rotY * dir;
-
-            return (tar.position + dir * length) - pos;
+        public void Round(Vector2 roundOffset) {
+            followComponent.RoundOffsetAdd(roundOffset);
         }
 
         public void Move_AndChangeLookAtOffset(Vector2 value) {

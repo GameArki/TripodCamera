@@ -10,6 +10,7 @@ namespace GameArki.TripodCamera.API {
         void Spawn(int id, Vector3 position, Quaternion rotation, float fov);
         void SpawnByMain(int id);
         void CutTo(int id, EasingType easingType, float duration);
+        TCCameraHook GetHook(int id);
 
         // ==== Basic ====
         void Push_In_Current(float value);
@@ -20,6 +21,7 @@ namespace GameArki.TripodCamera.API {
         void Rotate_Horizontal_Current(float x);
         void Rotate_Vertical_Current(float y);
         void Rotate_Roll_Current(float z);
+        void Round_Current(Vector2 value);
 
         void Zoom_In_Current(float value);
 
@@ -31,7 +33,6 @@ namespace GameArki.TripodCamera.API {
 
         void LookAt_SetInit_Current(Transform target, Vector3 offset);
         void LookAt_ChangeTarget_Current(Transform target);
-        TCCameraHook GetHook(int id);
         void LookAt_ChangeOffset_Current(Vector3 offset);
 
         // ==== Shake ====
@@ -41,7 +42,6 @@ namespace GameArki.TripodCamera.API {
         void Enter_Round_Current(TCRoundStateModel[] args, bool isExitReset, EasingType exitEasingType, float exitDuration);
         void Enter_Push_Current(TCPushStateModel[] args, bool isExitReset, EasingType exitEasingType, float exitDuration);
         void Enter_Rotation_Current(TCRotationStateModel[] args, bool isExitReset, EasingType exitEasingType, float exitDuration);
-
     }
 
 }
