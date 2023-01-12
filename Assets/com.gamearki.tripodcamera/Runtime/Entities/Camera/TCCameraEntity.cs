@@ -10,8 +10,6 @@ namespace GameArki.TripodCamera.Entities {
         public void SetID(int value) => id = value;
 
         // ==== Info ====
-        TCCameraInfoComponent savedInfoComponent;
-
         TCCameraInfoComponent currentInfoComponent;
         public TCCameraInfoComponent CurrentInfoComponent => currentInfoComponent;
 
@@ -48,7 +46,6 @@ namespace GameArki.TripodCamera.Entities {
         public TCCameraPushStateComponent PushStateComponent => pushStateComponent;
 
         public TCCameraEntity() {
-            this.savedInfoComponent = new TCCameraInfoComponent();
             this.currentInfoComponent = new TCCameraInfoComponent();
             this.followComponent = new TCCameraFollowComponent();
             this.lookAtComponent = new TCCameraLookAtComponent();
@@ -63,18 +60,7 @@ namespace GameArki.TripodCamera.Entities {
 
         // ==== Info ====
         public void InitInfo(Vector3 pos, Quaternion rot, float fov) {
-            savedInfoComponent.Init(pos, rot, fov);
             currentInfoComponent.Init(pos, rot, fov);
-        }
-
-        public void SaveAsDefault() {
-            // Save pos, rot, fov
-            savedInfoComponent.CloneFrom(currentInfoComponent);
-        }
-
-        public void RestoreByDefault() {
-            // Restore pos, rot, fov
-            currentInfoComponent.CloneFrom(savedInfoComponent);
         }
 
         // ==== Basic ====
@@ -92,12 +78,8 @@ namespace GameArki.TripodCamera.Entities {
             }
             fwd.Normalize();
 
-            if (followComponent.IsFollowing()) {
-                followComponent.PushIn(fwd, value);
-            } else {
-                pos += fwd * value;
-                currentInfoComponent.SetPos(pos);
-            }
+            pos += fwd * value;
+            currentInfoComponent.SetPos(pos);
 
         }
 
@@ -113,11 +95,7 @@ namespace GameArki.TripodCamera.Entities {
             right = right * value.x;
             pos += right + up;
 
-            if (followComponent.IsFollowing()) {
-                followComponent.FollowOffsetAdd(right + up);
-            } else {
-                currentInfoComponent.SetPos(pos);
-            }
+            currentInfoComponent.SetPos(pos);
         }
 
         public void Round(Vector2 roundOffset) {

@@ -22,12 +22,6 @@ namespace GameArki.TripodCamera.Entities {
             this.fov = fov;
         }
 
-        public void CloneFrom(TCCameraInfoComponent other) {
-            this.pos = other.pos;
-            this.rot = other.rot;
-            this.fov = other.fov;
-        }
-
         // ==== Basic ====
         public void Rotate_Horizontal(float x) {
             var euler = rot.eulerAngles;
