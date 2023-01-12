@@ -1,18 +1,25 @@
 {
   "dependencies": {
-    "com.frame.fpmath": {
-      "version": "ssh://git@github.com/gamearki/FPMath.git?path=/Assets/com.frame.fpmath#main",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "8a06f8331a5f67e71f31550e5c170aa726b8b615"
-    },
     "com.gamearki.fpeasing": {
       "version": "ssh://git@github.com/gamearki/FPEasing.git?path=/Assets/com.gamearki.fpeasing#main",
       "depth": 0,
       "source": "git",
       "dependencies": {},
       "hash": "c512e0dd8b17aa1e78c7246081ff2cce843f18d0"
+    },
+    "com.gamearki.menutool": {
+      "version": "ssh://git@github.com/gamearki/arkimenutool.git?path=Assets/com.gamearki.menutool#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "44abf32ea5d0124607bc056846c038fb3dd24c81"
+    },
+    "com.gamearki.setup": {
+      "version": "ssh://git@github.com/gamearki/GameArkiSetup.git?path=/Assets/com.gamearki.setup#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "41668898b81800681247a2b960d8f9d8cdc8b415"
     },
     "com.unity.editorcoroutines": {
       "version": "1.0.0",

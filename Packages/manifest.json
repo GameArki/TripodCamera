@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.frame.fpmath": "ssh://git@github.com/gamearki/FPMath.git?path=/Assets/com.frame.fpmath#main",
     "com.gamearki.fpeasing": "ssh://git@github.com/gamearki/FPEasing.git?path=/Assets/com.gamearki.fpeasing#main",
+    "com.gamearki.setup": "ssh://git@github.com/gamearki/GameArkiSetup.git?path=/Assets/com.gamearki.setup#main",
     "com.unity.feature.development": "1.0.1",
     "com.unity.ide.rider": "3.0.15",
     "com.unity.ide.visualstudio": "2.0.16",
@@ -41,6 +41,7 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0"
+    "com.unity.modules.xr": "1.0.0",
+    "com.gamearki.menutool": "ssh://git@github.com/gamearki/arkimenutool.git?path=Assets/com.gamearki.menutool#main"
   }
 }

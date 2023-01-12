@@ -72,6 +72,7 @@ namespace GameArki.TripodCamera.Sample {
             var hook = tcCore.SetterAPI.GetHook(mainID);
 
             this.targets = new List<GameObject>();
+            targets.Add(GameObject.Find("绕柱柱子"));
 
         }
 
